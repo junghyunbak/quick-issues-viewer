@@ -5,14 +5,17 @@ import { devtools, persist } from "zustand/middleware";
 
 // slices
 import { createGithubRepoSlice } from "./slices/githubRepo";
+import { createIssueSlice } from "./slices/issue";
 
-export type StoreState = ReturnType<typeof createGithubRepoSlice>;
+export type StoreState = ReturnType<typeof createGithubRepoSlice> &
+  ReturnType<typeof createIssueSlice>;
 
 const useStoreBase = create<StoreState>()(
   devtools(
     persist(
       (...a) => ({
         ...createGithubRepoSlice(...a),
+        ...createIssueSlice(...a),
       }),
       { name: "zustandStore" }
     )
