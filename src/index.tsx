@@ -6,11 +6,12 @@ import reportWebVitals from "./reportWebVitals";
 
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { Global, css } from "@emotion/react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retryOnMount: false,
+      refetchOnMount: false,
       retry: 0,
     },
   },
@@ -22,6 +23,14 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <Global
+        styles={css`
+          :root {
+            font-size: 16px;
+          }
+        `}
+      />
+
       <App />
 
       <ReactQueryDevtools />
