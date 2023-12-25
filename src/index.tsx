@@ -11,7 +11,7 @@ import { Global, css } from "@emotion/react";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnMount: false,
+      refetchOnWindowFocus: false,
       retry: 0,
     },
   },
