@@ -1,3 +1,5 @@
-import { Octokit } from "octokit";
+import * as GET from "./methods/get";
 
-export const octokit = new Octokit();
+export const apiSevice = {
+  ...GET,
+};

@@ -1,2 +1,1 @@
-export const DEFAULT_REPO_OWNER = "junghyunbak";
-export const DEFAULT_REPO_NAME = "github-issues-viewer";
+export * as githubRepo from "./githubRepo";
