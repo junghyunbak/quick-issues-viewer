@@ -1,6 +1,7 @@
 // components
 import { IssueList } from "@/pages/Main/components/IssueLIst";
 import { LabelList } from "@/pages/Main/components/labelList";
+import { Header } from "@/pages/Main/components/Header";
 
 // styles
 import { css } from "@emotion/react";
@@ -8,33 +9,37 @@ import { size } from "@/assets/styles";
 
 export function Main() {
   return (
-    <div
-      css={css`
-        width: 100%;
-        max-width: ${size.BREAKPOINT_TABLET}px;
-        margin: 0 auto;
-      `}
-    >
+    <div>
+      <Header />
+
       <div
         css={css`
-          display: flex;
+          width: 100%;
+          max-width: ${size.BREAKPOINT_TABLET}px;
+          margin: 0 auto;
         `}
       >
         <div
           css={css`
-            width: ${size.SIDEBAR_WIDTH}px;
+            display: flex;
           `}
         >
-          <LabelList />
-        </div>
+          <div
+            css={css`
+              width: ${size.SIDEBAR_WIDTH}px;
+            `}
+          >
+            <LabelList />
+          </div>
 
-        <div
-          css={css`
-            width: 100%;
-            flex-shrink: 1;
-          `}
-        >
-          <IssueList />
+          <div
+            css={css`
+              width: 100%;
+              flex-shrink: 1;
+            `}
+          >
+            <IssueList />
+          </div>
         </div>
       </div>
     </div>

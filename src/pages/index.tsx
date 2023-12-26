@@ -9,15 +9,12 @@ import { NotFound } from "@/pages/NotFound";
 import { Main } from "@/pages/Main";
 import { GlobalStyle } from "./components/GlobalStyle";
 import { ReactQueryProvider } from "./components/ReactQueryProvider";
-import { Header } from "./components/Header";
 
 export function Index() {
   return (
     <ReactQueryProvider>
       <GlobalStyle>
         <BrowserRouter>
-          <Header />
-
           <Routes>
             <Route
               path="/"
