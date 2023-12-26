@@ -8,6 +8,9 @@ import { device, size, color } from "@/assets/styles";
 // styles
 import { css } from "@emotion/react";
 
+// svgs
+import { ReactComponent as Repository } from "@/assets/svgs/repository.svg";
+
 interface SearchModalItemProps {
   fullName: string;
 
@@ -26,11 +29,15 @@ export function SearchModalItem({
     navigate(`/${owner}/${repo}`);
 
     setIsModalOpen(false);
-  }, [navigate, fullName]);
+  }, [navigate, fullName, setIsModalOpen]);
 
   return (
     <li
       css={css`
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+
         cursor: pointer;
 
         border-radius: ${size.BORDER_RADIUS}px;
@@ -47,6 +54,8 @@ export function SearchModalItem({
       `}
       onClick={handleItemClick}
     >
+      <Repository />
+
       <p>{fullName}</p>
     </li>
   );
