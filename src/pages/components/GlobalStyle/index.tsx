@@ -13,15 +13,25 @@ const GlobalStyles = css`
   :root {
     font-size: 16px;
     box-sizing: border-box;
+    word-break: break-all;
 
     @media ${device.mobile} {
       font-size: 14px;
     }
   }
 
+  ul,
   p,
   body {
     margin: 0;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  li {
+    list-style: none;
   }
 `;
 

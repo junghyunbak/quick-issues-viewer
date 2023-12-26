@@ -1,3 +1,7 @@
+// components
+import { Search } from "@/components/widgets/Search";
+
+// styles
 import { css } from "@emotion/react";
 import { color } from "@/assets/styles";
 
@@ -11,16 +15,14 @@ export function Header() {
 
         padding: 1.25rem;
 
-        border-bottom: 1px solid ${color.border};
+        border-bottom: 1px solid ${color.g200};
       `}
     >
       <div>
         <p>사용자 정보</p>
       </div>
 
-      <div>
-        <p>검색 창</p>
-      </div>
+      <Search />
     </div>
   );
 }
