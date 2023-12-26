@@ -28,12 +28,13 @@ export function Search() {
           align-items: center;
           justify-content: center;
 
+          width: 2rem;
+          height: 2rem;
+
           border-radius: ${size.BORDER_RADIUS}px;
           border: 1px solid ${color.g200};
 
           background-color: ${color.g100};
-
-          padding: 0.5rem;
 
           cursor: pointer;
         `}
