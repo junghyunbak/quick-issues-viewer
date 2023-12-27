@@ -1,6 +1,6 @@
 // components
 import { IssueList } from "@/pages/Main/components/IssueList";
-import { LabelList } from "@/pages/Main/components/labelList";
+import { LabelList } from "@/pages/Main/components/LabelList";
 import { Header } from "@/pages/Main/components/Header";
 
 // styles
