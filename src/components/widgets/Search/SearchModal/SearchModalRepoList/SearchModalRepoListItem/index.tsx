@@ -11,25 +11,28 @@ import { css } from "@emotion/react";
 // svgs
 import { ReactComponent as Repository } from "@/assets/svgs/repository.svg";
 
+// apis
+import { type components } from "@octokit/openapi-types";
+
 interface SearchModalItemProps {
-  fullName: string;
+  repository: components["schemas"]["minimal-repository"];
 
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function SearchModalRepoListItem({
-  fullName,
+  repository,
   setIsModalOpen,
 }: SearchModalItemProps) {
   const navigate = useNavigate();
 
   const handleItemClick = useCallback(() => {
-    const [owner, repo] = fullName.split("/");
+    const [owner, repo] = repository.full_name.split("/");
 
     navigate(`/${owner}/${repo}`);
 
     setIsModalOpen(false);
-  }, [navigate, fullName, setIsModalOpen]);
+  }, [navigate, repository, setIsModalOpen]);
 
   return (
     <li
@@ -49,14 +52,18 @@ export function SearchModalRepoListItem({
         }
 
         padding: 0.375rem 0.5rem;
-
-        font-size: 0.875rem;
       `}
       onClick={handleItemClick}
     >
       <Repository />
 
-      <p>{fullName}</p>
+      <p
+        css={css`
+          font-size: 0.875rem;
+        `}
+      >
+        {repository.full_name}
+      </p>
     </li>
   );
 }

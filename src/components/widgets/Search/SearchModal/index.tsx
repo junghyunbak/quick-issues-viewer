@@ -1,6 +1,5 @@
 // react
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useQuery } from "react-query";
 
 // styles
 import { css } from "@emotion/react";
@@ -11,9 +10,7 @@ import { ReactComponent as Magnifier } from "@/assets/svgs/magnifier.svg";
 
 // components
 import { SearchModalRepoList } from "./SearchModalRepoList";
-
-// apis
-import { apiSevice } from "@/apis";
+import { SearchModalUserList } from "./SearchModalUserList";
 
 interface SearchModalProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -38,41 +35,27 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
     inputRef.current?.focus();
   }, []);
 
-  const [searchOwner] = searchValue.split("/");
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const repoList = useQuery(["search", searchOwner], async () => {
-    if (searchOwner === "") {
-      return null;
+  useEffect(() => {
+    localStorage.setItem("searchKeyword", inputValue);
+
+    if (timer.current) {
+      clearTimeout(timer.current);
     }
 
-    try {
-      const repoList = await apiSevice.getRepoList(searchOwner);
-
-      return repoList;
-    } catch (e) {
-      return null;
-    }
-  });
+    timer.current = setTimeout(() => {
+      setSearchValue(inputValue);
+    }, 500);
+  }, [inputValue]);
 
   const handleDimmedClick = useCallback(() => {
     setIsModalOpen(false);
   }, [setIsModalOpen]);
 
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value);
-
-      localStorage.setItem("searchKeyword", e.target.value);
-
-      if (timer.current) {
-        clearTimeout(timer.current);
-      }
-
-      timer.current = setTimeout(() => {
-        setSearchValue(e.target.value);
-      }, 500);
     },
     [setInputValue]
   );
@@ -130,7 +113,7 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
       >
         <div
           css={css`
-            padding: 1.25rem;
+            padding: 0.75rem;
           `}
         >
           <label
@@ -158,18 +141,33 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
               ref={inputRef}
               value={inputValue}
               onChange={handleInputChange}
-              placeholder="organization or username"
+              placeholder="{owner}/{repo}"
             />
           </label>
         </div>
 
-        {repoList.data && (
+        <div
+          css={css`
+            & > div {
+              border-bottom: 1px solid ${color.g200};
+
+              &:last-child {
+                border-bottom: 0;
+              }
+            }
+          `}
+        >
+          <SearchModalUserList
+            searchValue={searchValue}
+            setInputValue={setInputValue}
+          />
+
           <SearchModalRepoList
-            repoList={repoList.data}
             inputValue={inputValue}
+            searchValue={searchValue}
             setIsModalOpen={setIsModalOpen}
           />
-        )}
+        </div>
       </div>
     </div>
   );

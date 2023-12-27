@@ -1,5 +1,6 @@
 // react
 import React from "react";
+import { useQuery } from "react-query";
 
 // components
 import { SearchModalRepoListItem } from "./SearchModalRepoListItem";
@@ -8,29 +9,60 @@ import { SearchModalRepoListItem } from "./SearchModalRepoListItem";
 import { css } from "@emotion/react";
 
 // apis
-import { type components } from "@octokit/openapi-types";
+import { apiSevice } from "@/apis";
 
 interface SearchModalRepoListProps {
-  repoList: components["schemas"]["minimal-repository"][];
-
   inputValue: string;
+
+  searchValue: string;
 
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function SearchModalRepoList({
-  repoList,
   inputValue,
+  searchValue,
   setIsModalOpen,
 }: SearchModalRepoListProps) {
+  const [owner] = searchValue.split("/");
+
+  const repoList = useQuery(["search", "repos", owner], async () => {
+    if (owner === "") {
+      return null;
+    }
+
+    try {
+      const repoList = await apiSevice.getRepoList(owner);
+
+      return repoList;
+    } catch (e) {
+      return null;
+    }
+  });
+
+  if (!repoList.data) {
+    return null;
+  }
+
   return (
     <div
       css={css`
-        padding: 1.25rem;
+        padding: 0.75rem;
       `}
     >
+      <p
+        css={css`
+          font-size: 0.75rem;
+          font-weight: bold;
+
+          padding: 0.375rem 0.5rem;
+        `}
+      >
+        repository
+      </p>
+
       <ul>
-        {repoList
+        {repoList.data
           .filter((repo) => {
             const repoName = repo.full_name.split("/")[1];
 
@@ -43,12 +75,10 @@ export function SearchModalRepoList({
             return repoName.startsWith(searchRepo);
           })
           .map((repo) => {
-            const { id, full_name } = repo;
-
             return (
               <SearchModalRepoListItem
-                key={id}
-                fullName={full_name}
+                key={repo.id}
+                repository={repo}
                 setIsModalOpen={setIsModalOpen}
               />
             );
