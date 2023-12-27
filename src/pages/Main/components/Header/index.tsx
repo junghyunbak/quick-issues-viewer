@@ -1,5 +1,5 @@
 // react
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
@@ -14,6 +14,7 @@ import { color, device, size } from "@/assets/styles";
 import { ReactComponent as Hamburger } from "@/assets/svgs/hamburger.svg";
 
 import { Octokit } from "octokit";
+import { LabelListModal } from "./LabelListModal";
 
 const octokit = new Octokit();
 
@@ -32,7 +33,13 @@ export function Header() {
     return data;
   });
 
-  const handleMenuButtonClick = useCallback(() => {}, []);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+
+  const handleMenuButtonClick = useCallback(() => {
+    setMenuIsOpen((prev) => {
+      return !prev;
+    });
+  }, [setMenuIsOpen]);
 
   return (
     <div
@@ -120,6 +127,8 @@ export function Header() {
         >
           <Hamburger />
         </div>
+
+        {menuIsOpen && <LabelListModal setMenuIsOpen={setMenuIsOpen} />}
       </div>
     </div>
   );
