@@ -1,4 +1,5 @@
 // react
+import { useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
@@ -7,13 +8,12 @@ import { Search } from "@/components/widgets/Search";
 
 // styles
 import { css } from "@emotion/react";
-import { color, device } from "@/assets/styles";
+import { color, device, size } from "@/assets/styles";
 
 // svgs
 import { ReactComponent as Hamburger } from "@/assets/svgs/hamburger.svg";
 
 import { Octokit } from "octokit";
-import { useCallback } from "react";
 
 const octokit = new Octokit();
 
@@ -107,6 +107,14 @@ export function Header() {
             padding: 0.5rem;
 
             cursor: pointer;
+
+            border-radius: ${size.BORDER_RADIUS}px;
+
+            &:hover {
+              @media ${device.canHover} {
+                background-color: ${color.g100};
+              }
+            }
           `}
           onClick={handleMenuButtonClick}
         >
