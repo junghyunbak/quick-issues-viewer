@@ -36,7 +36,7 @@ export function Header() {
 
         justify-content: space-between;
 
-        padding: 1.25rem;
+        padding: 1rem;
 
         border-bottom: 1px solid ${color.g200};
       `}
@@ -52,8 +52,8 @@ export function Header() {
           >
             <img
               css={css`
-                width: 2.5rem;
-                height: 2.5rem;
+                width: 2rem;
+                height: 2rem;
                 border-radius: 9999px;
               `}
               src={user.data.avatar_url}
@@ -61,6 +61,7 @@ export function Header() {
             />
             <span
               css={css`
+                font-size: 0.875rem;
                 font-weight: 500;
               `}
             >
