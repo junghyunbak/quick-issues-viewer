@@ -1,4 +1,5 @@
 // react
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { Blocks } from "react-loader-spinner";
 import { useParams } from "react-router-dom";
@@ -8,6 +9,7 @@ import { apiSevice } from "@/apis";
 
 // styles
 import { css } from "@emotion/react";
+import { color, size } from "@/assets/styles";
 
 // components
 import { IssueListItem } from "./IssueListItem";
@@ -26,6 +28,8 @@ export function IssueList() {
       },
     }
   );
+
+  const [selectedIssueId, setSelectedIssueId] = useState<number | null>(null);
 
   if (issueList.isError) {
     return (
@@ -46,13 +50,35 @@ export function IssueList() {
   return (
     <div
       css={css`
-        width: 100%;
+        padding: 1.25rem;
       `}
     >
       {issueList.data.length > 0 ? (
-        <ul>
+        <ul
+          css={css`
+            width: 100%;
+
+            border-radius: ${size.BORDER_RADIUS}px;
+            border: 1px solid ${color.g200};
+
+            li {
+              border-bottom: 1px solid ${color.g200};
+
+              &:last-child {
+                border-bottom: 0;
+              }
+            }
+          `}
+        >
           {issueList.data.map((issue) => {
-            return <IssueListItem issue={issue} />;
+            return (
+              <IssueListItem
+                key={issue.id}
+                issue={issue}
+                selectedIssueId={selectedIssueId}
+                setSelectedIssueId={setSelectedIssueId}
+              />
+            );
           })}
         </ul>
       ) : (

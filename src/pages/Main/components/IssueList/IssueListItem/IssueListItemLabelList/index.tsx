@@ -16,6 +16,7 @@ export function IssueListItemLabelList({ labels }: IssueLabelListProps) {
       <ul
         css={css`
           display: flex;
+          flex-wrap: wrap;
 
           padding: 0;
 
