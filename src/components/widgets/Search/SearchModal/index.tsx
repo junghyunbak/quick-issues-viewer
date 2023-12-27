@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 
 // styles
 import { css } from "@emotion/react";
-import { color, device, size } from "@/assets/styles";
+import { color, device, size, zIndex } from "@/assets/styles";
 
 // svgs
 import { ReactComponent as Magnifier } from "@/assets/svgs/magnifier.svg";
@@ -88,6 +88,8 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
         position: fixed;
         top: 0;
         left: 0;
+
+        z-index: ${zIndex.SEARCH_MODAL};
 
         display: flex;
         flex-direction: column;
