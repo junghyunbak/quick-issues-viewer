@@ -12,9 +12,8 @@ import { ReactComponent as Magnifier } from "@/assets/svgs/magnifier.svg";
 // components
 import { SearchModalItem } from "./SearchModalItem";
 
-import { Octokit } from "octokit";
-
-const octokit = new Octokit();
+// apis
+import { apiSevice } from "@/apis";
 
 interface SearchModalProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -47,13 +46,9 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
     }
 
     try {
-      await octokit.rest.users.getByUsername({ username: searchOwner });
+      const repoList = await apiSevice.getRepoList(searchOwner);
 
-      const { data } = await octokit.rest.repos.listForUser({
-        username: searchOwner,
-      });
-
-      return data.map((repo) => ({ id: repo.id, fullName: repo.full_name }));
+      return repoList;
     } catch (e) {
       return null;
     }
@@ -177,7 +172,7 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
             <ul>
               {repoList.data
                 .filter((repo) => {
-                  const repoName = repo.fullName.split("/")[1];
+                  const repoName = repo.full_name.split("/")[1];
 
                   const searchRepo = inputValue.split("/")[1];
 
@@ -188,12 +183,12 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
                   return repoName.startsWith(searchRepo);
                 })
                 .map((repo) => {
-                  const { id, fullName } = repo;
+                  const { id, full_name } = repo;
 
                   return (
                     <SearchModalItem
                       key={id}
-                      fullName={fullName}
+                      fullName={full_name}
                       setIsModalOpen={setIsModalOpen}
                     />
                   );

@@ -33,3 +33,13 @@ export const getRepoIssueLabelList = async (
 
   return response.data;
 };
+
+export const getRepoList = async (owner: string) => {
+  await octokit.rest.users.getByUsername({ username: owner });
+
+  const { data } = await octokit.rest.repos.listForUser({
+    username: owner,
+  });
+
+  return data;
+};
