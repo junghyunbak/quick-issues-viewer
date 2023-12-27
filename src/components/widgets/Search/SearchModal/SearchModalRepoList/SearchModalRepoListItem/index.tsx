@@ -17,7 +17,7 @@ interface SearchModalItemProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function SearchModalItem({
+export function SearchModalRepoListItem({
   fullName,
   setIsModalOpen,
 }: SearchModalItemProps) {

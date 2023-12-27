@@ -10,7 +10,7 @@ import { color, device, size, zIndex } from "@/assets/styles";
 import { ReactComponent as Magnifier } from "@/assets/svgs/magnifier.svg";
 
 // components
-import { SearchModalItem } from "./SearchModalItem";
+import { SearchModalRepoList } from "./SearchModalRepoList";
 
 // apis
 import { apiSevice } from "@/apis";
@@ -164,37 +164,11 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
         </div>
 
         {repoList.data && (
-          <div
-            css={css`
-              padding: 1.25rem;
-            `}
-          >
-            <ul>
-              {repoList.data
-                .filter((repo) => {
-                  const repoName = repo.full_name.split("/")[1];
-
-                  const searchRepo = inputValue.split("/")[1];
-
-                  if (searchRepo === undefined) {
-                    return true;
-                  }
-
-                  return repoName.startsWith(searchRepo);
-                })
-                .map((repo) => {
-                  const { id, full_name } = repo;
-
-                  return (
-                    <SearchModalItem
-                      key={id}
-                      fullName={full_name}
-                      setIsModalOpen={setIsModalOpen}
-                    />
-                  );
-                })}
-            </ul>
-          </div>
+          <SearchModalRepoList
+            repoList={repoList.data}
+            inputValue={inputValue}
+            setIsModalOpen={setIsModalOpen}
+          />
         )}
       </div>
     </div>
