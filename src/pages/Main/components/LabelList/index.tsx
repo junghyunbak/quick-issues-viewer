@@ -43,9 +43,6 @@ export function LabelList() {
             padding: 0;
           `}
         >
-          {/**
-           * TODO: 얘도 라벨 리스트 아이템 컴포넌트로 대체
-           */}
           <LabelListItem
             label={{
               id: -1,

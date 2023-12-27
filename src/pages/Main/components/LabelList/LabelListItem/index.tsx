@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 // styles
 import { css } from "@emotion/react";
+import { color, device, size } from "@/assets/styles";
 
 // utils
 import queryString from "query-string";
@@ -27,26 +28,62 @@ export function LabelListItem({ label }: LabelListItemProps) {
     });
   };
 
+  const isActive = label.id.toString() === selectedLabel;
+
   return (
     <li
-      onClick={handleLabelClick(label.id)}
       css={css`
+        position: relative;
+
+        display: flex;
+        align-items: center;
+
         list-style: none;
+
+        border-radius: ${size.BORDER_RADIUS}px;
+
+        background-color: ${isActive ? color.g100 : "transparent"};
+
+        cursor: pointer;
+
+        &:hover {
+          @media ${device.canHover} {
+            background-color: ${color.g100};
+          }
+        }
+
+        &::before {
+          content: "";
+
+          position: absolute;
+
+          left: -8px;
+
+          display: ${isActive ? "block" : "none"};
+
+          border-radius: ${size.BORDER_RADIUS}px;
+
+          width: 4px;
+          height: 80%;
+
+          background-color: rgb(9, 105, 218);
+        }
       `}
+      onClick={handleLabelClick(label.id)}
     >
-      <p
+      <div
         css={css`
-          text-align: start;
-
-          cursor: pointer;
-
-          text-decoration: ${label.id.toString() === selectedLabel
-            ? "underline"
-            : "none"};
+          padding: 0.375rem 0.5rem;
         `}
       >
-        {label.name}
-      </p>
+        <p
+          css={css`
+            text-align: start;
+          `}
+        >
+          {label.name}
+        </p>
+      </div>
     </li>
   );
 }
