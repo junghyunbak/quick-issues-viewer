@@ -4,12 +4,14 @@ export const octokit = new Octokit();
 
 export const getRepoIssueList = async (
   owner: string = "",
-  repo: string = ""
+  repo: string = "",
+  labels: string[] = []
 ) => {
   const response = await octokit.rest.issues.listForRepo({
     owner,
     repo,
     state: "all",
+    labels: labels.join(","),
   });
 
   return response.data;

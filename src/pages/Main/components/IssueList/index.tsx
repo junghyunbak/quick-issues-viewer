@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { Blocks } from "react-loader-spinner";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 // apis
 import { apiSevice } from "@/apis";
@@ -14,13 +14,23 @@ import { color, size } from "@/assets/styles";
 // components
 import { IssueListItem } from "./IssueListItem";
 
+import queryString from "query-string";
+
 export function IssueList() {
   const { owner, repo } = useParams();
 
+  const [searchParams] = useSearchParams();
+
+  const parsedQueryString = queryString.parse(searchParams.toString());
+
+  const { label } = parsedQueryString;
+
   const issueList = useQuery(
-    ["issue", "list", owner, repo],
+    ["issue", "list", owner, repo, label],
     async () => {
-      return await apiSevice.getRepoIssueList(owner, repo);
+      const searchLabel = label as string;
+
+      return await apiSevice.getRepoIssueList(owner, repo, [searchLabel]);
     },
     {
       onError: (e) => {
