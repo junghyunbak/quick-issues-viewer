@@ -41,7 +41,11 @@ export function LabelList() {
   }
 
   return (
-    <div>
+    <div
+      css={css`
+        padding: 1.25rem;
+      `}
+    >
       {labelList.data && (
         <ul
           css={css`

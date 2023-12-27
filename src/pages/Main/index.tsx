@@ -5,28 +5,37 @@ import { Header } from "@/pages/Main/components/Header";
 
 // styles
 import { css } from "@emotion/react";
-import { size } from "@/assets/styles";
+import { size, color } from "@/assets/styles";
 
 export function Main() {
   return (
-    <div>
+    <div
+      css={css`
+        display: flex;
+        flex-direction: column;
+
+        height: 100vh;
+      `}
+    >
       <Header />
 
       <div
         css={css`
-          width: 100%;
-          max-width: ${size.BREAKPOINT_TABLET}px;
-          margin: 0 auto;
+          flex: 1;
         `}
       >
         <div
           css={css`
             display: flex;
+
+            height: 100%;
           `}
         >
           <div
             css={css`
               width: ${size.SIDEBAR_WIDTH}px;
+
+              border-right: 1px solid ${color.g200};
             `}
           >
             <LabelList />
@@ -34,8 +43,7 @@ export function Main() {
 
           <div
             css={css`
-              width: 100%;
-              flex-shrink: 1;
+              flex: 1;
             `}
           >
             <IssueList />

@@ -44,7 +44,11 @@ export function IssueList() {
   }
 
   return (
-    <div>
+    <div
+      css={css`
+        width: 100%;
+      `}
+    >
       {issueList.data.length > 0 ? (
         <ul>
           {issueList.data.map((issue) => {
