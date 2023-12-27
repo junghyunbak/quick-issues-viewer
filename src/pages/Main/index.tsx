@@ -1,5 +1,5 @@
 // components
-import { IssueList } from "@/pages/Main/components/IssueLIst";
+import { IssueList } from "@/pages/Main/components/IssueList";
 import { LabelList } from "@/pages/Main/components/labelList";
 import { Header } from "@/pages/Main/components/Header";
 

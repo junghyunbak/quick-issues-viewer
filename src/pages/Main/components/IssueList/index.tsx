@@ -9,8 +9,8 @@ import { apiSevice } from "@/apis";
 // styles
 import { css } from "@emotion/react";
 
-// utils
-import { findContrastColor } from "@/utils/color";
+// components
+import { IssueLabelList } from "./IssueLabelList";
 
 export function IssueList() {
   const { owner, repo } = useParams();
@@ -90,58 +90,9 @@ export function IssueList() {
                   </p>
                 </div>
 
-                <div>
-                  <p>{title}</p>
-                  <ul
-                    css={css`
-                      display: flex;
+                <p>{title}</p>
 
-                      padding: 0;
-
-                      gap: 4px;
-
-                      li {
-                        list-style: none;
-                      }
-                    `}
-                  >
-                    {labels.map((label, i) => {
-                      if (typeof label === "string") {
-                        return <li key={i}>{label}</li>;
-                      }
-
-                      const { id, name, color } = label;
-
-                      return (
-                        <li
-                          key={id}
-                          css={css`
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-
-                            background-color: #${color};
-
-                            padding: 0 7px;
-
-                            border-radius: 2rem;
-                          `}
-                        >
-                          <span
-                            css={css`
-                              font-size: 12px;
-                              line-height: 18px;
-                              font-weight: 500;
-                              color: #${findContrastColor(color || "ffffff")};
-                            `}
-                          >
-                            {name}
-                          </span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
+                <IssueLabelList labels={labels} />
               </li>
             );
           })}
