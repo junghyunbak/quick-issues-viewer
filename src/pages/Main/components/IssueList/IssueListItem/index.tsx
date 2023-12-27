@@ -28,7 +28,8 @@ export function IssueListItem({
   selectedIssueId,
   setSelectedIssueId,
 }: IssueListItemProps) {
-  const { id, title, labels, state, pull_request, body, user } = issue;
+  const { id, title, labels, state, pull_request, body, user, created_at } =
+    issue;
 
   const handleIssueItemClick = useCallback(
     (issueId: number) => {
@@ -112,21 +113,48 @@ export function IssueListItem({
           cursor: pointer;
         `}
       >
-        <div>{StatusIcon}</div>
-
         <div
           css={css`
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.375em;
-
-            flex-basis: content;
+            padding-left: 0.25rem;
           `}
         >
-          <p>{title}</p>
+          {StatusIcon}
+        </div>
 
-          <IssueListItemLabelList labels={labels} />
+        <div>
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 0.375em;
+
+              flex-basis: content;
+            `}
+          >
+            <p
+              css={css`
+                font-weight: 600;
+                line-height: 1.5rem;
+              `}
+            >
+              {title}
+            </p>
+
+            <IssueListItemLabelList labels={labels} />
+          </div>
+
+          <div>
+            <p
+              css={css`
+                color: gray;
+                font-size: 0.75rem;
+                line-height: 1.5rem;
+              `}
+            >
+              {new Date(created_at).toLocaleString()}
+            </p>
+          </div>
         </div>
       </div>
 
