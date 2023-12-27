@@ -37,14 +37,8 @@ export function IssueList() {
       );
 
       return issueList;
-    },
-    {
-      onError: (e) => {
-        console.log("에러 발생", e);
-      },
     }
   );
-  console.log(issueList);
 
   const [selectedIssueId, setSelectedIssueId] = useState<number | null>(null);
 
