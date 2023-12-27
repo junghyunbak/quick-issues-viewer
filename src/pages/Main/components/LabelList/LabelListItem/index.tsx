@@ -23,11 +23,11 @@ export function LabelListItem({ label }: LabelListItemProps) {
 
   const { label: selectedLabel } = queryString.parse(searchParams.toString());
 
-  const handleLabelClick = (id: number | null) => () => {
+  const handleLabelClick = (labelName: string) => () => {
     setSearchParams((prev) => {
       return {
         ...prev,
-        label: id,
+        label: labelName,
       };
     });
   };
@@ -37,7 +37,7 @@ export function LabelListItem({ label }: LabelListItemProps) {
       return label.id === ALL_SHOW_LABEL_ID;
     }
 
-    return label.id.toString() === selectedLabel;
+    return label.name === selectedLabel;
   }, [selectedLabel, label]);
 
   return (
@@ -79,7 +79,7 @@ export function LabelListItem({ label }: LabelListItemProps) {
           background-color: rgb(9, 105, 218);
         }
       `}
-      onClick={handleLabelClick(label.id)}
+      onClick={handleLabelClick(label.name)}
     >
       <div
         css={css`
