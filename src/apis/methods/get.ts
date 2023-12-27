@@ -43,3 +43,16 @@ export const getRepoList = async (owner: string) => {
 
   return data;
 };
+
+export const getUserList = async (owner: string) => {
+  const queries: string[] = [`${owner} in:login`];
+
+  const {
+    data: { items },
+  } = await octokit.rest.search.users({
+    q: queries.join("+"),
+    per_page: 5,
+  });
+
+  return items;
+};
