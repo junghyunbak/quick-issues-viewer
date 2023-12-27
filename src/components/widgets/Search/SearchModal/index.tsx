@@ -24,6 +24,8 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
   const [inputValue, setInputValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   useEffect(() => {
     const searchKeyword = localStorage.getItem("searchKeyword");
 
@@ -33,6 +35,8 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
 
     setInputValue(searchKeyword);
     setSearchValue(searchKeyword);
+
+    inputRef.current?.focus();
   }, []);
 
   const [searchOwner] = searchValue.split("/");
@@ -154,6 +158,7 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
                 outline: none;
                 border: 0;
               `}
+              ref={inputRef}
               value={inputValue}
               onChange={handleInputChange}
               placeholder="organization or username"
