@@ -1,4 +1,5 @@
 // react
+import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
 // styles
@@ -7,6 +8,9 @@ import { color, device, size } from "@/assets/styles";
 
 // utils
 import queryString from "query-string";
+
+// constants
+import { ALL_SHOW_LABEL_ID } from "..";
 
 import { type components } from "@octokit/openapi-types";
 
@@ -28,7 +32,13 @@ export function LabelListItem({ label }: LabelListItemProps) {
     });
   };
 
-  const isActive = label.id.toString() === selectedLabel;
+  const isActive = useMemo(() => {
+    if (!selectedLabel) {
+      return label.id === ALL_SHOW_LABEL_ID;
+    }
+
+    return label.id.toString() === selectedLabel;
+  }, [selectedLabel, label]);
 
   return (
     <li

@@ -12,6 +12,8 @@ import { apiSevice } from "@/apis";
 // components
 import { LabelListItem } from "./LabelListItem";
 
+export const ALL_SHOW_LABEL_ID = -1;
+
 export function LabelList() {
   const { owner, repo } = useParams();
 
@@ -45,7 +47,7 @@ export function LabelList() {
         >
           <LabelListItem
             label={{
-              id: -1,
+              id: ALL_SHOW_LABEL_ID,
               node_id: "",
               url: "",
               name: "all",
