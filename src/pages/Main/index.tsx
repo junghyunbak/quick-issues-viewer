@@ -22,6 +22,9 @@ export function Main() {
       <div
         css={css`
           flex: 1;
+
+          // 해당 속성을 추가해주지 않으면, 내부 요소에 의해 전체 레이아웃이 viewport보다 커질 수 있다.
+          overflow: hidden;
         `}
       >
         <div
@@ -40,8 +43,11 @@ export function Main() {
               }
 
               width: ${size.SIDEBAR_WIDTH}px;
+              height: 100%;
 
               border-right: 1px solid ${color.g200};
+
+              overflow-y: auto;
             `}
           >
             <LabelList />

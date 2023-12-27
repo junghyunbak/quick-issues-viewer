@@ -43,6 +43,9 @@ export function LabelListModal({ setMenuIsOpen }: LabelListModalProps) {
           top: 0;
           left: 0;
 
+          display: flex;
+          flex-direction: column;
+
           width: 100%;
           max-width: ${size.SIDEBAR_WIDTH}px;
           height: 100%;
@@ -84,7 +87,16 @@ export function LabelListModal({ setMenuIsOpen }: LabelListModalProps) {
             <X />
           </div>
         </div>
-        <LabelList />
+
+        <div
+          css={css`
+            flex: 1;
+
+            overflow-y: auto;
+          `}
+        >
+          <LabelList />
+        </div>
       </div>
     </div>
   );
