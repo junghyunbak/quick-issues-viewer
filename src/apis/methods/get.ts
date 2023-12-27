@@ -5,16 +5,21 @@ export const octokit = new Octokit();
 export const getRepoIssueList = async (
   owner: string = "",
   repo: string = "",
-  labels: string[] = []
+  label: string
 ) => {
-  const response = await octokit.rest.issues.listForRepo({
-    owner,
-    repo,
-    state: "all",
-    labels: labels.join(","),
+  const queries = [`type:issue`, `repo:${owner}/${repo}`];
+
+  if (label) {
+    queries.push(`label:${label}`);
+  }
+
+  const {
+    data: { items },
+  } = await octokit.rest.search.issuesAndPullRequests({
+    q: queries.join("+"),
   });
 
-  return response.data;
+  return items;
 };
 
 export const getRepoIssueLabelList = async (

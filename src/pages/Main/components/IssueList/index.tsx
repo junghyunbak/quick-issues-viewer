@@ -30,7 +30,13 @@ export function IssueList() {
     async () => {
       const searchLabel = label as string;
 
-      return await apiSevice.getRepoIssueList(owner, repo, [searchLabel]);
+      const issueList = await apiSevice.getRepoIssueList(
+        owner,
+        repo,
+        searchLabel
+      );
+
+      return issueList;
     },
     {
       onError: (e) => {
@@ -38,6 +44,7 @@ export function IssueList() {
       },
     }
   );
+  console.log(issueList);
 
   const [selectedIssueId, setSelectedIssueId] = useState<number | null>(null);
 

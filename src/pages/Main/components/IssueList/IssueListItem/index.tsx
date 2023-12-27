@@ -17,7 +17,7 @@ import { color, device } from "@/assets/styles";
 import { type components } from "@octokit/openapi-types";
 
 interface IssueListItemProps {
-  issue: components["schemas"]["issue"];
+  issue: components["schemas"]["issue-search-result-item"];
 
   selectedIssueId: number | null;
   setSelectedIssueId: React.Dispatch<React.SetStateAction<number | null>>;
