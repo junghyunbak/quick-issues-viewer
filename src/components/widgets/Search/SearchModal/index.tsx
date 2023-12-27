@@ -9,6 +9,7 @@ import { color, device, size, zIndex } from "@/assets/styles";
 import { SearchModalRepoList } from "./SearchModalRepoList";
 import { SearchModalUserList } from "./SearchModalUserList";
 import { SearchModalInput } from "./SearchModalInput";
+import { SearchModalFooter } from "./SearchModalFooter";
 
 interface SearchModalProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -135,6 +136,8 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
             setIsModalOpen={setIsModalOpen}
           />
         </div>
+
+        <SearchModalFooter />
       </div>
     </div>
   );
