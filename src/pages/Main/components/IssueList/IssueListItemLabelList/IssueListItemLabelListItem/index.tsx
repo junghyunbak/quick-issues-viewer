@@ -9,7 +9,7 @@ interface IssueListItemProps {
   labelBgColor: string;
 }
 
-export function IssueLabelListItem({
+export function IssueListItemLabelListItem({
   labelName,
   labelBgColor,
 }: IssueListItemProps) {

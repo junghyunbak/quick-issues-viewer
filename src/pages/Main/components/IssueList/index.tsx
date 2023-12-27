@@ -10,7 +10,7 @@ import { apiSevice } from "@/apis";
 import { css } from "@emotion/react";
 
 // components
-import { IssueLabelList } from "./IssueLabelList";
+import { IssueListItem } from "./IssueListItem";
 
 export function IssueList() {
   const { owner, repo } = useParams();
@@ -52,49 +52,7 @@ export function IssueList() {
       {issueList.data.length > 0 ? (
         <ul>
           {issueList.data.map((issue) => {
-            const { id, title, user, labels } = issue;
-
-            return (
-              <li
-                key={id}
-                css={css`
-                  display: flex;
-
-                  list-style: none;
-                `}
-              >
-                <div
-                  css={css`
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                  `}
-                >
-                  <img
-                    src={user?.avatar_url}
-                    css={css`
-                      width: 40px;
-                      height: 40px;
-                      border-radius: 9999px;
-                    `}
-                    alt="avatar_image"
-                  />
-
-                  <p
-                    css={css`
-                      margin: 0;
-                      font-size: 12px;
-                    `}
-                  >
-                    {user?.login}
-                  </p>
-                </div>
-
-                <p>{title}</p>
-
-                <IssueLabelList labels={labels} />
-              </li>
-            );
+            return <IssueListItem issue={issue} />;
           })}
         </ul>
       ) : (

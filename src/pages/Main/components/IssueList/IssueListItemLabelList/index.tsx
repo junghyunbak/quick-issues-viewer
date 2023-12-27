@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 
 // components
-import { IssueLabelListItem } from "./IssueLabelListItem";
+import { IssueListItemLabelListItem } from "./IssueListItemLabelListItem";
 
 import { type components } from "@octokit/openapi-types";
 
@@ -10,7 +10,7 @@ interface IssueLabelListProps {
   labels: components["schemas"]["issue"]["labels"];
 }
 
-export function IssueLabelList({ labels }: IssueLabelListProps) {
+export function IssueListItemLabelList({ labels }: IssueLabelListProps) {
   return (
     <div>
       <ul
@@ -38,7 +38,7 @@ export function IssueLabelList({ labels }: IssueLabelListProps) {
           }
 
           return (
-            <IssueLabelListItem
+            <IssueListItemLabelListItem
               key={id}
               labelName={name}
               labelBgColor={color}
