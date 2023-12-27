@@ -5,7 +5,7 @@ import { Header } from "@/pages/Main/components/Header";
 
 // styles
 import { css } from "@emotion/react";
-import { size, color } from "@/assets/styles";
+import { size, color, device } from "@/assets/styles";
 
 export function Main() {
   return (
@@ -33,6 +33,12 @@ export function Main() {
         >
           <div
             css={css`
+              display: none;
+
+              @media ${device.pc} {
+                display: block;
+              }
+
               width: ${size.SIDEBAR_WIDTH}px;
 
               border-right: 1px solid ${color.g200};
