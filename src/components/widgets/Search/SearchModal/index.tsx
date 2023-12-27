@@ -5,12 +5,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { css } from "@emotion/react";
 import { color, device, size, zIndex } from "@/assets/styles";
 
-// svgs
-import { ReactComponent as Magnifier } from "@/assets/svgs/magnifier.svg";
-
 // components
 import { SearchModalRepoList } from "./SearchModalRepoList";
 import { SearchModalUserList } from "./SearchModalUserList";
+import { SearchModalInput } from "./SearchModalInput";
 
 interface SearchModalProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,13 +51,6 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
     setIsModalOpen(false);
   }, [setIsModalOpen]);
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue(e.target.value);
-    },
-    [setInputValue]
-  );
-
   return (
     <div
       css={css`
@@ -94,10 +85,11 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
         css={css`
           position: absolute;
 
-          width: ${size.BREAKPOINT_TABLET}px;
-          max-height: 90%;
+          display: flex;
+          flex-direction: column;
 
-          overflow-y: auto;
+          width: ${size.BREAKPOINT_TABLET}px;
+          max-height: 80%;
 
           @media ${device.mobile} {
             width: 90%;
@@ -111,43 +103,18 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
           margin-top: 1%;
         `}
       >
-        <div
-          css={css`
-            padding: 0.75rem;
-          `}
-        >
-          <label
-            css={css`
-              display: flex;
-              align-items: center;
-
-              border: 1px solid ${color.g200};
-              border-radius: ${size.BORDER_RADIUS}px;
-
-              padding: 0.5rem;
-
-              gap: 0.25rem;
-            `}
-          >
-            <Magnifier />
-
-            <input
-              css={css`
-                width: 100%;
-
-                outline: none;
-                border: 0;
-              `}
-              ref={inputRef}
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="{owner}/{repo}"
-            />
-          </label>
-        </div>
+        <SearchModalInput
+          inputRef={inputRef}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+        />
 
         <div
           css={css`
+            flex: 1;
+
+            overflow-y: auto;
+
             & > div {
               border-bottom: 1px solid ${color.g200};
 
