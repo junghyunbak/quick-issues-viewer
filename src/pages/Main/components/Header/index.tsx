@@ -7,9 +7,13 @@ import { Search } from "@/components/widgets/Search";
 
 // styles
 import { css } from "@emotion/react";
-import { color } from "@/assets/styles";
+import { color, device } from "@/assets/styles";
+
+// svgs
+import { ReactComponent as Hamburger } from "@/assets/svgs/hamburger.svg";
 
 import { Octokit } from "octokit";
+import { useCallback } from "react";
 
 const octokit = new Octokit();
 
@@ -28,50 +32,87 @@ export function Header() {
     return data;
   });
 
+  const handleMenuButtonClick = useCallback(() => {}, []);
+
   return (
     <div
       css={css`
-        display: flex;
-        align-items: center;
-
-        justify-content: space-between;
-
-        padding: 1rem;
-
         border-bottom: 1px solid ${color.g200};
+
+        padding: 0.5rem;
       `}
     >
-      <div>
-        {user.data && (
-          <div
-            css={css`
-              display: flex;
-              align-items: center;
-              gap: 0.5rem;
-            `}
-          >
-            <img
+      <div
+        css={css`
+          display: flex;
+          align-items: center;
+
+          justify-content: space-between;
+
+          padding: 0.5rem;
+        `}
+      >
+        <div>
+          {user.data && (
+            <div
               css={css`
-                width: 2rem;
-                height: 2rem;
-                border-radius: 9999px;
-              `}
-              src={user.data.avatar_url}
-              alt="profileImage"
-            />
-            <span
-              css={css`
-                font-size: 0.875rem;
-                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
               `}
             >
-              {user.data.login}
-            </span>
-          </div>
-        )}
+              <img
+                css={css`
+                  width: 2rem;
+                  height: 2rem;
+                  border-radius: 9999px;
+                `}
+                src={user.data.avatar_url}
+                alt="profileImage"
+              />
+              <span
+                css={css`
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                `}
+              >
+                {user.data.login}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <Search />
       </div>
 
-      <Search />
+      <div
+        css={css`
+          display: flex;
+
+          @media ${device.pc} {
+            display: none;
+          }
+
+          width: 100%;
+
+          margin-top: 0.5rem;
+        `}
+      >
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0.5rem;
+
+            cursor: pointer;
+          `}
+          onClick={handleMenuButtonClick}
+        >
+          <Hamburger />
+        </div>
+      </div>
     </div>
   );
 }
