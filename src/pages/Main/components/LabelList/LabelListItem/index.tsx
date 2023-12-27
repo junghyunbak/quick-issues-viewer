@@ -1,5 +1,5 @@
 // react
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
 // styles
@@ -23,14 +23,20 @@ export function LabelListItem({ label }: LabelListItemProps) {
 
   const { label: selectedLabel } = queryString.parse(searchParams.toString());
 
-  const handleLabelClick = (labelName: string) => () => {
+  const handleLabelClick = useCallback(() => {
     setSearchParams((prev) => {
+      if (label.id === ALL_SHOW_LABEL_ID) {
+        prev.delete("label");
+
+        return prev;
+      }
+
       return {
         ...prev,
-        label: labelName,
+        label: label.name,
       };
     });
-  };
+  }, [setSearchParams, label]);
 
   const isActive = useMemo(() => {
     if (!selectedLabel) {
@@ -79,7 +85,7 @@ export function LabelListItem({ label }: LabelListItemProps) {
           background-color: rgb(9, 105, 218);
         }
       `}
-      onClick={handleLabelClick(label.name)}
+      onClick={handleLabelClick}
     >
       <div
         css={css`
