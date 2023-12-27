@@ -71,6 +71,8 @@ export function IssueList() {
             border-radius: ${size.BORDER_RADIUS}px;
             border: 1px solid ${color.g200};
 
+            overflow: hidden;
+
             li {
               border-bottom: 1px solid ${color.g200};
 
