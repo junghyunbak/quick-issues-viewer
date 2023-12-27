@@ -60,7 +60,15 @@ export function Main() {
               overflow-y: auto;
             `}
           >
-            <IssueList />
+            <div
+              css={css`
+                max-width: ${size.BREAKPOINT_PC}px;
+
+                margin: 0 auto;
+              `}
+            >
+              <IssueList />
+            </div>
           </div>
         </div>
       </div>
