@@ -9,6 +9,7 @@ export const getRepoIssueList = async (
   const response = await octokit.rest.issues.listForRepo({
     owner,
     repo,
+    state: "all",
   });
 
   return response.data;
