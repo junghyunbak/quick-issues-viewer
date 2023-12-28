@@ -46,12 +46,7 @@ export function SearchModalUserList({
   }
 
   return (
-    <div
-      css={css`
-        padding: 0.75rem;
-        padding-top: 0;
-      `}
-    >
+    <div>
       <p
         css={css`
           font-size: 0.75rem;

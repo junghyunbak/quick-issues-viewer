@@ -108,6 +108,12 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
               &:last-child {
                 border-bottom: 0;
               }
+
+              padding: 0.75rem;
+
+              &:first-child {
+                padding-top: 0;
+              }
             }
           `}
         >

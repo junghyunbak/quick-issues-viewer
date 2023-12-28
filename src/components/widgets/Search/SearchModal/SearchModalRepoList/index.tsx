@@ -45,11 +45,7 @@ export function SearchModalRepoList({
   }
 
   return (
-    <div
-      css={css`
-        padding: 0.75rem;
-      `}
-    >
+    <div>
       <p
         css={css`
           font-size: 0.75rem;
