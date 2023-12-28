@@ -26,6 +26,8 @@ export function LabelListItem({ label }: LabelListItemProps) {
   const handleLabelClick = useCallback(() => {
     setSearchParams(
       (prev) => {
+        prev.delete("page");
+
         if (label.id === ALL_SHOW_LABEL_ID) {
           prev.delete("label");
 
