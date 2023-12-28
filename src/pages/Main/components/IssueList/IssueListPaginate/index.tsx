@@ -32,8 +32,6 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
     [setSearchParams]
   );
 
-  console.log("[test]", page);
-
   const pageIndex = useMemo(() => {
     if (!page) {
       return 0;
@@ -206,7 +204,7 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
 
                 &:hover {
                   @media ${device.canHover} {
-                    border: 0;
+                    border: 1px solid transparent;
                   }
                 }
               }
