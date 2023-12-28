@@ -104,9 +104,14 @@ export function IssueList() {
         })}
       </ul>
       <IssueListPaginate
-        pageCount={Math.floor(
+        /**
+         * 글이 하나라도 존재할 경우 페이지의 개수는 1이상이기 때문에 Math.floor가 아닌 Math.ceil를 사용해야 함.
+         *
+         * 단, Math.ceil을 사용 할 경우 조회 제한 개수 1000개를 넘어가게 될 수 있어 오류가 발생할 수 있음.
+         */
+        pageCount={Math.ceil(
           Math.min(issueList.data.total_count, 1000) /
-            (parseInt(per_page as string) || defaultValue.DEFAULT_PER_PAGE)
+            (Number(per_page) || defaultValue.DEFAULT_PER_PAGE)
         )}
       />
     </div>
