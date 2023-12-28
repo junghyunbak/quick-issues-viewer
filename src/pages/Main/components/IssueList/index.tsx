@@ -69,7 +69,7 @@ export function IssueList() {
   }
 
   if (!issueList.data || issueList.data.items.length === 0) {
-    return <p>데이터가 없습니다.</p>;
+    return null;
   }
 
   return (
