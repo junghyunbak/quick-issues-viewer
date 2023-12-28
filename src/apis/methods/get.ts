@@ -12,7 +12,7 @@ export const getRepoIssueList = async (
   const queries = [`type:issue`, `repo:${owner}/${repo}`];
 
   if (label) {
-    queries.push(`label:${label}`);
+    queries.push(`label:"${label}"`);
   }
 
   const { data } = await octokit.rest.search.issuesAndPullRequests({
