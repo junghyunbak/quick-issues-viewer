@@ -12,6 +12,7 @@ import { ReactComponent as IssueClosed } from "@/assets/svgs/issue-closed.svg";
 import { css } from "@emotion/react";
 import { color, device } from "@/assets/styles";
 
+// apis
 import { type components } from "@octokit/openapi-types";
 
 interface IssueListItemProps {
@@ -70,6 +71,12 @@ export function IssueListItem({
         flex-direction: column;
 
         list-style: none;
+
+        border-bottom: 1px solid ${color.g200};
+
+        &:last-child {
+          border-bottom: 0;
+        }
       `}
       onClick={handleIssueItemClick(id)}
     >

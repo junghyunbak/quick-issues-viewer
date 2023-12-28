@@ -78,14 +78,6 @@ export function IssueList() {
             border: 1px solid ${color.g200};
 
             overflow: hidden;
-
-            li {
-              border-bottom: 1px solid ${color.g200};
-
-              &:last-child {
-                border-bottom: 0;
-              }
-            }
           `}
         >
           {issueList.data.items.map((issue) => {
