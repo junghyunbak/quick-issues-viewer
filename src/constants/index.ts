@@ -1,1 +1,1 @@
-export * as githubRepo from "./githubRepo";
+export * as defaultValue from "./defaultValue";

@@ -2,7 +2,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // constants
-import { githubRepo } from "@/constants";
+import { defaultValue } from "@/constants";
 
 // components
 import { NotFound } from "@/pages/NotFound";
@@ -21,7 +21,7 @@ export function Index() {
               element={
                 <Navigate
                   replace
-                  to={`/${githubRepo.DEFAULT_REPO_OWNER}/${githubRepo.DEFAULT_REPO_NAME}`}
+                  to={`/${defaultValue.DEFAULT_REPO_OWNER}/${defaultValue.DEFAULT_REPO_NAME}`}
                 />
               }
             />
