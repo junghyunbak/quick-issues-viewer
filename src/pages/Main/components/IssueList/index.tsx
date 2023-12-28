@@ -92,7 +92,7 @@ export function IssueList() {
       </ul>
 
       <IssueListPaginate
-        pageCount={Math.ceil(
+        pageCount={Math.floor(
           Math.min(issueList.data.total_count, 1000) /
             (parseInt(per_page as string) || defaultValue.DEFAULT_PER_PAGE)
         )}
