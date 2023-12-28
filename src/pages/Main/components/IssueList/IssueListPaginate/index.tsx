@@ -64,7 +64,7 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
               gap: 0.125rem;
 
               @media ${device.mobile} {
-                justify-content: space-around;
+                justify-content: space-between;
               }
             `}
             pageLinkClassName={css`
