@@ -19,8 +19,6 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
   const [inputValue, setInputValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
   useEffect(() => {
     const searchKeyword = localStorage.getItem("searchKeyword");
 
@@ -30,8 +28,6 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
 
     setInputValue(searchKeyword);
     setSearchValue(searchKeyword);
-
-    inputRef.current?.focus();
   }, []);
 
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -105,7 +101,6 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
         `}
       >
         <SearchModalInput
-          inputRef={inputRef}
           inputValue={inputValue}
           setInputValue={setInputValue}
         />

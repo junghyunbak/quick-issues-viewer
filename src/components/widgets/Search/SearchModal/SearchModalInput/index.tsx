@@ -1,5 +1,5 @@
 // react
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 
 // svgs
 import { ReactComponent as Magnifier } from "@/assets/svgs/magnifier.svg";
@@ -9,18 +9,21 @@ import { css } from "@emotion/react";
 import { color, size } from "@/assets/styles";
 
 interface SearchModalInputProps {
-  inputRef: React.MutableRefObject<HTMLInputElement | null>;
-
   inputValue: string;
 
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export function SearchModalInput({
-  inputRef,
   inputValue,
   setInputValue,
 }: SearchModalInputProps) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [inputRef]);
+
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value);
