@@ -55,8 +55,8 @@ export function IssueList() {
     return <Blocks />;
   }
 
-  if (!issueList.data) {
-    return null;
+  if (!issueList.data || issueList.data.items.length === 0) {
+    return <p>데이터가 없습니다.</p>;
   }
 
   return (
@@ -69,35 +69,31 @@ export function IssueList() {
         padding: 1.25rem;
       `}
     >
-      {issueList.data.items.length > 0 ? (
-        <ul
-          css={css`
-            width: 100%;
+      <ul
+        css={css`
+          width: 100%;
 
-            border-radius: ${size.BORDER_RADIUS}px;
-            border: 1px solid ${color.g200};
+          border-radius: ${size.BORDER_RADIUS}px;
+          border: 1px solid ${color.g200};
 
-            overflow: hidden;
-          `}
-        >
-          {issueList.data.items.map((issue) => {
-            return (
-              <IssueListItem
-                key={issue.id}
-                issue={issue}
-                selectedIssueId={selectedIssueId}
-                setSelectedIssueId={setSelectedIssueId}
-              />
-            );
-          })}
-        </ul>
-      ) : (
-        <p>데이터가 없습니다.</p>
-      )}
+          overflow: hidden;
+        `}
+      >
+        {issueList.data.items.map((issue) => {
+          return (
+            <IssueListItem
+              key={issue.id}
+              issue={issue}
+              selectedIssueId={selectedIssueId}
+              setSelectedIssueId={setSelectedIssueId}
+            />
+          );
+        })}
+      </ul>
 
       <IssueListPaginate
         pageCount={Math.ceil(
-          issueList.data.total_count /
+          Math.min(issueList.data.total_count, 1000) /
             (parseInt(per_page as string) || defaultValue.DEFAULT_PER_PAGE)
         )}
       />
