@@ -67,15 +67,14 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
                 justify-content: space-around;
               }
             `}
-            pageClassName={css`
-              border-radius: ${size.BORDER_RADIUS}px;
-
-              overflow: hidden;
-            `}
             pageLinkClassName={css`
               display: flex;
               align-items: center;
               justify-content: center;
+
+              @media ${device.mobile} {
+                display: none;
+              }
 
               padding: 0.5rem 0.8rem;
 
@@ -83,14 +82,25 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
 
               font-size: 0.875rem;
 
-              @media ${device.mobile} {
-                display: none;
+              border: 1px solid transparent;
+              border-radius: ${size.BORDER_RADIUS}px;
+
+              &:hover {
+                @media ${device.canHover} {
+                  border: 1px solid ${color.g200};
+                }
               }
             `}
-            activeClassName={css`
+            activeLinkClassName={css`
               color: ${color.w};
 
               background-color: ${color.active};
+
+              &:hover {
+                @media ${device.canHover} {
+                  border: 1px solid transparent;
+                }
+              }
             `}
             breakClassName={css`
               @media ${device.mobile} {
@@ -98,7 +108,7 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
               }
             `}
             previousLinkClassName={css`
-              padding: 0.3125rem 0.625rem;
+              padding: 0.5rem 0.8rem;
 
               display: flex;
               align-items: center;
@@ -108,6 +118,15 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
               color: ${color.active};
 
               cursor: pointer;
+
+              border: 1px solid transparent;
+              border-radius: ${size.BORDER_RADIUS}px;
+
+              &:hover {
+                @media ${device.canHover} {
+                  border: 1px solid ${color.g200};
+                }
+              }
 
               &::before {
                 content: "";
@@ -131,7 +150,7 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
               }
             `}
             nextLinkClassName={css`
-              padding: 0.3125rem 0.625rem;
+              padding: 0.5rem 0.8rem;
 
               display: flex;
               align-items: center;
@@ -141,6 +160,15 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
               cursor: pointer;
 
               color: ${color.active};
+
+              border: 1px solid transparent;
+              border-radius: ${size.BORDER_RADIUS}px;
+
+              &:hover {
+                @media ${device.canHover} {
+                  border: 1px solid ${color.g200};
+                }
+              }
 
               &::after {
                 content: "";
@@ -172,6 +200,12 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
                 &::after,
                 &::before {
                   background-color: ${color.inactive};
+                }
+
+                &:hover {
+                  @media ${device.canHover} {
+                    border: 0;
+                  }
                 }
               }
             `}
