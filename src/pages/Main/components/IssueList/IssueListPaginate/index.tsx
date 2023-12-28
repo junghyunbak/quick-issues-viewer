@@ -32,9 +32,11 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
     [setSearchParams]
   );
 
+  console.log("[test]", page);
+
   const pageIndex = useMemo(() => {
-    if (page === undefined) {
-      return undefined;
+    if (!page) {
+      return 0;
     }
 
     if (isNaN(Number(page))) {
