@@ -45,6 +45,10 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
     return Number(page) - 1;
   }, [page]);
 
+  if (pageCount === 0) {
+    return null;
+  }
+
   return (
     <ClassNames>
       {({ css }) => {
@@ -163,6 +167,8 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
             disabledClassName={css`
               a {
                 color: ${color.inactive};
+
+                cursor: auto;
 
                 &::after,
                 &::before {
