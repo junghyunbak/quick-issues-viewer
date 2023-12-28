@@ -7,8 +7,6 @@ import { IssueListItemLabelList } from "@/pages/Main/components/IssueList/IssueL
 // svgs
 import { ReactComponent as IssueOpened } from "@/assets/svgs/issue-opened.svg";
 import { ReactComponent as IssueClosed } from "@/assets/svgs/issue-closed.svg";
-import { ReactComponent as PrOpened } from "@/assets/svgs/pr-opened.svg";
-import { ReactComponent as PrClosed } from "@/assets/svgs/pr-closed.svg";
 
 // styles
 import { css } from "@emotion/react";
@@ -28,8 +26,7 @@ export function IssueListItem({
   selectedIssueId,
   setSelectedIssueId,
 }: IssueListItemProps) {
-  const { id, title, labels, state, pull_request, body, user, created_at } =
-    issue;
+  const { id, title, labels, state, body, user, created_at } = issue;
 
   const handleIssueItemClick = useCallback(
     (issueId: number) => {
@@ -47,26 +44,6 @@ export function IssueListItem({
   );
 
   const StatusIcon = useMemo<React.ReactNode>(() => {
-    if (pull_request) {
-      return state === "open" ? (
-        <PrOpened
-          css={css`
-            path {
-              fill: ${color.success};
-            }
-          `}
-        />
-      ) : (
-        <PrClosed
-          css={css`
-            path {
-              fill: ${color.complete};
-            }
-          `}
-        />
-      );
-    }
-
     return state === "open" ? (
       <IssueOpened
         css={css`
@@ -84,7 +61,7 @@ export function IssueListItem({
         `}
       />
     );
-  }, [state, pull_request]);
+  }, [state]);
 
   return (
     <li
