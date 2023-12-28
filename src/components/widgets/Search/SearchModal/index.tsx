@@ -52,26 +52,19 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
     <div
       css={css`
         position: fixed;
-        top: 0;
-        left: 0;
-
-        z-index: ${zIndex.SEARCH_MODAL};
+        inset: 0;
 
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
-        height: 100%;
+
+        z-index: ${zIndex.SEARCH_MODAL};
       `}
     >
       <div
         css={css`
           position: absolute;
-          top: 0;
-          left: 0;
-
-          width: 100%;
-          height: 100%;
+          inset: 0;
 
           background-color: rgba(0, 0, 0, 0.35);
         `}
@@ -107,8 +100,6 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
 
         <div
           css={css`
-            flex: 1;
-
             overflow-y: auto;
 
             & > div {

@@ -1,8 +1,13 @@
 // react
 import React, { useCallback, useMemo } from "react";
+import Markdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import remarkGfm from "remark-gfm";
+import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 // components
 import { IssueListItemLabelList } from "@/pages/Main/components/IssueList/IssueListItem/IssueListItemLabelList";
+import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
 
 // svgs
 import { ReactComponent as IssueOpened } from "@/assets/svgs/issue-opened.svg";
@@ -14,12 +19,6 @@ import { color, device } from "@/assets/styles";
 
 // apis
 import { type components } from "@octokit/openapi-types";
-
-// markdown
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface IssueListItemProps {
   issue: components["schemas"]["issue-search-result-item"];
@@ -118,8 +117,6 @@ export function IssueListItem({
               align-items: center;
               flex-wrap: wrap;
               gap: 0.375em;
-
-              flex-basis: content;
             `}
           >
             <p
@@ -156,43 +153,48 @@ export function IssueListItem({
             padding: 0.5rem;
           `}
         >
-          <div>
-            <img
-              src={user?.avatar_url}
-              css={css`
-                width: 2rem;
-                height: 2rem;
-                border-radius: 9999px;
-              `}
-              alt="issue-writer-profile-image"
-            />
-          </div>
+          <FixedAndVariableLayout
+            fixedElement={
+              <img
+                src={user?.avatar_url}
+                css={css`
+                  width: 2.5rem;
+                  height: 2.5rem;
 
-          <Markdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              code({ inline, children, className, node, ...props }) {
-                const match = /language-(\w+)/.exec(className || "");
+                  border-radius: 9999px;
+                `}
+                alt="issue-writer-profile"
+              />
+            }
+            variableElement={
+              <Markdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  code({ inline, children, className, node, ...props }) {
+                    const match = /language-(\w+)/.exec(className || "");
 
-                return !inline && match ? (
-                  <SyntaxHighlighter
-                    {...props}
-                    PreTag="div"
-                    language={match[1]}
-                    style={vscDarkPlus}
-                  >
-                    {String(children).replace(/\n$/, "")}
-                  </SyntaxHighlighter>
-                ) : (
-                  <code {...props} className={className}>
-                    {children}
-                  </code>
-                );
-              },
-            }}
-          >
-            {body || ""}
-          </Markdown>
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        {...props}
+                        PreTag="div"
+                        language={match[1]}
+                        showLineNumbers={true}
+                        style={vs}
+                      >
+                        {String(children).replace(/\n$/, "")}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code {...props} className={className}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
+                {body || ""}
+              </Markdown>
+            }
+          />
         </div>
       )}
     </li>

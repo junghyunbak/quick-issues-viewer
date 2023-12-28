@@ -2,6 +2,7 @@
 import { IssueList } from "@/pages/Main/components/IssueList";
 import { LabelList } from "@/pages/Main/components/LabelList";
 import { Header } from "@/pages/Main/components/Header";
+import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
 
 // styles
 import { css } from "@emotion/react";
@@ -11,68 +12,50 @@ export function Main() {
   return (
     <div
       css={css`
-        display: flex;
-        flex-direction: column;
-
+        width: 100vw;
         height: 100vh;
       `}
     >
-      <Header />
+      <FixedAndVariableLayout
+        direction="column"
+        fixedElement={<Header />}
+        variableElement={
+          <FixedAndVariableLayout
+            fixedElement={
+              <div
+                css={css`
+                  display: none;
 
-      <div
-        css={css`
-          flex: 1;
+                  @media ${device.pc} {
+                    display: block;
+                  }
 
-          // 해당 속성을 추가해주지 않으면, 내부 요소에 의해 전체 레이아웃이 viewport보다 커질 수 있다.
-          overflow: hidden;
-        `}
-      >
-        <div
-          css={css`
-            display: flex;
+                  width: ${size.SIDEBAR_WIDTH}px;
+                  height: 100%;
 
-            height: 100%;
-          `}
-        >
-          <div
-            css={css`
-              display: none;
+                  border-right: 1px solid ${color.g200};
 
-              @media ${device.pc} {
-                display: block;
-              }
+                  overflow: auto;
+                `}
+              >
+                <LabelList />
+              </div>
+            }
+            variableElement={
+              <div
+                css={css`
+                  max-width: ${size.BREAKPOINT_PC}px;
+                  height: 100%;
 
-              width: ${size.SIDEBAR_WIDTH}px;
-              height: 100%;
-
-              border-right: 1px solid ${color.g200};
-
-              overflow-y: auto;
-            `}
-          >
-            <LabelList />
-          </div>
-
-          <div
-            css={css`
-              flex: 1;
-
-              overflow-y: auto;
-            `}
-          >
-            <div
-              css={css`
-                max-width: ${size.BREAKPOINT_PC}px;
-                height: 100%;
-
-                margin: 0 auto;
-              `}
-            >
-              <IssueList />
-            </div>
-          </div>
-        </div>
-      </div>
+                  margin: 0 auto;
+                `}
+              >
+                <IssueList />
+              </div>
+            }
+          />
+        }
+      />
     </div>
   );
 }

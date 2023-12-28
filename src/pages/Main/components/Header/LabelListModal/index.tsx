@@ -6,7 +6,8 @@ import { css } from "@emotion/react";
 import { color, device, size } from "@/assets/styles";
 
 // components
-import { LabelList } from "../../LabelList";
+import { LabelList } from "@/pages/Main/components/LabelList";
+import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
 
 // svgs
 import { ReactComponent as X } from "@/assets/svgs/x.svg";
@@ -43,9 +44,6 @@ export function LabelListModal({ setMenuIsOpen }: LabelListModalProps) {
           top: 0;
           left: 0;
 
-          display: flex;
-          flex-direction: column;
-
           width: 100%;
           max-width: ${size.SIDEBAR_WIDTH}px;
           height: 100%;
@@ -53,50 +51,46 @@ export function LabelListModal({ setMenuIsOpen }: LabelListModalProps) {
           background-color: ${color.w};
         `}
       >
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
+        <FixedAndVariableLayout
+          direction="column"
+          fixedElement={
+            <div
+              css={css`
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
 
-            border-bottom: 1px solid ${color.g200};
+                border-bottom: 1px solid ${color.g200};
 
-            padding: 0.5rem;
-          `}
-        >
-          <div
-            css={css`
-              display: flex;
-              align-items: center;
-              justify-content: center;
+                padding: 0.5rem;
+              `}
+            >
+              <div
+                css={css`
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
 
-              padding: 0.5rem;
+                  padding: 0.5rem;
 
-              border-radius: ${size.BORDER_RADIUS}px;
+                  border-radius: ${size.BORDER_RADIUS}px;
 
-              cursor: pointer;
+                  cursor: pointer;
 
-              &:hover {
-                @media ${device.canHover} {
-                  background-color: ${color.g100};
-                }
-              }
-            `}
-            onClick={handleDimmedClick}
-          >
-            <X />
-          </div>
-        </div>
-
-        <div
-          css={css`
-            flex: 1;
-
-            overflow-y: auto;
-          `}
-        >
-          <LabelList />
-        </div>
+                  &:hover {
+                    @media ${device.canHover} {
+                      background-color: ${color.g100};
+                    }
+                  }
+                `}
+                onClick={handleDimmedClick}
+              >
+                <X />
+              </div>
+            </div>
+          }
+          variableElement={<LabelList />}
+        />
       </div>
     </div>
   );
