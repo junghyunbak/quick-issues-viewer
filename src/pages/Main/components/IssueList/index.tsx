@@ -11,9 +11,14 @@ import { apiSevice } from "@/apis";
 import { css } from "@emotion/react";
 import { color, size } from "@/assets/styles";
 
+// constants
+import { defaultValue } from "@/constants";
+
 // components
 import { IssueListItem } from "./IssueListItem";
+import { IssueListPaginate } from "./IssueListPaginate";
 
+// utils
 import queryString from "query-string";
 
 export function IssueList() {
@@ -23,20 +28,14 @@ export function IssueList() {
 
   const parsedQueryString = queryString.parse(searchParams.toString());
 
-  const { label } = parsedQueryString;
+  const { label, per_page } = parsedQueryString;
 
   const issueList = useQuery(
-    ["issue", "list", owner, repo, label],
+    ["issue", "list", owner, repo, label, per_page],
     async () => {
       const searchLabel = label as string;
 
-      const issueList = await apiSevice.getRepoIssueList(
-        owner,
-        repo,
-        searchLabel
-      );
-
-      return issueList;
+      return await apiSevice.getRepoIssueList(owner, repo, searchLabel);
     }
   );
 
@@ -61,10 +60,14 @@ export function IssueList() {
   return (
     <div
       css={css`
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+
         padding: 1.25rem;
       `}
     >
-      {issueList.data.length > 0 ? (
+      {issueList.data.items.length > 0 ? (
         <ul
           css={css`
             width: 100%;
@@ -83,7 +86,7 @@ export function IssueList() {
             }
           `}
         >
-          {issueList.data.map((issue) => {
+          {issueList.data.items.map((issue) => {
             return (
               <IssueListItem
                 key={issue.id}
@@ -97,6 +100,13 @@ export function IssueList() {
       ) : (
         <p>데이터가 없습니다.</p>
       )}
+
+      <IssueListPaginate
+        pageCount={Math.ceil(
+          issueList.data.total_count /
+            (parseInt(per_page as string) || defaultValue.DEFAULT_PER_PAGE)
+        )}
+      />
     </div>
   );
 }
