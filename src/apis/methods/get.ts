@@ -1,3 +1,5 @@
+import { defaultValue } from "@/constants";
+
 import { Octokit } from "octokit";
 
 export const octokit = new Octokit();
@@ -5,7 +7,8 @@ export const octokit = new Octokit();
 export const getRepoIssueList = async (
   owner: string = "",
   repo: string = "",
-  label: string
+  label: string,
+  perPage: number = defaultValue.DEFAULT_PER_PAGE
 ) => {
   const queries = [`type:issue`, `repo:${owner}/${repo}`];
 
@@ -17,9 +20,30 @@ export const getRepoIssueList = async (
     data: { items },
   } = await octokit.rest.search.issuesAndPullRequests({
     q: queries.join("+"),
+    per_page: perPage,
   });
 
   return items;
+};
+
+export const getRepoIssueListTotalCount = async (
+  owner: string = "",
+  repo: string = "",
+  label: string
+) => {
+  const queries = [`type:issue`, `repo:${owner}/${repo}`];
+
+  if (label) {
+    queries.push(`label:${label}`);
+  }
+
+  const {
+    data: { total_count },
+  } = await octokit.rest.search.issuesAndPullRequests({
+    q: queries.join("+"),
+  });
+
+  return total_count;
 };
 
 export const getRepoIssueLabelList = async (
