@@ -15,7 +15,7 @@ import { ReactComponent as IssueClosed } from "@/assets/svgs/issue-closed.svg";
 
 // styles
 import { css } from "@emotion/react";
-import { color, device } from "@/assets/styles";
+import { color, device, size } from "@/assets/styles";
 
 // apis
 import { type components } from "@octokit/openapi-types";
@@ -150,7 +150,7 @@ export function IssueListItem({
           css={css`
             border-top: 1px solid ${color.g200};
 
-            padding: 0.5rem;
+            padding: 0.75rem;
           `}
         >
           <FixedAndVariableLayout
@@ -162,37 +162,144 @@ export function IssueListItem({
                   height: 2.5rem;
 
                   border-radius: 9999px;
+                  border: 1px solid ${color.g200};
+
+                  @media ${device.mobile} {
+                    display: none;
+                  }
                 `}
                 alt="issue-writer-profile"
               />
             }
             variableElement={
-              <Markdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  code({ inline, children, className, node, ...props }) {
-                    const match = /language-(\w+)/.exec(className || "");
+              <div
+                css={css`
+                  padding-left: 1rem;
 
-                    return !inline && match ? (
-                      <SyntaxHighlighter
-                        {...props}
-                        PreTag="div"
-                        language={match[1]}
-                        showLineNumbers={true}
-                        style={vs}
-                      >
-                        {String(children).replace(/\n$/, "")}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code {...props} className={className}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
+                  @media ${device.mobile} {
+                    padding-left: 0;
+                  }
+                `}
               >
-                {body || ""}
-              </Markdown>
+                <div
+                  css={css`
+                    display: flex;
+                    flex-direction: column;
+                  `}
+                >
+                  <div
+                    css={css`
+                      background-color: ${color.g100};
+                      padding: 0.5rem 0.75rem;
+
+                      border: 1px solid ${color.g200};
+                      border-top-left-radius: ${size.BORDER_RADIUS}px;
+                      border-top-right-radius: ${size.BORDER_RADIUS}px;
+
+                      position: relative;
+
+                      &::before {
+                        content: " ";
+
+                        display: block;
+
+                        position: absolute;
+                        top: 0.6875rem;
+                        left: -0.5rem;
+
+                        width: 0.5rem;
+                        height: 1rem;
+
+                        clip-path: polygon(0 50%, 100% 0, 100% 100%);
+
+                        background-color: ${color.g200};
+                      }
+
+                      &::after {
+                        content: " ";
+
+                        display: block;
+
+                        position: absolute;
+                        top: 0.6875rem;
+                        left: -0.5rem;
+
+                        margin-left: 0.125rem;
+
+                        width: 0.5rem;
+                        height: 1rem;
+
+                        clip-path: polygon(0 50%, 100% 0, 100% 100%);
+
+                        background-color: ${color.g100};
+                      }
+
+                      @media ${device.mobile} {
+                        &::before,
+                        &::after {
+                          display: none;
+                        }
+                      }
+                    `}
+                  >
+                    <a
+                      css={css`
+                        font-size: 0.875rem;
+                        font-weight: bold;
+
+                        color: ${color.b};
+                        text-decoration: none;
+
+                        &:hover {
+                          color: ${color.active};
+                          text-decoration: underline;
+                        }
+                      `}
+                      href={user?.html_url}
+                    >
+                      {user?.login}
+                    </a>
+                  </div>
+
+                  <div
+                    css={css`
+                      border: 1px solid ${color.g200};
+                      border-top: 0;
+                      border-bottom-left-radius: ${size.BORDER_RADIUS}px;
+                      border-bottom-right-radius: ${size.BORDER_RADIUS}px;
+
+                      padding: 0.75rem;
+                    `}
+                  >
+                    <Markdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        code({ inline, children, className, node, ...props }) {
+                          const match = /language-(\w+)/.exec(className || "");
+
+                          return !inline && match ? (
+                            <SyntaxHighlighter
+                              {...props}
+                              PreTag="div"
+                              language={match[1]}
+                              showLineNumbers={true}
+                              style={vs}
+                            >
+                              {String(children).replace(/\n$/, "")}
+                            </SyntaxHighlighter>
+                          ) : (
+                            <code {...props} className={className}>
+                              {children}
+                            </code>
+                          );
+                        },
+                      }}
+                    >
+                      {body || ""}
+                    </Markdown>
+                  </div>
+                </div>
+              </div>
             }
           />
         </div>
