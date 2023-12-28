@@ -1,15 +1,50 @@
 // react
-import ReactPaginate from "react-paginate";
+import ReactPaginate, { type ReactPaginateProps } from "react-paginate";
+import { useCallback, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 
 // styles
 import { ClassNames } from "@emotion/react";
 import { color, device, size } from "@/assets/styles";
+
+// utils
+import queryString from "query-string";
 
 interface IssueListPaginateProps {
   pageCount: number;
 }
 
 export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const { page } = queryString.parse(searchParams.toString());
+
+  const handlePageClick = useCallback<
+    Required<ReactPaginateProps>["onPageChange"]
+  >(
+    (selectedItem): void => {
+      setSearchParams((prev) => {
+        return {
+          ...prev,
+          page: selectedItem.selected + 1,
+        };
+      });
+    },
+    [setSearchParams]
+  );
+
+  const initialPage = useMemo(() => {
+    if (page === undefined) {
+      return undefined;
+    }
+
+    if (isNaN(Number(page))) {
+      return undefined;
+    }
+
+    return Number(page) - 1;
+  }, [page]);
+
   return (
     <ClassNames>
       {({ css }) => {
@@ -17,6 +52,8 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
           <ReactPaginate
             pageCount={pageCount}
             pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            initialPage={initialPage}
             className={css`
               display: flex;
               align-items: center;

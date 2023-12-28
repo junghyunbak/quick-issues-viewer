@@ -1,14 +1,13 @@
-import { defaultValue } from "@/constants";
-
 import { Octokit } from "octokit";
 
 export const octokit = new Octokit();
 
 export const getRepoIssueList = async (
-  owner: string = "",
-  repo: string = "",
+  owner: string,
+  repo: string,
   label: string,
-  perPage: number = defaultValue.DEFAULT_PER_PAGE
+  perPage: number,
+  page: number
 ) => {
   const queries = [`type:issue`, `repo:${owner}/${repo}`];
 
@@ -19,6 +18,7 @@ export const getRepoIssueList = async (
   const { data } = await octokit.rest.search.issuesAndPullRequests({
     q: queries.join("+"),
     per_page: perPage,
+    page,
   });
 
   return data;

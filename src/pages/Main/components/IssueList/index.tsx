@@ -26,16 +26,18 @@ export function IssueList() {
 
   const [searchParams] = useSearchParams();
 
-  const parsedQueryString = queryString.parse(searchParams.toString());
-
-  const { label, per_page } = parsedQueryString;
+  const { label, per_page, page } = queryString.parse(searchParams.toString());
 
   const issueList = useQuery(
-    ["issue", "list", owner, repo, label, per_page],
+    ["issue", "list", owner, repo, label, per_page, page],
     async () => {
-      const searchLabel = label as string;
-
-      return await apiSevice.getRepoIssueList(owner, repo, searchLabel);
+      return await apiSevice.getRepoIssueList(
+        owner || "",
+        repo || "",
+        (label as string) || "",
+        Number(per_page) || defaultValue.DEFAULT_PER_PAGE,
+        Number(page) || 1
+      );
     }
   );
 
