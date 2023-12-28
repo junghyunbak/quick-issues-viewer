@@ -1,7 +1,7 @@
 // react
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { Blocks } from "react-loader-spinner";
+import { RotatingLines } from "react-loader-spinner";
 import { useParams, useSearchParams } from "react-router-dom";
 
 // apis
@@ -52,7 +52,20 @@ export function IssueList() {
   }
 
   if (issueList.isLoading) {
-    return <Blocks />;
+    return (
+      <div
+        css={css`
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: 100%;
+          height: 100%;
+        `}
+      >
+        <RotatingLines width="2rem" strokeColor="gray" />
+      </div>
+    );
   }
 
   if (!issueList.data || issueList.data.items.length === 0) {
@@ -90,7 +103,6 @@ export function IssueList() {
           );
         })}
       </ul>
-
       <IssueListPaginate
         pageCount={Math.floor(
           Math.min(issueList.data.total_count, 1000) /

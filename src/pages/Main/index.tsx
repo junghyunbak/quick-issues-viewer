@@ -63,6 +63,7 @@ export function Main() {
             <div
               css={css`
                 max-width: ${size.BREAKPOINT_PC}px;
+                height: 100%;
 
                 margin: 0 auto;
               `}

@@ -1,6 +1,6 @@
 // react
 import { useQuery } from "react-query";
-import { Blocks } from "react-loader-spinner";
+import { RotatingLines } from "react-loader-spinner";
 import { useParams } from "react-router-dom";
 
 // styles
@@ -26,7 +26,20 @@ export function LabelList() {
   }
 
   if (labelList.isLoading) {
-    return <Blocks />;
+    return (
+      <div
+        css={css`
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: 100%;
+          height: 100%;
+        `}
+      >
+        <RotatingLines width="2rem" strokeColor="gray" />
+      </div>
+    );
   }
 
   if (!labelList.data) {
