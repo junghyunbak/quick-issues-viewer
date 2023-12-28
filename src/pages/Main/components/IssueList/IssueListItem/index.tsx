@@ -1,5 +1,7 @@
 // react
 import React, { useCallback, useMemo } from "react";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // components
 import { IssueListItemLabelList } from "@/pages/Main/components/IssueList/IssueListItem/IssueListItemLabelList";
@@ -161,7 +163,8 @@ export function IssueListItem({
               alt="issue-writer-profile-image"
             />
           </div>
-          <div dangerouslySetInnerHTML={{ __html: body || "" }} />
+
+          <Markdown remarkPlugins={[remarkGfm]}>{body}</Markdown>
         </div>
       )}
     </li>
