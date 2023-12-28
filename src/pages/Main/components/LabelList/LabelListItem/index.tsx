@@ -24,18 +24,23 @@ export function LabelListItem({ label }: LabelListItemProps) {
   const { label: selectedLabel } = queryString.parse(searchParams.toString());
 
   const handleLabelClick = useCallback(() => {
-    setSearchParams((prev) => {
-      if (label.id === ALL_SHOW_LABEL_ID) {
-        prev.delete("label");
+    setSearchParams(
+      (prev) => {
+        if (label.id === ALL_SHOW_LABEL_ID) {
+          prev.delete("label");
 
-        return prev;
+          return prev;
+        }
+
+        return {
+          ...prev,
+          label: label.name,
+        };
+      },
+      {
+        replace: true,
       }
-
-      return {
-        ...prev,
-        label: label.name,
-      };
-    });
+    );
   }, [setSearchParams, label]);
 
   const isActive = useMemo(() => {
