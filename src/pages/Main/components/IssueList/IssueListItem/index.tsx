@@ -1,7 +1,5 @@
 // react
 import React, { useCallback, useMemo } from "react";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 // components
 import { IssueListItemLabelList } from "@/pages/Main/components/IssueList/IssueListItem/IssueListItemLabelList";
@@ -16,6 +14,12 @@ import { color, device } from "@/assets/styles";
 
 // apis
 import { type components } from "@octokit/openapi-types";
+
+// markdown
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface IssueListItemProps {
   issue: components["schemas"]["issue-search-result-item"];
@@ -80,7 +84,6 @@ export function IssueListItem({
           border-bottom: 0;
         }
       `}
-      onClick={handleIssueItemClick(id)}
     >
       <div
         css={css`
@@ -98,6 +101,7 @@ export function IssueListItem({
 
           cursor: pointer;
         `}
+        onClick={handleIssueItemClick(id)}
       >
         <div
           css={css`
@@ -164,7 +168,31 @@ export function IssueListItem({
             />
           </div>
 
-          <Markdown remarkPlugins={[remarkGfm]}>{body}</Markdown>
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              code({ inline, children, className, node, ...props }) {
+                const match = /language-(\w+)/.exec(className || "");
+
+                return !inline && match ? (
+                  <SyntaxHighlighter
+                    {...props}
+                    PreTag="div"
+                    language={match[1]}
+                    style={vscDarkPlus}
+                  >
+                    {String(children).replace(/\n$/, "")}
+                  </SyntaxHighlighter>
+                ) : (
+                  <code {...props} className={className}>
+                    {children}
+                  </code>
+                );
+              },
+            }}
+          >
+            {body || ""}
+          </Markdown>
         </div>
       )}
     </li>
