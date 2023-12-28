@@ -21,7 +21,7 @@ export function ReactQueryProvider({ children }: ReactQueryProviderProps) {
     <QueryClientProvider client={queryClient}>
       {children}
 
-      <ReactQueryDevtools />
+      {process.env.NODE_ENV !== "production" && <ReactQueryDevtools />}
     </QueryClientProvider>
   );
 }
