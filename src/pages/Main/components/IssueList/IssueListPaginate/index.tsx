@@ -24,16 +24,15 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
   >(
     (selectedItem): void => {
       setSearchParams((prev) => {
-        return {
-          ...prev,
-          page: selectedItem.selected + 1,
-        };
+        prev.set("page", (selectedItem.selected + 1).toString());
+
+        return prev;
       });
     },
     [setSearchParams]
   );
 
-  const initialPage = useMemo(() => {
+  const pageIndex = useMemo(() => {
     if (page === undefined) {
       return undefined;
     }
@@ -57,7 +56,7 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
             pageCount={pageCount}
             pageRangeDisplayed={3}
             onPageChange={handlePageClick}
-            initialPage={initialPage}
+            forcePage={pageIndex}
             className={css`
               display: flex;
               align-items: center;

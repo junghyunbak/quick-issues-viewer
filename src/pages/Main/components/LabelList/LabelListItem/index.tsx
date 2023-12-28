@@ -32,10 +32,9 @@ export function LabelListItem({ label }: LabelListItemProps) {
           return prev;
         }
 
-        return {
-          ...prev,
-          label: label.name,
-        };
+        prev.set("label", label.name);
+
+        return prev;
       },
       {
         replace: true,
