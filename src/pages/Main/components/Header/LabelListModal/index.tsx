@@ -62,8 +62,6 @@ export function LabelListModal({ setMenuIsOpen }: LabelListModalProps) {
                 align-items: center;
                 justify-content: flex-end;
 
-                border-bottom: 1px solid ${color.g200};
-
                 padding: 0.5rem;
               `}
             >
