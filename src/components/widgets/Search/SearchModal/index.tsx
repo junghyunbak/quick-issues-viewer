@@ -111,7 +111,7 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
 
               padding: 0.75rem;
 
-              &:first-child {
+              &:first-of-type {
                 padding-top: 0;
               }
             }
