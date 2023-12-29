@@ -158,21 +158,34 @@ export function IssueListItem({
         >
           <FixedAndVariableLayout
             fixedElement={
-              <img
-                src={user?.avatar_url}
+              <a
                 css={css`
+                  display: block;
+
                   width: 2.5rem;
                   height: 2.5rem;
 
                   border-radius: 9999px;
                   border: 1px solid ${color.g200};
 
+                  overflow: hidden;
+
                   @media ${device.mobile} {
                     display: none;
                   }
                 `}
-                alt="issue-writer-profile"
-              />
+                target="__blank"
+                href={user?.html_url}
+              >
+                <img
+                  src={user?.avatar_url}
+                  css={css`
+                    width: 100%;
+                    height: 100%;
+                  `}
+                  alt="issue-writer-profile"
+                />
+              </a>
             }
             variableElement={
               <div
