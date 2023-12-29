@@ -12,12 +12,15 @@ interface GlobalStyleProps {
 const GlobalStyles = css`
   :root {
     font-size: 16px;
-    box-sizing: border-box;
-    word-break: break-all;
 
     @media ${device.mobile} {
       font-size: 14px;
     }
+  }
+
+  * {
+    box-sizing: border-box;
+    word-break: break-all;
   }
 
   ul,
