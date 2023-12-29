@@ -1,5 +1,5 @@
 // react
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 
 // components
@@ -18,10 +18,22 @@ export function GlobalErrorBoundary({ children }: GlobalErrorBoundaryProps) {
   return <ErrorBoundary FallbackComponent={Fallback}>{children}</ErrorBoundary>;
 }
 
-function Fallback({ error }: FallbackProps) {
-  const handleGoHomeButtonClick = () => {
-    window.location.href = "/";
-  };
+function Fallback({ error, resetErrorBoundary }: FallbackProps) {
+  const handleGoHomeButtonClick = useCallback(() => {
+    switch (error.status) {
+      case 403:
+        resetErrorBoundary();
+
+        break;
+
+      case 404:
+      case 422:
+      default:
+        window.location.href = "/";
+
+        break;
+    }
+  }, [error, resetErrorBoundary]);
 
   const errorMessage = useMemo(() => {
     switch (error.status) {
@@ -34,6 +46,18 @@ function Fallback({ error }: FallbackProps) {
 
       default:
         return "알 수 없는 오류가 발생했습니다.";
+    }
+  }, [error]);
+
+  const buttonMessage = useMemo(() => {
+    switch (error.status) {
+      case 403:
+        return "retry";
+
+      case 404:
+      case 422:
+      default:
+        return "go home";
     }
   }, [error]);
 
@@ -94,7 +118,7 @@ function Fallback({ error }: FallbackProps) {
               `}
               onClick={handleGoHomeButtonClick}
             >
-              go home
+              {buttonMessage}
             </button>
           </div>
         </div>

@@ -9,6 +9,7 @@ const octokit = new MyOctoKit({
   log: require("console-log-level")({
     level: "info",
   }),
+  throttle: { enabled: false },
 });
 
 export const apiSevice = {
