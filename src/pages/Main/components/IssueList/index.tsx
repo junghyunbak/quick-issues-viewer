@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { RotatingLines } from "react-loader-spinner";
-import { useParams, useSearchParams } from "react-router-dom";
+import { Navigate, useParams, useSearchParams } from "react-router-dom";
 
 // apis
 import { apiSevice } from "@/apis";
@@ -44,11 +44,7 @@ export function IssueList() {
   const [selectedIssueId, setSelectedIssueId] = useState<number | null>(null);
 
   if (issueList.isError) {
-    return (
-      <div>
-        <p>해당 레포지토리를 찾을 수 없습니다.</p>
-      </div>
-    );
+    return <Navigate replace to="/404" />;
   }
 
   if (issueList.isLoading) {
