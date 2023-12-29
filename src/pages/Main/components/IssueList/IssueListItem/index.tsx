@@ -13,6 +13,7 @@ import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayo
 // svgs
 import { ReactComponent as IssueOpened } from "@/assets/svgs/issue-opened.svg";
 import { ReactComponent as IssueClosed } from "@/assets/svgs/issue-closed.svg";
+import { ReactComponent as Reference } from "@/assets/svgs/reference.svg";
 
 // styles
 import { css } from "@emotion/react";
@@ -34,7 +35,7 @@ export function IssueListItem({
   selectedIssueId,
   setSelectedIssueId,
 }: IssueListItemProps) {
-  const { id, title, labels, state, body, user, created_at } = issue;
+  const { id, title, labels, state, body, user, created_at, html_url } = issue;
 
   const handleIssueItemClick = useCallback(
     (issueId: number) => {
@@ -191,7 +192,11 @@ export function IssueListItem({
                 >
                   <div
                     css={css`
+                      display: flex;
+                      justify-content: space-between;
+
                       background-color: ${color.g100};
+
                       padding: 0.5rem 0.75rem;
 
                       border: 1px solid ${color.g200};
@@ -258,8 +263,13 @@ export function IssueListItem({
                         }
                       `}
                       href={user?.html_url}
+                      target="__blank"
                     >
                       {user?.login}
+                    </a>
+
+                    <a href={html_url} target="__blank">
+                      <Reference />
                     </a>
                   </div>
 
