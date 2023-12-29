@@ -1,7 +1,7 @@
 // components
 import { IssueList } from "@/pages/Main/components/IssueList";
 import { LabelList } from "@/pages/Main/components/LabelList";
-import { Header } from "@/pages/Main/components/Header";
+import { Header } from "@/components/widgets/Header";
 import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
 
 // styles
