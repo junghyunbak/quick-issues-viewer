@@ -1,4 +1,5 @@
 import { Octokit } from "octokit";
+import { type components } from "@octokit/openapi-types";
 
 export const octokit = new Octokit();
 
@@ -28,12 +29,28 @@ export const getRepoIssueLabelList = async (
   owner: string = "",
   repo: string = ""
 ) => {
-  const response = await octokit.rest.issues.listLabelsForRepo({
-    owner,
-    repo,
-  });
+  let ret: components["schemas"]["label"][] = [];
 
-  return response.data;
+  let page = 1;
+
+  let issueList: components["schemas"]["label"][];
+
+  do {
+    const { data } = await octokit.rest.issues.listLabelsForRepo({
+      owner,
+      repo,
+      per_page: 100,
+      page,
+    });
+
+    issueList = data;
+
+    ret = [...ret, ...issueList];
+
+    page++;
+  } while (issueList.length && page <= 10);
+
+  return ret;
 };
 
 export const getRepoList = async (owner: string) => {
