@@ -75,3 +75,21 @@ export const getUserList = async (owner: string) => {
 
   return items;
 };
+
+export const getUserInfo = async (
+  owner?: string
+): Promise<components["schemas"]["public-user"] | null> => {
+  /**
+   * owner가 빈 문자열이거나 주어지지 않을 경우
+   * 유저 리스트를 조회하는 api가 요청되기 때문에 null값을 반환하도록 처리
+   */
+  if (!owner) {
+    return null;
+  }
+
+  const { data } = await octokit.rest.users.getByUsername({
+    username: owner,
+  });
+
+  return data;
+};

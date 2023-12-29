@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 
 // components
 import { Search } from "@/components/widgets/Search";
+import { LabelListModal } from "./LabelListModal";
 
 // styles
 import { css } from "@emotion/react";
@@ -13,24 +14,16 @@ import { color, device, size } from "@/assets/styles";
 // svgs
 import { ReactComponent as Hamburger } from "@/assets/svgs/hamburger.svg";
 
-import { Octokit } from "octokit";
-import { LabelListModal } from "./LabelListModal";
-
-const octokit = new Octokit();
+// apis
+import { apiSevice } from "@/apis";
 
 export function Header() {
   const { owner } = useParams();
 
   const user = useQuery(["user", "info", owner], async () => {
-    if (!owner) {
-      return null;
-    }
+    const user = await apiSevice.getUserInfo(owner);
 
-    const { data } = await octokit.rest.users.getByUsername({
-      username: owner,
-    });
-
-    return data;
+    return user;
   });
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
