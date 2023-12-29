@@ -1,5 +1,5 @@
 // react
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useQuery } from "react-query";
 import { RotatingLines } from "react-loader-spinner";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -34,7 +34,7 @@ export function IssueList() {
       return await apiSevice.getRepoIssueList(
         owner || "",
         repo || "",
-        (label as string) || "",
+        [label as string],
         Number(per_page) || defaultValue.DEFAULT_PER_PAGE,
         Number(page) || 1
       );
@@ -60,10 +60,6 @@ export function IssueList() {
     );
   }
 
-  const isIssueExist = !(!issueList.data || issueList.data.items.length === 0);
-
-  const issueTotalCount = isIssueExist ? issueList.data.total_count : 0;
-
   return (
     <div
       css={css`
@@ -74,41 +70,33 @@ export function IssueList() {
         padding: 1.25rem;
       `}
     >
-      {isIssueExist && (
-        <ul
-          css={css`
-            width: 100%;
+      {issueList.data && (
+        <Fragment>
+          <ul
+            css={css`
+              width: 100%;
 
-            border-radius: ${size.BORDER_RADIUS}px;
-            border: 1px solid ${color.g200};
+              border-radius: ${size.BORDER_RADIUS}px;
+              border: 1px solid ${color.g200};
 
-            overflow: hidden;
-          `}
-        >
-          {issueList.data.items.map((issue) => {
-            return (
-              <IssueListItem
-                key={issue.id}
-                issue={issue}
-                selectedIssueId={selectedIssueId}
-                setSelectedIssueId={setSelectedIssueId}
-              />
-            );
-          })}
-        </ul>
+              overflow: hidden;
+            `}
+          >
+            {issueList.data.issues.map((issue) => {
+              return (
+                <IssueListItem
+                  key={issue.id}
+                  issue={issue}
+                  selectedIssueId={selectedIssueId}
+                  setSelectedIssueId={setSelectedIssueId}
+                />
+              );
+            })}
+          </ul>
+
+          <IssueListPaginate pageCount={issueList.data.pageCount} />
+        </Fragment>
       )}
-
-      <IssueListPaginate
-        /**
-         * 글이 하나라도 존재할 경우 페이지의 개수는 1이상이기 때문에 Math.floor가 아닌 Math.ceil를 사용해야 함.
-         *
-         * 단, Math.ceil을 사용 할 경우 조회 제한 개수 1000개를 넘어가게 될 수 있어 오류가 발생할 수 있음.
-         */
-        pageCount={Math.ceil(
-          Math.min(issueTotalCount, 1000) /
-            (Number(per_page) || defaultValue.DEFAULT_PER_PAGE)
-        )}
-      />
     </div>
   );
 }

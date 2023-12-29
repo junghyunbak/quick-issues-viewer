@@ -24,7 +24,7 @@ import "github-markdown-css";
 import { type components } from "@octokit/openapi-types";
 
 interface IssueListItemProps {
-  issue: components["schemas"]["issue-search-result-item"];
+  issue: components["schemas"]["issue"];
 
   selectedIssueId: number | null;
   setSelectedIssueId: React.Dispatch<React.SetStateAction<number | null>>;

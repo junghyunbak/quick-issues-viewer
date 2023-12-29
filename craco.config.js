@@ -15,7 +15,9 @@ module.exports = {
   ],
   resolve: {
     fallback: {
+      querystring: require.resolve("querystring"),
       util: require.resolve("util/"),
+      url: require.resolve("url/"),
     },
   },
 };
