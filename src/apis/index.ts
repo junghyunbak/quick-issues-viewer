@@ -1,5 +1,16 @@
-import * as GET from "./methods/get";
+import { get } from "./methods/get";
+
+import { Octokit } from "octokit";
+import { requestLog } from "@octokit/plugin-request-log";
+
+const MyOctoKit = Octokit.plugin(requestLog);
+
+const octokit = new MyOctoKit({
+  log: require("console-log-level")({
+    level: "info",
+  }),
+});
 
 export const apiSevice = {
-  ...GET,
+  ...get(octokit),
 };
