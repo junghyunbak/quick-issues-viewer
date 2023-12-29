@@ -274,6 +274,11 @@ export function IssueListItem({
                     `}
                   >
                     <Markdown
+                      css={css`
+                        li {
+                          list-style: unset;
+                        }
+                      `}
                       className="markdown-body"
                       remarkPlugins={[remarkGfm]}
                       rehypePlugins={[rehypeRaw]}
@@ -286,8 +291,15 @@ export function IssueListItem({
                               {...props}
                               PreTag="div"
                               language={match[1]}
-                              showLineNumbers={true}
                               style={vs}
+                              customStyle={{
+                                background: "none",
+                                border: 0,
+                                padding: 0,
+                                margin: 0,
+                                fontSize: "1rem",
+                                lineHeight: "normal",
+                              }}
                             >
                               {String(children).replace(/\n$/, "")}
                             </SyntaxHighlighter>
