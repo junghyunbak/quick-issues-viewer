@@ -1,18 +1,12 @@
 // react
-import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
 // components
 import { Search } from "@/components/widgets/Search";
-import { LabelListModal } from "./LabelListModal";
 
 // styles
 import { css } from "@emotion/react";
-import { color, device, size } from "@/assets/styles";
-
-// svgs
-import { ReactComponent as Hamburger } from "@/assets/svgs/hamburger.svg";
 
 // apis
 import { apiSevice } from "@/apis";
@@ -26,19 +20,9 @@ export function Header() {
     return user;
   });
 
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
-
-  const handleMenuButtonClick = useCallback(() => {
-    setMenuIsOpen((prev) => {
-      return !prev;
-    });
-  }, [setMenuIsOpen]);
-
   return (
     <div
       css={css`
-        border-bottom: 1px solid ${color.g200};
-
         padding: 0.5rem;
       `}
     >
@@ -83,45 +67,6 @@ export function Header() {
         </div>
 
         <Search />
-      </div>
-
-      <div
-        css={css`
-          display: flex;
-
-          @media ${device.pc} {
-            display: none;
-          }
-
-          width: 100%;
-
-          margin-top: 0.5rem;
-        `}
-      >
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 0.5rem;
-
-            cursor: pointer;
-
-            border-radius: ${size.BORDER_RADIUS}px;
-
-            &:hover {
-              @media ${device.canHover} {
-                background-color: ${color.g100};
-              }
-            }
-          `}
-          onClick={handleMenuButtonClick}
-        >
-          <Hamburger />
-        </div>
-
-        {menuIsOpen && <LabelListModal setMenuIsOpen={setMenuIsOpen} />}
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { IssueList } from "@/pages/Main/components/IssueList";
 import { LabelList } from "@/pages/Main/components/LabelList";
 import { Header } from "@/components/widgets/Header";
 import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
+import { MobileLableListController } from "./components/MobileLableListController";
 
 // styles
 import { css } from "@emotion/react";
@@ -18,7 +19,16 @@ export function Main() {
     >
       <FixedAndVariableLayout
         direction="column"
-        fixedElement={<Header />}
+        fixedElement={
+          <div
+            css={css`
+              border-bottom: 1px solid ${color.g200};
+            `}
+          >
+            <Header />
+            <MobileLableListController />
+          </div>
+        }
         variableElement={
           <FixedAndVariableLayout
             fixedElement={

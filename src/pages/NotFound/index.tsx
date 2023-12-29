@@ -20,7 +20,15 @@ export function NotFound() {
   return (
     <FixedAndVariableLayout
       direction="column"
-      fixedElement={<Header />}
+      fixedElement={
+        <div
+          css={css`
+            border-bottom: 1px solid ${color.g200};
+          `}
+        >
+          <Header />
+        </div>
+      }
       variableElement={
         <div
           css={css`
