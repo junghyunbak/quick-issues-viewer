@@ -9,6 +9,7 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       retry: 0,
       staleTime: 1000 * 20,
+      useErrorBoundary: true,
     },
   },
 });

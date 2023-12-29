@@ -2,7 +2,7 @@
 import React, { useState, Fragment, useCallback } from "react";
 import { useQuery } from "react-query";
 import { RotatingLines } from "react-loader-spinner";
-import { useParams, Navigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 // styles
 import { css } from "@emotion/react";
@@ -35,10 +35,6 @@ export function LabelList() {
     },
     [setInputValue]
   );
-
-  if (labelList.isError) {
-    return <Navigate replace to="/404" />;
-  }
 
   if (labelList.isLoading) {
     return (

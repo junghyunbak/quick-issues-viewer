@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { RotatingLines } from "react-loader-spinner";
-import { Navigate, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 // apis
 import { apiSevice } from "@/apis";
@@ -42,10 +42,6 @@ export function IssueList() {
   );
 
   const [selectedIssueId, setSelectedIssueId] = useState<number | null>(null);
-
-  if (issueList.isError) {
-    return <Navigate replace to="/404" />;
-  }
 
   if (issueList.isLoading) {
     return (
