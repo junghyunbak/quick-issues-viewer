@@ -2,6 +2,14 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
+// components
+import { Header } from "@/components/widgets/Header";
+import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
+
+// styles
+import { css } from "@emotion/react";
+import { color, size } from "@/assets/styles";
+
 export function NotFound() {
   const navigate = useNavigate();
 
@@ -10,11 +18,59 @@ export function NotFound() {
   }, [navigate]);
 
   return (
-    <div>
-      <p>404 Not Found</p>
-      <button type="button" onClick={handleGoHomeButtonClick}>
-        go home
-      </button>
-    </div>
+    <FixedAndVariableLayout
+      direction="column"
+      fixedElement={<Header />}
+      variableElement={
+        <div
+          css={css`
+            display: flex;
+            justify-content: center;
+
+            padding: 2.5rem 1rem;
+          `}
+        >
+          <div
+            css={css`
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 0.5rem;
+            `}
+          >
+            <h1>Ooops!</h1>
+
+            <p
+              css={css`
+                color: ${color.inactive};
+                font-size: 1.5rem;
+              `}
+            >
+              Page Not Found
+            </p>
+
+            <button
+              type="button"
+              css={css`
+                padding: 0.3125rem 1rem;
+
+                border: 1px solid ${color.g200};
+                border-radius: ${size.BORDER_RADIUS}px;
+
+                background-color: ${color.g100};
+
+                font-weight: 500;
+                color: ${color.active};
+
+                cursor: pointer;
+              `}
+              onClick={handleGoHomeButtonClick}
+            >
+              go home
+            </button>
+          </div>
+        </div>
+      }
+    />
   );
 }
