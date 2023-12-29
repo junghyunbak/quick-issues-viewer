@@ -3,6 +3,7 @@ import React, { useCallback, useMemo } from "react";
 import Markdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 // components
@@ -16,6 +17,7 @@ import { ReactComponent as IssueClosed } from "@/assets/svgs/issue-closed.svg";
 // styles
 import { css } from "@emotion/react";
 import { color, device, size } from "@/assets/styles";
+import "github-markdown-css";
 
 // apis
 import { type components } from "@octokit/openapi-types";
@@ -272,7 +274,9 @@ export function IssueListItem({
                     `}
                   >
                     <Markdown
+                      className="markdown-body"
                       remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeRaw]}
                       components={{
                         code({ inline, children, className, node, ...props }) {
                           const match = /language-(\w+)/.exec(className || "");
