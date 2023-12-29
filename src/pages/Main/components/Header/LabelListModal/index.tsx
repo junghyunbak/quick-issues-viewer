@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 
 // styles
 import { css } from "@emotion/react";
-import { color, device, size } from "@/assets/styles";
+import { color, device, size, zIndex } from "@/assets/styles";
 
 // components
 import { LabelList } from "@/pages/Main/components/LabelList";
@@ -26,6 +26,8 @@ export function LabelListModal({ setMenuIsOpen }: LabelListModalProps) {
       css={css`
         position: fixed;
         inset: 0;
+
+        z-index: ${zIndex.LABEL_LIST_MODAL};
       `}
     >
       <div
