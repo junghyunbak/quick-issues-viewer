@@ -64,9 +64,9 @@ export function IssueList() {
     );
   }
 
-  if (!issueList.data || issueList.data.items.length === 0) {
-    return null;
-  }
+  const isIssueExist = !(!issueList.data || issueList.data.items.length === 0);
+
+  const issueTotalCount = isIssueExist ? issueList.data.total_count : 0;
 
   return (
     <div
@@ -78,27 +78,30 @@ export function IssueList() {
         padding: 1.25rem;
       `}
     >
-      <ul
-        css={css`
-          width: 100%;
+      {isIssueExist && (
+        <ul
+          css={css`
+            width: 100%;
 
-          border-radius: ${size.BORDER_RADIUS}px;
-          border: 1px solid ${color.g200};
+            border-radius: ${size.BORDER_RADIUS}px;
+            border: 1px solid ${color.g200};
 
-          overflow: hidden;
-        `}
-      >
-        {issueList.data.items.map((issue) => {
-          return (
-            <IssueListItem
-              key={issue.id}
-              issue={issue}
-              selectedIssueId={selectedIssueId}
-              setSelectedIssueId={setSelectedIssueId}
-            />
-          );
-        })}
-      </ul>
+            overflow: hidden;
+          `}
+        >
+          {issueList.data.items.map((issue) => {
+            return (
+              <IssueListItem
+                key={issue.id}
+                issue={issue}
+                selectedIssueId={selectedIssueId}
+                setSelectedIssueId={setSelectedIssueId}
+              />
+            );
+          })}
+        </ul>
+      )}
+
       <IssueListPaginate
         /**
          * 글이 하나라도 존재할 경우 페이지의 개수는 1이상이기 때문에 Math.floor가 아닌 Math.ceil를 사용해야 함.
@@ -106,7 +109,7 @@ export function IssueList() {
          * 단, Math.ceil을 사용 할 경우 조회 제한 개수 1000개를 넘어가게 될 수 있어 오류가 발생할 수 있음.
          */
         pageCount={Math.ceil(
-          Math.min(issueList.data.total_count, 1000) /
+          Math.min(issueTotalCount, 1000) /
             (Number(per_page) || defaultValue.DEFAULT_PER_PAGE)
         )}
       />

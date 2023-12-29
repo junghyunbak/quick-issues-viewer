@@ -33,6 +33,10 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
   );
 
   const pageIndex = useMemo(() => {
+    if (pageCount === 0) {
+      return undefined;
+    }
+
     if (!page) {
       return 0;
     }
@@ -42,11 +46,7 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
     }
 
     return Number(page) - 1;
-  }, [page]);
-
-  if (pageCount === 0) {
-    return null;
-  }
+  }, [page, pageCount]);
 
   return (
     <ClassNames>
