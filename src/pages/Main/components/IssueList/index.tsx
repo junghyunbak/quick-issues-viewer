@@ -29,7 +29,15 @@ export function IssueList() {
   const { label, per_page, page } = queryString.parse(searchParams.toString());
 
   const issueList = useQuery(
-    ["issue", "list", owner, repo, label, per_page, page],
+    [
+      "issue",
+      "list",
+      owner,
+      repo,
+      label,
+      per_page || defaultValue.DEFAULT_PER_PAGE,
+      page || 1,
+    ],
     async () => {
       return await apiSevice.getRepoIssueList(
         owner || "",
