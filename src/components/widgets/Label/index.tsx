@@ -9,10 +9,7 @@ interface IssueListItemProps {
   labelBgColor: string;
 }
 
-export function IssueListItemLabelListItem({
-  labelName,
-  labelBgColor,
-}: IssueListItemProps) {
+export function Label({ labelName, labelBgColor }: IssueListItemProps) {
   const [r, g, b] = hexToRgb(labelBgColor);
 
   const [h, s, l] = hexToHSL(labelBgColor);

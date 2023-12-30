@@ -2,8 +2,9 @@
 import { css } from "@emotion/react";
 
 // components
-import { IssueListItemLabelListItem } from "./IssueListItemLabelListItem";
+import { Label } from "@/components/widgets/Label";
 
+// apis
 import { type components } from "@octokit/openapi-types";
 
 interface IssueLabelListProps {
@@ -38,13 +39,7 @@ export function IssueListItemLabelList({ labels }: IssueLabelListProps) {
             return null;
           }
 
-          return (
-            <IssueListItemLabelListItem
-              key={id}
-              labelName={name}
-              labelBgColor={color}
-            />
-          );
+          return <Label key={id} labelName={name} labelBgColor={color} />;
         })}
       </ul>
     </div>
