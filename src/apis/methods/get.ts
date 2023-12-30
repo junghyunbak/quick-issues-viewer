@@ -67,6 +67,11 @@ export function get(octokit: Octokit) {
 
       return { pageCount, issues: data };
     },
+    /**
+     * TODO: 라벨을 전부 가져오기 위해 필요한 api 횟수 최적화 필요
+     * TODO: 파라미터 default값 제거
+     * TODO?: 라벨 필터링 기능을 삭제하고 더보기로 api 요청을 최소화
+     */
     getRepoIssueLabelList: async (owner: string = "", repo: string = "") => {
       let ret: components["schemas"]["label"][] = [];
 
@@ -92,8 +97,6 @@ export function get(octokit: Octokit) {
       return ret;
     },
     getRepoList: async (owner: string) => {
-      await octokit.rest.users.getByUsername({ username: owner });
-
       const { data } = await octokit.rest.repos.listForUser({
         username: owner,
       });
@@ -129,6 +132,5 @@ export function get(octokit: Octokit) {
 
       return data;
     },
-    getRateLimit: async () => {},
   };
 }
