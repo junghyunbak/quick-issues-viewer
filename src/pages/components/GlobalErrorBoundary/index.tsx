@@ -146,7 +146,10 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
 
             {error.status === 403 && (
               <p>
-                남은 시간: <span>{`${minute}분 ${second}초`}</span>
+                남은 시간:{" "}
+                <span>{`${minute.toString().padStart(2, "0")}분 ${second
+                  .toString()
+                  .padStart(2, "0")}초`}</span>
               </p>
             )}
 
