@@ -117,11 +117,6 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
             }
           `}
         >
-          <SearchModalUserList
-            searchValue={searchValue}
-            setInputValue={setInputValue}
-          />
-
           <SearchModalRepoList
             inputValue={inputValue}
             searchValue={searchValue}

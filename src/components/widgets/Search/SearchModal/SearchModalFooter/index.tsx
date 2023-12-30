@@ -19,7 +19,7 @@ export function SearchModalFooter() {
           font-size: 0.75rem;
         `}
       >
-        <b>owner</b>: change input value / <b>repository</b>: change url path
+        <b>repository</b>: change url path
       </p>
     </div>
   );
