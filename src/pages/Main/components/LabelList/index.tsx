@@ -24,7 +24,7 @@ export function LabelList() {
   const { owner, repo } = useParams();
 
   const labelList = useQuery(["label", "list", owner, repo], async () => {
-    return await apiSevice.getRepoIssueLabelList(owner, repo);
+    return await apiSevice.getRepoIssueLabelList(owner || "", repo || "");
   });
 
   const [inputValue, setInputValue] = useState("");

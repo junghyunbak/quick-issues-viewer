@@ -17,6 +17,22 @@ declare namespace parseLinkHeader {
   }
 }
 
+const isLastPage = (pageLinks: parseLinkHeader.Links): boolean => {
+  if (Object.keys(pageLinks).length !== 2) {
+    return false;
+  }
+
+  if (!pageLinks.first) {
+    return false;
+  }
+
+  if (!pageLinks.prev) {
+    return false;
+  }
+
+  return true;
+};
+
 const getPageCount = (
   pageLinks: parseLinkHeader.Links | null,
   dataLength: number
@@ -25,11 +41,7 @@ const getPageCount = (
     return dataLength === 0 ? 0 : 1;
   }
 
-  if (
-    Object.keys(pageLinks).length === 2 &&
-    pageLinks.first &&
-    pageLinks.prev
-  ) {
+  if (isLastPage(pageLinks) && pageLinks.prev) {
     return parseInt(pageLinks.prev.page, 10) + 1;
   } else if (pageLinks.last) {
     return parseInt(pageLinks.last.page, 10);
@@ -68,33 +80,36 @@ export function get(octokit: Octokit) {
       return { pageCount, issues: data };
     },
     /**
-     * TODO: 라벨을 전부 가져오기 위해 필요한 api 횟수 최적화 필요
-     * TODO: 파라미터 default값 제거
      * TODO?: 라벨 필터링 기능을 삭제하고 더보기로 api 요청을 최소화
      */
-    getRepoIssueLabelList: async (owner: string = "", repo: string = "") => {
-      let ret: components["schemas"]["label"][] = [];
+    getRepoIssueLabelList: async (
+      owner: string,
+      repo: string
+    ): Promise<components["schemas"]["label"][]> => {
+      const labels: components["schemas"]["label"][] = [];
 
       let page = 1;
-
-      let issueList: components["schemas"]["label"][];
+      let pageLinks = null;
 
       do {
-        const { data } = await octokit.rest.issues.listLabelsForRepo({
+        const {
+          data,
+          headers: { link },
+        } = await octokit.rest.issues.listLabelsForRepo({
           owner,
           repo,
           per_page: 100,
           page,
         });
 
-        issueList = data;
+        labels.push(...data);
 
-        ret = [...ret, ...issueList];
+        pageLinks = parseLink(link);
 
-        page++;
-      } while (issueList.length && page <= 10);
+        page += 1;
+      } while (pageLinks && !isLastPage(pageLinks));
 
-      return ret;
+      return labels;
     },
     getRepoList: async (owner: string) => {
       const { data } = await octokit.rest.repos.listForUser({
