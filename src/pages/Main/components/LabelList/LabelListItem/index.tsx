@@ -1,5 +1,5 @@
 // react
-import { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
 // styles
@@ -9,9 +9,7 @@ import { color, device, size } from "@/assets/styles";
 // utils
 import queryString from "query-string";
 
-// constants
-import { ALL_SHOW_LABEL_ID } from "..";
-
+// apis
 import { type components } from "@octokit/openapi-types";
 
 interface LabelListItemProps {
@@ -23,34 +21,67 @@ export function LabelListItem({ label }: LabelListItemProps) {
 
   const { label: selectedLabel } = queryString.parse(searchParams.toString());
 
-  const handleLabelClick = useCallback(() => {
-    setSearchParams(
-      (prev) => {
-        prev.delete("page");
-
-        if (label.id === ALL_SHOW_LABEL_ID) {
-          prev.delete("label");
-
-          return prev;
-        }
-
-        prev.set("label", label.name);
-
-        return prev;
-      },
-      {
-        replace: true,
-      }
-    );
-  }, [setSearchParams, label]);
-
-  const isActive = useMemo(() => {
+  const isSelect = useMemo(() => {
     if (!selectedLabel) {
-      return label.id === ALL_SHOW_LABEL_ID;
+      return false;
     }
 
-    return label.name === selectedLabel;
+    if (typeof selectedLabel !== "string") {
+      return false;
+    }
+
+    return selectedLabel.split(",").includes(label.name);
   }, [selectedLabel, label]);
+
+  const handleChkboxClick = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const {
+        target: { checked },
+      } = e;
+
+      setSearchParams(
+        (prev) => {
+          let labels: string | string[] | null = prev.get(
+            /**
+             * TODO: label -> labels
+             */
+            "label"
+          );
+
+          if (!labels) {
+            if (checked) {
+              prev.set("label", label.name);
+            }
+
+            return prev;
+          }
+
+          labels = labels.split(",");
+
+          if (checked) {
+            prev.set(
+              "label",
+              Array.from(new Set([...labels, label.name])).join(",")
+            );
+          } else {
+            const index = labels.indexOf(label.name);
+
+            if (index !== -1) {
+              labels.splice(index, 1);
+
+              prev.set("label", labels.join(","));
+            }
+          }
+
+          return prev;
+        },
+        {
+          replace: true,
+        }
+      );
+    },
+    [setSearchParams, label]
+  );
 
   return (
     <li
@@ -64,40 +95,31 @@ export function LabelListItem({ label }: LabelListItemProps) {
 
         border-radius: ${size.BORDER_RADIUS}px;
 
-        background-color: ${isActive ? color.g100 : "transparent"};
-
-        cursor: pointer;
-
         &:hover {
           @media ${device.canHover} {
             background-color: ${color.g100};
           }
         }
-
-        &::before {
-          content: "";
-
-          position: absolute;
-
-          left: -8px;
-
-          display: ${isActive ? "block" : "none"};
-
-          border-radius: ${size.BORDER_RADIUS}px;
-
-          width: 4px;
-          height: 80%;
-
-          background-color: rgb(9, 105, 218);
-        }
       `}
-      onClick={handleLabelClick}
     >
-      <div
+      <label
         css={css`
+          display: flex;
+          width: 100%;
+
           padding: 0.375rem 0.5rem;
+
+          cursor: pointer;
+
+          gap: 0.375rem;
         `}
       >
+        <input
+          type="checkbox"
+          onChange={handleChkboxClick}
+          checked={isSelect}
+        />
+
         <p
           css={css`
             text-align: start;
@@ -105,7 +127,7 @@ export function LabelListItem({ label }: LabelListItemProps) {
         >
           {label.name}
         </p>
-      </div>
+      </label>
     </li>
   );
 }
