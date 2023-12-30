@@ -1,5 +1,5 @@
 // react
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 
 // components
@@ -10,15 +10,24 @@ import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayo
 import { css } from "@emotion/react";
 import { color, size } from "@/assets/styles";
 
+// apis
+import { type RequestError } from "octokit";
+
 interface GlobalErrorBoundaryProps {
   children: React.ReactNode;
 }
 
 export function GlobalErrorBoundary({ children }: GlobalErrorBoundaryProps) {
-  return <ErrorBoundary FallbackComponent={Fallback}>{children}</ErrorBoundary>;
+  return (
+    <ErrorBoundary FallbackComponent={ErrorFallback}>{children}</ErrorBoundary>
+  );
 }
 
-function Fallback({ error, resetErrorBoundary }: FallbackProps) {
+interface ErrorFallbackProps extends FallbackProps {
+  error: RequestError;
+}
+
+function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
   const handleGoHomeButtonClick = useCallback(() => {
     switch (error.status) {
       case 403:
@@ -61,6 +70,40 @@ function Fallback({ error, resetErrorBoundary }: FallbackProps) {
     }
   }, [error]);
 
+  const resetDate = useMemo(() => {
+    if (!error.headers["x-ratelimit-reset"]) {
+      return new Date();
+    }
+
+    return new Date(parseInt(error.headers["x-ratelimit-reset"], 10) * 1000);
+  }, [error]);
+
+  const [remainSecond, setRemainSecond] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const ms =
+        resetDate.getTime() - new Date(new Date().toISOString()).getTime();
+
+      const s = Math.ceil(ms / 1000);
+
+      if (s < 0) {
+        return;
+      }
+
+      setRemainSecond(s);
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [resetDate, setRemainSecond]);
+
+  const minute = Math.floor(remainSecond / 60);
+  const second = remainSecond % 60;
+
+  const isReset = error.status !== 403 || remainSecond === 0;
+
   return (
     <FixedAndVariableLayout
       direction="column"
@@ -101,6 +144,12 @@ function Fallback({ error, resetErrorBoundary }: FallbackProps) {
               {errorMessage}
             </p>
 
+            {error.status === 403 && (
+              <p>
+                남은 시간: <span>{`${minute}분 ${second}초`}</span>
+              </p>
+            )}
+
             <button
               type="button"
               css={css`
@@ -112,11 +161,12 @@ function Fallback({ error, resetErrorBoundary }: FallbackProps) {
                 background-color: ${color.g100};
 
                 font-weight: 500;
-                color: ${color.active};
+                color: ${isReset ? color.active : color.inactive};
 
-                cursor: pointer;
+                cursor: ${isReset ? "pointer" : "auto"};
               `}
               onClick={handleGoHomeButtonClick}
+              disabled={!isReset}
             >
               {buttonMessage}
             </button>
