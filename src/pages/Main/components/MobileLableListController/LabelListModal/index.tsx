@@ -8,6 +8,7 @@ import { color, device, size, zIndex } from "@/assets/styles";
 // components
 import { LabelList } from "@/pages/Main/components/LabelList";
 import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
+import { FilterLabelInput } from "@/pages/Main/components/FilterLabelInput";
 
 // svgs
 import { ReactComponent as X } from "@/assets/svgs/x.svg";
@@ -58,35 +59,43 @@ export function LabelListModal({ setMenuIsOpen }: LabelListModalProps) {
           fixedElement={
             <div
               css={css`
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-
-                padding: 0.5rem;
+                border-bottom: 1px solid ${color.g200};
               `}
             >
               <div
                 css={css`
                   display: flex;
                   align-items: center;
-                  justify-content: center;
+                  justify-content: flex-end;
 
                   padding: 0.5rem;
-
-                  border-radius: ${size.BORDER_RADIUS}px;
-
-                  cursor: pointer;
-
-                  &:hover {
-                    @media ${device.canHover} {
-                      background-color: ${color.g100};
-                    }
-                  }
                 `}
-                onClick={handleDimmedClick}
               >
-                <X />
+                <div
+                  css={css`
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    padding: 0.5rem;
+
+                    border-radius: ${size.BORDER_RADIUS}px;
+
+                    cursor: pointer;
+
+                    &:hover {
+                      @media ${device.canHover} {
+                        background-color: ${color.g100};
+                      }
+                    }
+                  `}
+                  onClick={handleDimmedClick}
+                >
+                  <X />
+                </div>
               </div>
+
+              <FilterLabelInput />
             </div>
           }
           variableElement={<LabelList />}
