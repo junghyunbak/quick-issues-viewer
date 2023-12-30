@@ -36,7 +36,7 @@ const isLastPage = (pageLinks: parseLinkHeader.Links): boolean => {
 const getPageCount = (
   pageLinks: parseLinkHeader.Links | null,
   dataLength: number
-) => {
+): number => {
   if (!pageLinks) {
     return dataLength === 0 ? 0 : 1;
   }
@@ -92,15 +92,17 @@ export function get(octokit: Octokit) {
       let pageLinks = null;
 
       do {
-        const {
-          data,
-          headers: { link },
-        } = await octokit.rest.issues.listLabelsForRepo({
+        const response = await octokit.rest.issues.listLabelsForRepo({
           owner,
           repo,
           per_page: 100,
           page,
         });
+
+        const {
+          data,
+          headers: { link },
+        } = response;
 
         labels.push(...data);
 
@@ -111,14 +113,18 @@ export function get(octokit: Octokit) {
 
       return labels;
     },
-    getRepoList: async (owner: string) => {
+    getRepoList: async (
+      owner: string
+    ): Promise<components["schemas"]["minimal-repository"][]> => {
       const { data } = await octokit.rest.repos.listForUser({
         username: owner,
       });
 
       return data;
     },
-    getUserList: async (owner: string) => {
+    getUserList: async (
+      owner: string
+    ): Promise<components["schemas"]["user-search-result-item"][]> => {
       const queries: string[] = [`${owner} in:login`];
 
       const {
