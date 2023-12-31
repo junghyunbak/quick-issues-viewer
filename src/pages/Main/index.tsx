@@ -4,7 +4,6 @@ import { LabelList } from "@/pages/Main/components/LabelList";
 import { Header } from "@/components/widgets/Header";
 import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
 import { MobileLableListController } from "./components/MobileLableListController";
-import { FilterLabelInput } from "./components/FilterLabelInput";
 
 // styles
 import { css } from "@emotion/react";
@@ -36,7 +35,6 @@ export function Main() {
               <div
                 css={css`
                   display: flex;
-                  flex-direction: column;
 
                   width: ${size.SIDEBAR_WIDTH}px;
                   height: 100%;
@@ -48,23 +46,7 @@ export function Main() {
                   }
                 `}
               >
-                <div
-                  css={css`
-                    border-bottom: 1px solid ${color.g200};
-                  `}
-                >
-                  <FilterLabelInput />
-                </div>
-
-                <div
-                  css={css`
-                    flex: 1;
-
-                    overflow: auto;
-                  `}
-                >
-                  <LabelList />
-                </div>
+                <LabelList />
               </div>
             }
             variableElement={

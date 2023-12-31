@@ -8,7 +8,6 @@ import { color, device, size, zIndex } from "@/assets/styles";
 // components
 import { LabelList } from "@/pages/Main/components/LabelList";
 import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
-import { FilterLabelInput } from "@/pages/Main/components/FilterLabelInput";
 
 // svgs
 import { ReactComponent as X } from "@/assets/svgs/x.svg";
@@ -94,8 +93,6 @@ export function LabelListModal({ setMenuIsOpen }: LabelListModalProps) {
                   <X />
                 </div>
               </div>
-
-              <FilterLabelInput />
             </div>
           }
           variableElement={<LabelList />}

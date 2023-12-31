@@ -1,5 +1,5 @@
 // react
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 
 // styles
 import { css } from "@emotion/react";
@@ -8,17 +8,21 @@ import { color, size } from "@/assets/styles";
 // svgs
 import { ReactComponent as Magnifier } from "@/assets/svgs/magnifier.svg";
 
-// zustand
-import useStore from "@/store";
+interface LabelListFilterInput {
+  inputValue: string;
 
-export function FilterLabelInput() {
-  const [setSearchLabel] = useStore((state) => [state.setSearchLabel]);
+  setInputValue: React.Dispatch<React.SetStateAction<string>>;
+}
 
+export function LabelListFilterInput({
+  inputValue,
+  setInputValue,
+}: LabelListFilterInput) {
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchLabel(e.target.value);
+      setInputValue(e.target.value);
     },
-    [setSearchLabel]
+    [setInputValue]
   );
 
   return (
@@ -49,6 +53,7 @@ export function FilterLabelInput() {
             outline: none;
             border: 0;
           `}
+          value={inputValue}
           onChange={handleInputChange}
           placeholder="label"
         />
