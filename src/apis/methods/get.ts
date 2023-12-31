@@ -118,6 +118,7 @@ export function get(octokit: Octokit) {
     ): Promise<components["schemas"]["minimal-repository"][]> => {
       const { data } = await octokit.rest.repos.listForUser({
         username: owner,
+        per_page: 100,
       });
 
       return data;
