@@ -58,40 +58,34 @@ export function LabelListModal({ setMenuIsOpen }: LabelListModalProps) {
           fixedElement={
             <div
               css={css`
-                border-bottom: 1px solid ${color.g200};
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+
+                padding: 0.5rem;
               `}
             >
               <div
                 css={css`
                   display: flex;
                   align-items: center;
-                  justify-content: flex-end;
+                  justify-content: center;
 
                   padding: 0.5rem;
-                `}
-              >
-                <div
-                  css={css`
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
 
-                    padding: 0.5rem;
+                  border-radius: ${size.BORDER_RADIUS}px;
 
-                    border-radius: ${size.BORDER_RADIUS}px;
+                  cursor: pointer;
 
-                    cursor: pointer;
-
-                    &:hover {
-                      @media ${device.canHover} {
-                        background-color: ${color.g100};
-                      }
+                  &:hover {
+                    @media ${device.canHover} {
+                      background-color: ${color.g100};
                     }
-                  `}
-                  onClick={handleDimmedClick}
-                >
-                  <X />
-                </div>
+                  }
+                `}
+                onClick={handleDimmedClick}
+              >
+                <X />
               </div>
             </div>
           }
