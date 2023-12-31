@@ -299,7 +299,7 @@ export function IssueListItem({
                     <Markdown
                       css={css`
                         li {
-                          list-style: unset;
+                          list-style: initial;
                         }
                       `}
                       className="markdown-body"
