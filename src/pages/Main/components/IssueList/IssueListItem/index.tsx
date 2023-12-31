@@ -48,7 +48,6 @@ export function IssueListItem({
     created_at,
     html_url,
     pull_request,
-    state_reason,
   } = issue;
 
   const handleIssueItemClick = useCallback(
@@ -67,7 +66,6 @@ export function IssueListItem({
   );
 
   const StatusIcon = useMemo<React.ReactNode>(() => {
-    console.log(title, state, pull_request?.merged_at, state_reason);
     if (pull_request) {
       if (state === "open") {
         return (
@@ -121,7 +119,7 @@ export function IssueListItem({
         `}
       />
     );
-  }, [state]);
+  }, [state, pull_request]);
 
   return (
     <li
