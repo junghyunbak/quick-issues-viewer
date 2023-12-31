@@ -1,10 +1,10 @@
 // react
-import { useMemo, useState, useEffect, useCallback } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { type FallbackProps } from "react-error-boundary";
 
 // styles
 import { css } from "@emotion/react";
-import { color, size } from "@/assets/styles";
+import { color } from "@/assets/styles";
 
 // apis
 import { type RequestError } from "octokit";
@@ -16,28 +16,29 @@ interface ForbiddenProps {
 }
 
 export function Forbidden({ error, resetErrorBoundary }: ForbiddenProps) {
+  const [remainSecond, setRemainSecond] = useState(0);
+
   const resetDate = useMemo(() => {
-    if (!error.headers["x-ratelimit-reset"]) {
-      return new Date();
+    if (!error.response || !error.response.headers["x-ratelimit-reset"]) {
+      const utcDate = new Date(new Date().toISOString());
+
+      return utcDate;
     }
 
-    return new Date(parseInt(error.headers["x-ratelimit-reset"], 10) * 1000);
+    return new Date(
+      parseInt(error.response.headers["x-ratelimit-reset"], 10) * 1000
+    );
   }, [error]);
-
-  const [remainSecond, setRemainSecond] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      const ms =
-        resetDate.getTime() - new Date(new Date().toISOString()).getTime();
+      const utcDate = new Date(new Date().toISOString());
 
-      const s = Math.ceil(ms / 1000);
+      const second = Math.ceil(
+        (resetDate.getTime() - utcDate.getTime()) / 1000
+      );
 
-      if (s < 0) {
-        return;
-      }
-
-      setRemainSecond(s);
+      setRemainSecond(second);
     }, 1000);
 
     return () => {
@@ -45,14 +46,14 @@ export function Forbidden({ error, resetErrorBoundary }: ForbiddenProps) {
     };
   }, [resetDate, setRemainSecond]);
 
-  const handleRetryButtonClick = useCallback(() => {
-    resetErrorBoundary();
-  }, [resetErrorBoundary]);
+  useEffect(() => {
+    if (remainSecond < 0) {
+      resetErrorBoundary();
+    }
+  }, [remainSecond, resetErrorBoundary]);
 
-  const minute = Math.floor(remainSecond / 60);
-  const second = remainSecond % 60;
-
-  const isReset = remainSecond === 0;
+  const minute = Math.floor(Math.max(remainSecond, 0) / 60);
+  const second = Math.max(remainSecond) % 60;
 
   return (
     <div
@@ -88,27 +89,6 @@ export function Forbidden({ error, resetErrorBoundary }: ForbiddenProps) {
             .toString()
             .padStart(2, "0")}초`}</span>
         </p>
-
-        <button
-          type="button"
-          css={css`
-            padding: 0.3125rem 1rem;
-
-            border: 1px solid ${color.g200};
-            border-radius: ${size.BORDER_RADIUS}px;
-
-            background-color: ${color.g100};
-
-            font-weight: 500;
-            color: ${isReset ? color.active : color.inactive};
-
-            cursor: ${isReset ? "pointer" : "auto"};
-          `}
-          onClick={handleRetryButtonClick}
-          disabled={!isReset}
-        >
-          retry
-        </button>
       </div>
     </div>
   );
