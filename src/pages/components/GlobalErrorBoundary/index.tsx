@@ -24,12 +24,10 @@ interface ErrorFallbackProps extends FallbackProps {
   error: RequestError;
 }
 
-function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
+function ErrorFallback({ error }: ErrorFallbackProps) {
   switch (error.status) {
     case 403:
-      return (
-        <Forbidden error={error} resetErrorBoundary={resetErrorBoundary} />
-      );
+      return <Forbidden error={error} />;
 
     case 404:
     case 422:

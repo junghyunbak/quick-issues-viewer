@@ -1,6 +1,5 @@
 // react
 import { useMemo, useState, useEffect } from "react";
-import { type FallbackProps } from "react-error-boundary";
 
 // styles
 import { css } from "@emotion/react";
@@ -11,11 +10,9 @@ import { type RequestError } from "octokit";
 
 interface ForbiddenProps {
   error: RequestError;
-
-  resetErrorBoundary: FallbackProps["resetErrorBoundary"];
 }
 
-export function Forbidden({ error, resetErrorBoundary }: ForbiddenProps) {
+export function Forbidden({ error }: ForbiddenProps) {
   const [remainSecond, setRemainSecond] = useState(0);
 
   const resetDate = useMemo(() => {
@@ -38,7 +35,7 @@ export function Forbidden({ error, resetErrorBoundary }: ForbiddenProps) {
         (resetDate.getTime() - utcDate.getTime()) / 1000
       );
 
-      setRemainSecond(second);
+      setRemainSecond(Math.max(second, 0));
     }, 1000);
 
     return () => {
@@ -48,9 +45,9 @@ export function Forbidden({ error, resetErrorBoundary }: ForbiddenProps) {
 
   useEffect(() => {
     if (remainSecond < 0) {
-      resetErrorBoundary();
+      window.location.reload();
     }
-  }, [remainSecond, resetErrorBoundary]);
+  }, [remainSecond]);
 
   const minute = Math.floor(Math.max(remainSecond, 0) / 60);
   const second = Math.max(remainSecond) % 60;
