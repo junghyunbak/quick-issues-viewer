@@ -14,6 +14,9 @@ import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayo
 import { ReactComponent as IssueOpened } from "@/assets/svgs/issue-opened.svg";
 import { ReactComponent as IssueClosed } from "@/assets/svgs/issue-closed.svg";
 import { ReactComponent as Reference } from "@/assets/svgs/reference.svg";
+import { ReactComponent as PrOpen } from "@/assets/svgs/pr-open.svg";
+import { ReactComponent as PrClosed } from "@/assets/svgs/pr-closed.svg";
+import { ReactComponent as PrMerged } from "@/assets/svgs/pr-merged.svg";
 
 // styles
 import { css } from "@emotion/react";
@@ -35,7 +38,18 @@ export function IssueListItem({
   selectedIssueId,
   setSelectedIssueId,
 }: IssueListItemProps) {
-  const { id, title, labels, state, body, user, created_at, html_url } = issue;
+  const {
+    id,
+    title,
+    labels,
+    state,
+    body,
+    user,
+    created_at,
+    html_url,
+    pull_request,
+    state_reason,
+  } = issue;
 
   const handleIssueItemClick = useCallback(
     (issueId: number) => {
@@ -53,6 +67,43 @@ export function IssueListItem({
   );
 
   const StatusIcon = useMemo<React.ReactNode>(() => {
+    console.log(title, state, pull_request?.merged_at, state_reason);
+    if (pull_request) {
+      if (state === "open") {
+        return (
+          <PrOpen
+            css={css`
+              path {
+                fill: ${color.success};
+              }
+            `}
+          />
+        );
+      } else {
+        if (!pull_request.merged_at) {
+          return (
+            <PrClosed
+              css={css`
+                path {
+                  fill: rgb(207, 34, 46);
+                }
+              `}
+            />
+          );
+        } else {
+          return (
+            <PrMerged
+              css={css`
+                path {
+                  fill: ${color.complete};
+                }
+              `}
+            />
+          );
+        }
+      }
+    }
+
     return state === "open" ? (
       <IssueOpened
         css={css`

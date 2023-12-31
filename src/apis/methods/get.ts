@@ -68,6 +68,7 @@ export function get(octokit: Octokit) {
         per_page: perPage,
         labels: labels.join(","),
         page,
+        state: "all",
       });
 
       const {
