@@ -13,13 +13,13 @@ import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayo
 import { ReactComponent as X } from "@/assets/svgs/x.svg";
 
 interface LabelListModalProps {
-  setMenuIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function LabelListModal({ setMenuIsOpen }: LabelListModalProps) {
+export function LabelListModal({ setIsOpen }: LabelListModalProps) {
   const handleDimmedClick = useCallback(() => {
-    setMenuIsOpen(false);
-  }, [setMenuIsOpen]);
+    setIsOpen(false);
+  }, [setIsOpen]);
 
   return (
     <div
