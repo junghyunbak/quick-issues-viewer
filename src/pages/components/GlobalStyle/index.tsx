@@ -4,7 +4,7 @@ import React from "react";
 // styles
 import { Global, css } from "@emotion/react";
 import { device } from "@/assets/styles";
-import "@/assets/fonts/font.css";
+import "@/assets/fonts/stylesheet.css";
 
 interface GlobalStyleProps {
   children: React.ReactNode;
