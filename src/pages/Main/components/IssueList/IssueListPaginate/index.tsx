@@ -67,6 +67,30 @@ export function IssueListPaginate({ pageCount }: IssueListPaginateProps) {
                 justify-content: space-between;
               }
             `}
+            breakLinkClassName={css`
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              @media ${device.mobile} {
+                display: none;
+              }
+
+              padding: 0.5rem 0.8rem;
+
+              cursor: pointer;
+
+              font-size: 0.875rem;
+
+              border: 1px solid transparent;
+              border-radius: ${size.BORDER_RADIUS}px;
+
+              &:hover {
+                @media ${device.canHover} {
+                  border: 1px solid ${color.g200};
+                }
+              }
+            `}
             pageLinkClassName={css`
               display: flex;
               align-items: center;
