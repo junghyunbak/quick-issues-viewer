@@ -41,6 +41,8 @@ export function LabelListItem({ label }: LabelListItemProps) {
 
       setSearchParams(
         (prev) => {
+          prev.delete("page");
+
           let labels: string | string[] | null = prev.get(
             /**
              * TODO: label -> labels
