@@ -265,7 +265,7 @@ export function IssueListItem({
                     <a
                       css={css`
                         font-size: 0.875rem;
-                        font-weight: bold;
+                        font-weight: 600;
 
                         color: ${color.b};
                         text-decoration: none;
