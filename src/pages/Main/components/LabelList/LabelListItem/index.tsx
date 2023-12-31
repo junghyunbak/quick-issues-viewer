@@ -1,5 +1,5 @@
 // react
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, memo } from "react";
 import { useSearchParams } from "react-router-dom";
 
 // styles
@@ -16,7 +16,7 @@ interface LabelListItemProps {
   label: components["schemas"]["label"];
 }
 
-export function LabelListItem({ label }: LabelListItemProps) {
+function LabelListItem({ label }: LabelListItemProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { label: selectedLabel } = queryString.parse(searchParams.toString());
@@ -133,3 +133,5 @@ export function LabelListItem({ label }: LabelListItemProps) {
     </li>
   );
 }
+
+export const MemoizedLabelListItem = memo(LabelListItem);

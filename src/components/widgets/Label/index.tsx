@@ -15,7 +15,7 @@ export function Label({ labelName, labelBgColor }: IssueListItemProps) {
   const [h, s, l] = hexToHSL(labelBgColor);
 
   return (
-    <li
+    <div
       css={css`
         display: flex;
         align-items: center;
@@ -84,6 +84,6 @@ export function Label({ labelName, labelBgColor }: IssueListItemProps) {
       >
         {labelName}
       </span>
-    </li>
+    </div>
   );
 }
