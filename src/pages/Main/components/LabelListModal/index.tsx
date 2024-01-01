@@ -29,6 +29,10 @@ export function LabelListModal({ setIsOpen }: LabelListModalProps) {
         inset: 0;
 
         z-index: ${zIndex.LABEL_LIST_MODAL};
+
+        @media ${device.pc} {
+          display: none;
+        }
       `}
     >
       <div
