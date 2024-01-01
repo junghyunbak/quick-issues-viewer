@@ -116,6 +116,7 @@ export function LabelList() {
                 <ul
                   css={css`
                     display: flex;
+                    flex-wrap: wrap;
                     gap: 0.25rem;
 
                     padding: 1.25rem;
