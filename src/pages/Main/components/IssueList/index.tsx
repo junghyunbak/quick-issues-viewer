@@ -28,7 +28,7 @@ export function IssueList() {
 
   const { label, per_page, page } = queryString.parse(searchParams.toString());
 
-  const issueList = useQuery(
+  const issues = useQuery(
     [
       "issue",
       "list",
@@ -51,7 +51,7 @@ export function IssueList() {
 
   const [selectedIssueId, setSelectedIssueId] = useState<number | null>(null);
 
-  if (issueList.isLoading) {
+  if (issues.isLoading) {
     return (
       <div
         css={css`
@@ -68,6 +68,10 @@ export function IssueList() {
     );
   }
 
+  if (!issues.data) {
+    return null;
+  }
+
   return (
     <div
       css={css`
@@ -78,8 +82,8 @@ export function IssueList() {
         padding: 1.25rem;
       `}
     >
-      {issueList.data && (
-        <Fragment>
+      <Fragment>
+        {issues.data.items.length > 0 && (
           <ul
             css={css`
               width: 100%;
@@ -90,7 +94,7 @@ export function IssueList() {
               overflow: hidden;
             `}
           >
-            {issueList.data.issues.map((issue) => {
+            {issues.data.items.map((issue) => {
               return (
                 <IssueListItem
                   key={issue.id}
@@ -101,10 +105,10 @@ export function IssueList() {
               );
             })}
           </ul>
+        )}
 
-          <IssueListPaginate pageCount={issueList.data.pageCount} />
-        </Fragment>
-      )}
+        <IssueListPaginate pageCount={issues.data.pageCount} />
+      </Fragment>
     </div>
   );
 }

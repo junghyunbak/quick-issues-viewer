@@ -60,7 +60,7 @@ export function get(octokit: Octokit) {
       page: number
     ): Promise<{
       pageCount: number;
-      issues: components["schemas"]["issue"][];
+      items: components["schemas"]["issue"][];
     }> => {
       const response = await octokit.rest.issues.listForRepo({
         owner,
@@ -78,7 +78,7 @@ export function get(octokit: Octokit) {
 
       const pageCount = getPageCount(parseLink(link), data.length);
 
-      return { pageCount, issues: data };
+      return { pageCount, items: data };
     },
     /**
      * TODO?: 라벨 필터링 기능을 삭제하고 더보기로 api 요청을 최소화
@@ -151,6 +151,17 @@ export function get(octokit: Octokit) {
 
       const { data } = await octokit.rest.users.getByUsername({
         username: owner,
+      });
+
+      return data;
+    },
+    getRepoInfo: async (
+      owner: string,
+      repo: string
+    ): Promise<components["schemas"]["simple-repository"]> => {
+      const { data } = await octokit.rest.repos.get({
+        owner,
+        repo,
       });
 
       return data;

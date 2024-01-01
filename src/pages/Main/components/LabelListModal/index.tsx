@@ -8,6 +8,7 @@ import { color, device, size, zIndex } from "@/assets/styles";
 // components
 import { LabelList } from "@/pages/Main/components/LabelList";
 import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
+import { RepositoryLink } from "@/pages/Main/components/RepositoryLink";
 
 // svgs
 import { ReactComponent as X } from "@/assets/svgs/x.svg";
@@ -60,11 +61,13 @@ export function LabelListModal({ setIsOpen }: LabelListModalProps) {
               css={css`
                 display: flex;
                 align-items: center;
-                justify-content: flex-end;
+                justify-content: space-between;
 
                 padding: 0.5rem;
               `}
             >
+              <RepositoryLink />
+
               <div
                 css={css`
                   display: flex;

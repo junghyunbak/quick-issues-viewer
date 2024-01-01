@@ -4,6 +4,7 @@ import { useState, Fragment } from "react";
 // components
 import { Search } from "@/components/widgets/Search";
 import { LabelListModal } from "@/pages/Main/components/LabelListModal";
+import { RepositoryLink } from "@/pages/Main/components/RepositoryLink";
 
 // styles
 import { css } from "@emotion/react";
@@ -35,27 +36,44 @@ export function Header() {
           css={css`
             display: flex;
             align-items: center;
-            justify-content: center;
-
-            padding: 0.5rem;
-
-            cursor: pointer;
-
-            border-radius: ${size.BORDER_RADIUS}px;
-
-            &:hover {
-              @media ${device.canHover} {
-                background-color: ${color.g100};
-              }
-            }
-
-            @media ${device.pc} {
-              visibility: hidden;
-            }
           `}
-          onClick={handleMemuButtonClick}
         >
-          <Hamburger />
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              padding: 0.5rem;
+
+              cursor: pointer;
+
+              border-radius: ${size.BORDER_RADIUS}px;
+
+              &:hover {
+                @media ${device.canHover} {
+                  background-color: ${color.g100};
+                }
+              }
+
+              @media ${device.pc} {
+                display: none;
+              }
+            `}
+            onClick={handleMemuButtonClick}
+          >
+            <Hamburger />
+          </div>
+
+          <div
+            css={css`
+              @media ${device.tablet} {
+                display: none;
+              }
+            `}
+          >
+            <RepositoryLink />
+          </div>
         </div>
 
         <Search />
