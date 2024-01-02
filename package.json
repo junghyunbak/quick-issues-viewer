@@ -68,5 +68,6 @@
     "@types/parse-link-header": "^2.0.3",
     "@types/react-syntax-highlighter": "^15.5.11",
     "craco-alias": "^3.0.1"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }
