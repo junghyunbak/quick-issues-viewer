@@ -6,14 +6,16 @@ import { useParams } from "react-router-dom";
 import { css } from "@emotion/react";
 import { color, size } from "@/assets/styles";
 
-// apis
-import { apiSevice } from "@/apis";
+// hooks
+import { useOctokit } from "@/hooks";
 
 export function RepositoryLink() {
   const { owner, repo } = useParams();
 
+  const { apiService } = useOctokit();
+
   const repoInfo = useQuery(["repo", "info", owner, repo], async () => {
-    return await apiSevice.getRepoInfo(owner || "", repo || "");
+    return await apiService.getRepoInfo(owner || "", repo || "");
   });
 
   if (!repoInfo.data) {

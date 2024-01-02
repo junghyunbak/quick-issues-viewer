@@ -8,8 +8,8 @@ import { SearchModalRepoListItem } from "./SearchModalRepoListItem";
 // styles
 import { css } from "@emotion/react";
 
-// apis
-import { apiSevice } from "@/apis";
+// hooks
+import { useOctokit } from "@/hooks";
 
 interface SearchModalRepoListProps {
   inputValue: string;
@@ -24,6 +24,8 @@ export function SearchModalRepoList({
   searchValue,
   setIsModalOpen,
 }: SearchModalRepoListProps) {
+  const { apiService } = useOctokit();
+
   const [owner] = searchValue.split("/");
 
   const repoList = useQuery(["search", "repos", owner], async () => {
@@ -32,7 +34,7 @@ export function SearchModalRepoList({
     }
 
     try {
-      const repoList = await apiSevice.getRepoList(owner);
+      const repoList = await apiService.getRepoList(owner);
 
       return repoList;
     } catch (e) {

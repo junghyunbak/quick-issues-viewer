@@ -8,9 +8,6 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { css } from "@emotion/react";
 import { color } from "@/assets/styles";
 
-// apis
-import { apiSevice } from "@/apis";
-
 // utils
 import queryString from "query-string";
 
@@ -20,6 +17,9 @@ import { LabelListFilterInput } from "./LabelListFilterInput";
 import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
 import { Label } from "@/components/widgets/Label";
 
+// hooks
+import { useOctokit } from "@/hooks";
+
 export function LabelList() {
   const { owner, repo } = useParams();
 
@@ -27,8 +27,10 @@ export function LabelList() {
 
   const { label } = queryString.parse(searchParams.toString());
 
+  const { apiService } = useOctokit();
+
   const labelList = useQuery(["label", "list", owner, repo], async () => {
-    return await apiSevice.getRepoIssueLabelList(owner || "", repo || "");
+    return await apiService.getRepoIssueLabelList(owner || "", repo || "");
   });
 
   const [searchLabel, setSearchLabel] = useState("");

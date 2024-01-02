@@ -2,14 +2,14 @@
 import React from "react";
 import { useQuery } from "react-query";
 
-// apis
-import { apiSevice } from "@/apis";
-
 // styles
 import { css } from "@emotion/react";
 
 // components
 import { SearchModalUserListItem } from "./SearchModalUserListItem";
+
+// hooks
+import { useOctokit } from "@/hooks";
 
 interface SearchModalUserListProps {
   searchValue: string;
@@ -23,13 +23,15 @@ export function SearchModalUserList({
 }: SearchModalUserListProps) {
   const [owner, repo] = searchValue.split("/");
 
+  const { apiService } = useOctokit();
+
   const userList = useQuery(["search", "users", owner], async () => {
     if (owner === "") {
       return null;
     }
 
     try {
-      const userList = await apiSevice.getUserList(owner);
+      const userList = await apiService.getUserList(owner);
 
       return userList;
     } catch (e) {

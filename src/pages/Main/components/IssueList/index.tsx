@@ -4,9 +4,6 @@ import { useQuery } from "react-query";
 import { RotatingLines } from "react-loader-spinner";
 import { useParams, useSearchParams } from "react-router-dom";
 
-// apis
-import { apiSevice } from "@/apis";
-
 // styles
 import { css } from "@emotion/react";
 import { color, size } from "@/assets/styles";
@@ -21,10 +18,14 @@ import { IssueListPaginate } from "./IssueListPaginate";
 // utils
 import queryString from "query-string";
 
+import { useOctokit } from "@/hooks";
+
 export function IssueList() {
   const { owner, repo } = useParams();
 
   const [searchParams] = useSearchParams();
+
+  const { apiService } = useOctokit();
 
   const { label, per_page, page } = queryString.parse(searchParams.toString());
 
@@ -39,7 +40,7 @@ export function IssueList() {
       page || 1,
     ],
     async () => {
-      return await apiSevice.getRepoIssueList(
+      return await apiService.getRepoIssueList(
         owner || "",
         repo || "",
         [label as string],

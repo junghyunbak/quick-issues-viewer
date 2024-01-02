@@ -5,11 +5,11 @@ import { get } from "@/apis/methods/get";
 export const useOctokit = () => {
   const { octokit, setAccessToken } = useContext(OctokitContext);
 
-  const apiSevice = useMemo(() => {
+  const apiService = useMemo(() => {
     return {
       ...get(octokit),
     };
   }, [octokit]);
 
-  return { apiSevice, setAccessToken };
+  return { apiService, setAccessToken };
 };
