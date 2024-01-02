@@ -8,7 +8,8 @@ import { NotFound } from "./NotFound";
 import { Unknown } from "./Unknown";
 
 // apis
-import { type RequestError } from "octokit";
+import { RequestError } from "octokit";
+import { AxiosError } from "axios";
 
 interface GlobalErrorBoundaryProps {
   children: React.ReactNode;
@@ -21,19 +22,25 @@ export function GlobalErrorBoundary({ children }: GlobalErrorBoundaryProps) {
 }
 
 interface ErrorFallbackProps extends FallbackProps {
-  error: RequestError;
+  error: RequestError | AxiosError;
 }
 
 function ErrorFallback({ error }: ErrorFallbackProps) {
-  switch (error.status) {
-    case 403:
-      return <Forbidden error={error} />;
+  if (error instanceof RequestError) {
+    switch (error.status) {
+      case 403:
+        return <Forbidden error={error} />;
 
-    case 404:
-    case 422:
-      return <NotFound />;
+      case 404:
+      case 422:
+        return <NotFound />;
 
-    default:
-      return <Unknown />;
+      default:
+        return <Unknown />;
+    }
+  } else if (error instanceof AxiosError) {
+    return <Unknown />;
+  } else {
+    return <Unknown />;
   }
 }
