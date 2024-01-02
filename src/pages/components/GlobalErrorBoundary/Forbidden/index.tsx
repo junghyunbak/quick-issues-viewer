@@ -35,7 +35,7 @@ export function Forbidden({ error }: ForbiddenProps) {
         (resetDate.getTime() - utcDate.getTime()) / 1000
       );
 
-      setRemainSecond(Math.max(second, 0));
+      setRemainSecond(second);
     }, 1000);
 
     return () => {
@@ -50,7 +50,7 @@ export function Forbidden({ error }: ForbiddenProps) {
   }, [remainSecond]);
 
   const minute = Math.floor(Math.max(remainSecond, 0) / 60);
-  const second = Math.max(remainSecond) % 60;
+  const second = Math.max(Math.max(remainSecond, 0)) % 60;
 
   return (
     <div
