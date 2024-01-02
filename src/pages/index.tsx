@@ -10,27 +10,32 @@ import { Main } from "@/pages/Main";
 import { GlobalStyle } from "./components/GlobalStyle";
 import { ReactQueryProvider } from "./components/ReactQueryProvider";
 import { GlobalErrorBoundary } from "./components/GlobalErrorBoundary";
+import { OctokitProvider } from "./components/OctokitProvider";
+import { Login } from "./Login";
 
 export function Index() {
   return (
     <ReactQueryProvider>
       <GlobalStyle>
         <GlobalErrorBoundary>
-          <BrowserRouter>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Navigate
-                    replace
-                    to={`/${defaultValue.DEFAULT_REPO_OWNER}/${defaultValue.DEFAULT_REPO_NAME}`}
-                  />
-                }
-              />
-              <Route path="/:owner/:repo" element={<Main />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
+          <OctokitProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <Navigate
+                      replace
+                      to={`/${defaultValue.DEFAULT_REPO_OWNER}/${defaultValue.DEFAULT_REPO_NAME}`}
+                    />
+                  }
+                />
+                <Route path="/login" element={<Login />} />
+                <Route path="/:owner/:repo" element={<Main />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </OctokitProvider>
         </GlobalErrorBoundary>
       </GlobalStyle>
     </ReactQueryProvider>
