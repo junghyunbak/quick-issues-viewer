@@ -1,26 +1,12 @@
 // react
-import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
 // styles
 import { css } from "@emotion/react";
 import { color, size } from "@/assets/styles";
 
-// hooks
-import { useOctokit } from "@/hooks";
-
 export function RepositoryLink() {
   const { owner, repo } = useParams();
-
-  const { apiService } = useOctokit();
-
-  const repoInfo = useQuery(["repo", "info", owner, repo], async () => {
-    return await apiService.getRepoInfo(owner || "", repo || "");
-  });
-
-  if (!repoInfo.data) {
-    return null;
-  }
 
   return (
     <div
@@ -43,14 +29,14 @@ export function RepositoryLink() {
         }
       `}
     >
-      <a href={repoInfo.data.owner.html_url} target="__blank">
-        {repoInfo.data.owner.login}
+      <a href={`https://github.com/${owner}`} target="__blank">
+        {owner}
       </a>
 
       <span>/</span>
 
-      <a href={repoInfo.data.html_url} target="__blank">
-        {repoInfo.data.name}
+      <a href={`https://github.com/${owner}/${repo}/issues`} target="__blank">
+        {repo}
       </a>
     </div>
   );
