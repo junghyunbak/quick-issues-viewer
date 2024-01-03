@@ -25,16 +25,19 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
   const [octokit, setOctokit] = useState<Octokit | null>(null);
 
   const initializeOctokit = async () => {
-    const octokitOptions: OctokitOptions = {
-      throttle: { enabled: false },
+    const logger = (logLevel: string) => (message: string) => {
+      axios.post("/api/log/create", { logLevel, message }).catch();
     };
 
-    const logger =
-      (logLevel: string, identifier: string) => (message: string) => {
-        axios
-          .post("/api/log/create", { identifier, logLevel, message })
-          .catch();
-      };
+    const octokitOptions: OctokitOptions = {
+      throttle: { enabled: false },
+      log: {
+        debug: () => {},
+        info: logger("info"),
+        warn: logger("warn"),
+        error: logger("error"),
+      },
+    };
 
     const reissueAccessTokenSilently = async () => {
       const {
@@ -46,30 +49,11 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
       return accessToken;
     };
 
-    const getUserIdentifier = async (accessToken: string | null) => {
-      const {
-        data: { identifier },
-      } = await axios.post("/api/oauth/identifier", {
-        accessToken: accessToken || "",
-      });
-
-      return identifier;
-    };
-
     const accessToken = await reissueAccessTokenSilently();
 
     if (accessToken) {
       octokitOptions.auth = accessToken;
     }
-
-    const identifier = await getUserIdentifier(accessToken);
-
-    octokitOptions.log = {
-      debug: logger("debug", identifier),
-      info: logger("info", identifier),
-      warn: logger("warn", identifier),
-      error: logger("error", identifier),
-    };
 
     setOctokit(new MyOctoKit(octokitOptions));
   };
