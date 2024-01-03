@@ -4,6 +4,12 @@ import { css } from "@emotion/react";
 // utils
 import { hexToRgb, hexToHSL } from "@/utils/color";
 
+declare module "react" {
+  interface CSSProperties {
+    [key: `--${string}`]: string | number;
+  }
+}
+
 interface IssueListItemProps {
   labelName: string;
   labelBgColor: string;
@@ -11,79 +17,82 @@ interface IssueListItemProps {
 
 export function Label({ labelName, labelBgColor }: IssueListItemProps) {
   const [r, g, b] = hexToRgb(labelBgColor);
-
   const [h, s, l] = hexToHSL(labelBgColor);
 
   return (
     <div
+      style={{
+        "--label-r": r,
+        "--label-g": g,
+        "--label-b": b,
+        "--label-h": h,
+        "--label-s": s,
+        "--label-l": l,
+      }}
       css={css`
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        --border-threshold: 0.96;
+        --lightness-threshold: 0.453;
 
-        background-color: #${labelBgColor};
+        --perceived-lightness: calc(
+          (
+              (var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) +
+                (var(--label-b) * 0.0722)
+            ) / 255
+        );
 
-        padding: 0 7px;
+        --border-alpha: max(
+          0,
+          min(
+            calc((var(--perceived-lightness) - var(--border-threshold)) * 100),
+            1
+          )
+        );
 
-        border-radius: 2rem;
-        border: 1px solid
-          hsla(
-            ${h},
-            calc(${s} * 1%),
-            calc((${l} - 25) * 1%),
-            max(
-              0,
-              min(
-                calc(
-                  (
-                      calc(
-                          ((${r} * 0.2126) + (${g} * 0.7152) + (${b} * 0.0722)) /
-                            255
-                        ) - 0.96
-                    ) * 100
-                ),
-                1
-              )
-            )
-          );
+        --lightness-switch: max(
+          0,
+          min(
+            calc(
+              (1 / (var(--lightness-threshold) - var(--perceived-lightness)))
+            ),
+            1
+          )
+        );
       `}
     >
-      <span
+      <div
         css={css`
-          font-size: 12px;
-          line-height: 18px;
-          font-weight: 500;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
-          color: hsl(
-            0deg,
-            0%,
-            calc(
-              max(
-                  0,
-                  min(
-                    calc(
-                      (
-                        1 /
-                          (
-                            0.453 -
-                              calc(
-                                (
-                                    (${r} * 0.2126) + (${g} * 0.7152) +
-                                      (${b} * 0.0722)
-                                  ) / 255
-                              )
-                          )
-                      )
-                    ),
-                    1
-                  )
-                ) * 100%
-            )
+          background-color: rgb(var(--label-r), var(--label-g), var(--label-b));
+
+          padding: 0 7px;
+
+          border-radius: 2rem;
+
+          border-width: 1px;
+          border-style: solid;
+          border-color: hsla(
+            var(--label-h),
+            calc(var(--label-s) * 1%),
+            calc((var(--label-l) - 25) * 1%),
+            var(--border-alpha)
           );
         `}
       >
-        {labelName}
-      </span>
+        <span
+          css={css`
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: 500;
+
+            color: hsl(0deg, 0%, calc(var(--lightness-switch) * 100%));
+          `}
+        >
+          {labelName}
+        </span>
+      </div>
     </div>
   );
 }
