@@ -350,6 +350,10 @@ export function IssueListItem({
                         li {
                           list-style: initial;
                         }
+
+                        pre {
+                          padding: 0;
+                        }
                       `}
                       className="markdown-body"
                       remarkPlugins={[remarkGfm]}
@@ -367,7 +371,6 @@ export function IssueListItem({
                               customStyle={{
                                 background: "none",
                                 border: 0,
-                                padding: 0,
                                 margin: 0,
                                 fontSize: "1rem",
                                 lineHeight: "normal",
