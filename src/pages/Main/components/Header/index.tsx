@@ -5,7 +5,8 @@ import { useState, Fragment, useRef, useEffect } from "react";
 import { Search } from "@/components/widgets/Search";
 import { LabelListModal } from "@/pages/Main/components/LabelListModal";
 import { RepositoryLink } from "@/pages/Main/components/RepositoryLink";
-import { GithubLoginButton } from "@/components/widgets/GithubLoginButton";
+import { GithubLoginButton } from "@/components/core/Button/GithubLoginButton";
+import { GithubLogoutButton } from "@/components/core/Button/GithubLogoutButton";
 import { NonModal } from "@/components/Overlay/NonModal";
 
 // styles
@@ -20,13 +21,13 @@ import { ReactComponent as User } from "@/assets/svgs/user.svg";
 import { useOctokit } from "@/hooks";
 
 // apis
-import axios from "axios";
 import { type components } from "@octokit/openapi-types";
+import axios from "axios";
 
 export function Header() {
   const { apiService } = useOctokit();
 
-  const logInOutButton = useRef<HTMLDivElement | null>(null);
+  const profileButton = useRef<HTMLDivElement | null>(null);
 
   const [labelListModalIsOpen, setLabelListModalIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -42,10 +43,17 @@ export function Header() {
     setLabelListModalIsOpen(true);
   };
 
-  const handleLogInOutButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleProfileButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
     setModalIsOpen((prev) => !prev);
 
     e.stopPropagation();
+  };
+
+  const handleLoginButtonClick = async () => {
+    localStorage.setItem("redirect_from", window.location.href);
+
+    window.location.href =
+      "https://github.com/login/oauth/authorize?client_id=Iv1.1eb8f2908f40728f";
   };
 
   const handleLogoutButtonClick = async () => {
@@ -125,8 +133,8 @@ export function Header() {
 
               cursor: pointer;
             `}
-            ref={logInOutButton}
-            onClick={handleLogInOutButtonClick}
+            ref={profileButton}
+            onClick={handleProfileButtonClick}
           >
             {user ? (
               <div
@@ -168,7 +176,7 @@ export function Header() {
           </div>
 
           <NonModal
-            target={logInOutButton}
+            target={profileButton}
             isOpen={modalIsOpen}
             setIsOpen={setModalIsOpen}
           >
@@ -185,31 +193,9 @@ export function Header() {
               `}
             >
               {user ? (
-                <div
-                  css={css`
-                    padding: 0.5rem;
-
-                    border-radius: ${size.BORDER_RADIUS}px;
-
-                    cursor: pointer;
-
-                    &:hover {
-                      background-color: ${color.g100};
-                    }
-                  `}
-                  onClick={handleLogoutButtonClick}
-                >
-                  <p
-                    css={css`
-                      font-size: 0.875rem;
-                      white-space: nowrap;
-                    `}
-                  >
-                    Logout
-                  </p>
-                </div>
+                <GithubLogoutButton onClick={handleLogoutButtonClick} />
               ) : (
-                <GithubLoginButton />
+                <GithubLoginButton onClick={handleLoginButtonClick} />
               )}
             </div>
           </NonModal>

@@ -1,3 +1,6 @@
+// react
+import React from "react";
+
 // styles
 import { css } from "@emotion/react";
 import { size, color } from "@/assets/styles";
@@ -5,14 +8,13 @@ import { size, color } from "@/assets/styles";
 // svgs
 import { ReactComponent as Github } from "@/assets/svgs/github.svg";
 
-export function GithubLoginButton() {
-  const handleLoginButtonClick = async () => {
-    localStorage.setItem("redirect_from", window.location.href);
+interface GithubLoginButtonProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {}
 
-    window.location.href =
-      "https://github.com/login/oauth/authorize?client_id=Iv1.1eb8f2908f40728f";
-  };
-
+export function GithubLoginButton(props: GithubLoginButtonProps) {
   return (
     <div
       css={css`
@@ -30,7 +32,7 @@ export function GithubLoginButton() {
           background-color: ${color.g100};
         }
       `}
-      onClick={handleLoginButtonClick}
+      {...props}
     >
       <Github
         css={css`

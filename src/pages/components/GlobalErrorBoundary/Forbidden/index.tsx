@@ -6,7 +6,7 @@ import { css } from "@emotion/react";
 import { color, size } from "@/assets/styles";
 
 // components
-import { GithubLoginButton } from "@/components/widgets/GithubLoginButton";
+import { GithubLoginButton } from "@/components/core/Button/GithubLoginButton";
 
 // apis
 import { type RequestError } from "octokit";
@@ -54,6 +54,13 @@ export function Forbidden({ error }: ForbiddenProps) {
 
   const minute = Math.floor(Math.max(remainSecond, 0) / 60);
   const second = Math.max(Math.max(remainSecond, 0)) % 60;
+
+  const handleLoginButtonClick = async () => {
+    localStorage.setItem("redirect_from", window.location.href);
+
+    window.location.href =
+      "https://github.com/login/oauth/authorize?client_id=Iv1.1eb8f2908f40728f";
+  };
 
   return (
     <div
@@ -105,14 +112,13 @@ export function Forbidden({ error }: ForbiddenProps) {
             로그인을 통해 계속 사용할 수 있습니다.
           </p>
 
-          <div
+          <GithubLoginButton
             css={css`
               border: 1px solid ${color.g200};
               border-radius: ${size.BORDER_RADIUS}px;
             `}
-          >
-            <GithubLoginButton />
-          </div>
+            onClick={handleLoginButtonClick}
+          />
         </div>
       </div>
     </div>
