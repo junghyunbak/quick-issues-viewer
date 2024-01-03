@@ -35,7 +35,7 @@ export function NotFound() {
             font-size: 1.5rem;
           `}
         >
-          잘못된 레포지토리 정보를 입력하였습니다.
+          Invalid repository information entered.
         </p>
 
         <button

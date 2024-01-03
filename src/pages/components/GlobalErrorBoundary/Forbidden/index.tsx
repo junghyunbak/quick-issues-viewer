@@ -87,14 +87,14 @@ export function Forbidden({ error }: ForbiddenProps) {
             font-size: 1.5rem;
           `}
         >
-          요청 최대 횟수를 초과하였습니다.
+          Request quota exhausted for request
         </p>
 
         <p>
-          남은 시간:{" "}
-          <span>{`${minute.toString().padStart(2, "0")}분 ${second
+          Retrying after{" "}
+          <span>{`${minute.toString().padStart(2, "0")}:${second
             .toString()
-            .padStart(2, "0")}초`}</span>
+            .padStart(2, "0")}`}</span>
         </p>
 
         <div
@@ -109,7 +109,7 @@ export function Forbidden({ error }: ForbiddenProps) {
               font-size: 0.875rem;
             `}
           >
-            로그인을 통해 계속 사용할 수 있습니다.
+            You can continue to use it by logging in.
           </p>
 
           <GithubLoginButton

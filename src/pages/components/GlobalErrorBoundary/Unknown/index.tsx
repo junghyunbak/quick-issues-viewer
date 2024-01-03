@@ -35,7 +35,7 @@ export function Unknown() {
             font-size: 1.5rem;
           `}
         >
-          알 수 없는 오류가 발생했습니다.
+          An unknown error occurred.
         </p>
 
         <button
