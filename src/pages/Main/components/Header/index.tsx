@@ -1,5 +1,6 @@
 // react
-import { useState, Fragment, useRef, useEffect } from "react";
+import { useState, Fragment, useRef } from "react";
+import { useQuery } from "react-query";
 
 // components
 import { Search } from "@/components/widgets/Search";
@@ -19,7 +20,6 @@ import { size, color, device } from "@/assets/styles";
 import { useOctokit } from "@/hooks";
 
 // apis
-import { type components } from "@octokit/openapi-types";
 import axios from "axios";
 
 export function Header() {
@@ -29,13 +29,10 @@ export function Header() {
 
   const [labelListModalIsOpen, setLabelListModalIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [user, setUser] = useState<components["schemas"]["public-user"] | null>(
-    null
-  );
 
-  useEffect(() => {
-    apiService.getAuthenticatedUserInfo().then((res) => setUser(res));
-  }, [apiService, setUser]);
+  const user = useQuery(["auth", "user"], async () => {
+    return await apiService.getAuthenticatedUserInfo();
+  });
 
   const handleMemuButtonClick = () => {
     setLabelListModalIsOpen(true);
@@ -108,7 +105,14 @@ export function Header() {
           <Search />
 
           <div ref={profileButton} onClick={handleProfileButtonClick}>
-            {user ? (
+            {user.isLoading ? (
+              <div
+                css={css`
+                  width: 2rem;
+                  height: 2rem;
+                `}
+              />
+            ) : user.data ? (
               <div
                 css={css`
                   width: 2rem;
@@ -122,7 +126,7 @@ export function Header() {
                 `}
               >
                 <img
-                  src={user.avatar_url}
+                  src={user.data.avatar_url}
                   css={css`
                     width: 100%;
                     height: 100%;
