@@ -30,10 +30,10 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
     };
 
     const logger =
-      (logLevel: string, userName?: string) => (message: string) => {
-        console.log(
-          `[user: ${userName}] [level: ${logLevel}] [date: ${new Date().toISOString()}] ${message}`
-        );
+      (logLevel: string, identifier: string) => (message: string) => {
+        axios
+          .post("/api/log/create", { identifier, logLevel, message })
+          .catch();
       };
 
     const reissueAccessTokenSilently = async () => {
