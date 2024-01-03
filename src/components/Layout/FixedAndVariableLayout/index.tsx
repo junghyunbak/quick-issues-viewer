@@ -4,7 +4,7 @@ import { useMemo } from "react";
 // styles
 import { css } from "@emotion/react";
 
-interface FixedAndVariableLayout {
+interface FixedAndVariableLayoutProps {
   fixedElement: React.ReactNode;
 
   variableElement: React.ReactNode;
@@ -19,7 +19,7 @@ export function FixedAndVariableLayout({
   variableElement,
   direction = "row",
   reverse = false,
-}: FixedAndVariableLayout) {
+}: FixedAndVariableLayoutProps) {
   const flexDirection = useMemo(() => {
     let tmp = direction;
 
