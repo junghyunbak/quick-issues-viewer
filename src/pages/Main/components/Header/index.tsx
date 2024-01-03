@@ -5,6 +5,7 @@ import { useState, Fragment, useRef, useEffect } from "react";
 import { Search } from "@/components/widgets/Search";
 import { LabelListModal } from "@/pages/Main/components/LabelListModal";
 import { RepositoryLink } from "@/pages/Main/components/RepositoryLink";
+import { GithubLoginButton } from "@/components/widgets/GithubLoginButton";
 import { NonModal } from "@/components/Overlay/NonModal";
 
 // styles
@@ -13,7 +14,6 @@ import { size, color, device } from "@/assets/styles";
 
 // svgs
 import { ReactComponent as Hamburger } from "@/assets/svgs/hamburger.svg";
-import { ReactComponent as Github } from "@/assets/svgs/github.svg";
 import { ReactComponent as User } from "@/assets/svgs/user.svg";
 
 // hooks
@@ -46,13 +46,6 @@ export function Header() {
     setModalIsOpen((prev) => !prev);
 
     e.stopPropagation();
-  };
-
-  const handleLoginButtonClick = async () => {
-    localStorage.setItem("redirect_from", window.location.href);
-
-    window.location.href =
-      "https://github.com/login/oauth/authorize?client_id=Iv1.1eb8f2908f40728f";
   };
 
   const handleLogoutButtonClick = async () => {
@@ -216,40 +209,7 @@ export function Header() {
                   </p>
                 </div>
               ) : (
-                <div
-                  css={css`
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5rem;
-
-                    padding: 0.5rem;
-
-                    cursor: pointer;
-
-                    border-radius: ${size.BORDER_RADIUS}px;
-
-                    &:hover {
-                      background-color: ${color.g100};
-                    }
-                  `}
-                  onClick={handleLoginButtonClick}
-                >
-                  <Github
-                    css={css`
-                      width: 1rem;
-                      height: 1rem;
-                    `}
-                  />
-
-                  <p
-                    css={css`
-                      font-size: 0.875rem;
-                      white-space: nowrap;
-                    `}
-                  >
-                    Login
-                  </p>
-                </div>
+                <GithubLoginButton />
               )}
             </div>
           </NonModal>

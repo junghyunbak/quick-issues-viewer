@@ -3,7 +3,10 @@ import { useMemo, useState, useEffect } from "react";
 
 // styles
 import { css } from "@emotion/react";
-import { color } from "@/assets/styles";
+import { color, size } from "@/assets/styles";
+
+// components
+import { GithubLoginButton } from "@/components/widgets/GithubLoginButton";
 
 // apis
 import { type RequestError } from "octokit";
@@ -86,6 +89,31 @@ export function Forbidden({ error }: ForbiddenProps) {
             .toString()
             .padStart(2, "0")}초`}</span>
         </p>
+
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+          `}
+        >
+          <p
+            css={css`
+              font-size: 0.875rem;
+            `}
+          >
+            로그인을 통해 계속 사용할 수 있습니다.
+          </p>
+
+          <div
+            css={css`
+              border: 1px solid ${color.g200};
+              border-radius: ${size.BORDER_RADIUS}px;
+            `}
+          >
+            <GithubLoginButton />
+          </div>
+        </div>
       </div>
     </div>
   );
