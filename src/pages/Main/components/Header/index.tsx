@@ -7,6 +7,7 @@ import { LabelListModal } from "@/pages/Main/components/LabelListModal";
 import { RepositoryLink } from "@/pages/Main/components/RepositoryLink";
 import { GithubLoginButton } from "@/components/core/Button/GithubLoginButton";
 import { LogoutButton } from "@/components/core/Button/LogoutButton";
+import { ProfileButton } from "@/components/core/Button/ProfileButton";
 import { NonModal } from "@/components/Overlay/NonModal";
 
 // styles
@@ -15,7 +16,6 @@ import { size, color, device } from "@/assets/styles";
 
 // svgs
 import { ReactComponent as Hamburger } from "@/assets/svgs/hamburger.svg";
-import { ReactComponent as User } from "@/assets/svgs/user.svg";
 
 // hooks
 import { useOctokit } from "@/hooks";
@@ -126,25 +126,18 @@ export function Header() {
         >
           <Search />
 
-          <div
-            css={css`
-              width: 2rem;
-              height: 2rem;
-
-              cursor: pointer;
-            `}
-            ref={profileButton}
-            onClick={handleProfileButtonClick}
-          >
+          <div ref={profileButton} onClick={handleProfileButtonClick}>
             {user ? (
               <div
                 css={css`
-                  width: 100%;
-                  height: 100%;
+                  width: 2rem;
+                  height: 2rem;
 
                   border-radius: 9999px;
 
                   overflow: hidden;
+
+                  cursor: pointer;
                 `}
               >
                 <img
@@ -156,22 +149,7 @@ export function Header() {
                 />
               </div>
             ) : (
-              <div
-                css={css`
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-
-                  width: 100%;
-                  height: 100%;
-
-                  background-color: ${color.g100};
-                  border: 1px solid ${color.g200};
-                  border-radius: ${size.BORDER_RADIUS}px;
-                `}
-              >
-                <User />
-              </div>
+              <ProfileButton />
             )}
           </div>
 
