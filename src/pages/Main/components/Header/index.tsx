@@ -143,24 +143,26 @@ export function Header() {
             isOpen={modalIsOpen}
             setIsOpen={setModalIsOpen}
           >
-            <div
-              css={css`
-                padding: 0.5rem;
+            {user.isLoading ? null : (
+              <div
+                css={css`
+                  padding: 0.5rem;
 
-                background-color: ${color.w};
+                  background-color: ${color.w};
 
-                border-radius: ${size.BORDER_RADIUS * 2}px;
+                  border-radius: ${size.BORDER_RADIUS * 2}px;
 
-                box-shadow: rgba(31, 35, 40, 0.12) 0px 1px 3px 0px,
-                  rgba(66, 74, 83, 0.12) 0px 8px 24px 0px;
-              `}
-            >
-              {user ? (
-                <LogoutButton onClick={handleLogoutButtonClick} />
-              ) : (
-                <GithubLoginButton onClick={handleLoginButtonClick} />
-              )}
-            </div>
+                  box-shadow: rgba(31, 35, 40, 0.12) 0px 1px 3px 0px,
+                    rgba(66, 74, 83, 0.12) 0px 8px 24px 0px;
+                `}
+              >
+                {user.data ? (
+                  <LogoutButton onClick={handleLogoutButtonClick} />
+                ) : (
+                  <GithubLoginButton onClick={handleLoginButtonClick} />
+                )}
+              </div>
+            )}
           </NonModal>
         </div>
       </div>
