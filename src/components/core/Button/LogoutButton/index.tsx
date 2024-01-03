@@ -5,13 +5,13 @@ import React from "react";
 import { css } from "@emotion/react";
 import { size, color } from "@/assets/styles";
 
-interface GithubLogoutButtonProps
+interface LogoutButtonProps
   extends React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > {}
 
-export function GithubLogoutButton(props: GithubLogoutButtonProps) {
+export function LogoutButton(props: LogoutButtonProps) {
   return (
     <div
       css={css`

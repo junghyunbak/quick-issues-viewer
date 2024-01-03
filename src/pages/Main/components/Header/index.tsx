@@ -6,7 +6,7 @@ import { Search } from "@/components/widgets/Search";
 import { LabelListModal } from "@/pages/Main/components/LabelListModal";
 import { RepositoryLink } from "@/pages/Main/components/RepositoryLink";
 import { GithubLoginButton } from "@/components/core/Button/GithubLoginButton";
-import { GithubLogoutButton } from "@/components/core/Button/GithubLogoutButton";
+import { LogoutButton } from "@/components/core/Button/LogoutButton";
 import { NonModal } from "@/components/Overlay/NonModal";
 
 // styles
@@ -193,7 +193,7 @@ export function Header() {
               `}
             >
               {user ? (
-                <GithubLogoutButton onClick={handleLogoutButtonClick} />
+                <LogoutButton onClick={handleLogoutButtonClick} />
               ) : (
                 <GithubLoginButton onClick={handleLoginButtonClick} />
               )}
