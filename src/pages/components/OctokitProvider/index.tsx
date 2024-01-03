@@ -13,6 +13,8 @@ const MyOctoKit = Octokit.plugin(requestLog);
 type OctokitContextValue = {
   octokit: Octokit;
 
+  accessToken: string | null;
+
   setAccessToken: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
@@ -61,7 +63,9 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
       const reissueAccessTokenSilently = async () => {
         const {
           data: { accessToken },
-        } = await axios.post("/api/oauth/slient-refresh");
+        } = await axios.post<{ accessToken: string | null }>(
+          "/api/oauth/slient-refresh"
+        );
 
         return accessToken;
       };
@@ -91,10 +95,11 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
         error: logger("error", identifier),
       };
 
-      return new MyOctoKit(octokitOptions);
+      return { accessToken: at, octokit: new MyOctoKit(octokitOptions) };
     },
     {
-      onSuccess(octokit) {
+      onSuccess({ accessToken, octokit }) {
+        setAccessToken(accessToken);
         setOctokit(octokit);
       },
     }
@@ -105,7 +110,7 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
   }
 
   return (
-    <OctokitContext.Provider value={{ setAccessToken, octokit }}>
+    <OctokitContext.Provider value={{ setAccessToken, accessToken, octokit }}>
       {children}
     </OctokitContext.Provider>
   );

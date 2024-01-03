@@ -3,7 +3,7 @@ import { OctokitContext } from "@/pages/components/OctokitProvider";
 import { get } from "@/apis/methods/get";
 
 export const useOctokit = () => {
-  const { octokit, setAccessToken } = useContext(OctokitContext);
+  const { octokit, accessToken, setAccessToken } = useContext(OctokitContext);
 
   const apiService = useMemo(() => {
     return {
@@ -11,5 +11,5 @@ export const useOctokit = () => {
     };
   }, [octokit]);
 
-  return { apiService, setAccessToken };
+  return { apiService, accessToken, setAccessToken };
 };
