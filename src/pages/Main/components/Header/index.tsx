@@ -49,6 +49,8 @@ export function Header() {
   };
 
   const handleLoginButtonClick = async () => {
+    localStorage.setItem("redirect_from", window.location.href);
+
     window.location.href =
       "https://github.com/login/oauth/authorize?client_id=Iv1.1eb8f2908f40728f";
   };
@@ -56,7 +58,7 @@ export function Header() {
   const handleLogoutButtonClick = async () => {
     await axios.post("/api/oauth/logout");
 
-    window.location.href = "/";
+    window.location.reload();
   };
 
   return (
@@ -202,13 +204,13 @@ export function Header() {
                       background-color: ${color.g100};
                     }
                   `}
+                  onClick={handleLogoutButtonClick}
                 >
                   <p
                     css={css`
                       font-size: 0.875rem;
                       white-space: nowrap;
                     `}
-                    onClick={handleLogoutButtonClick}
                   >
                     Logout
                   </p>

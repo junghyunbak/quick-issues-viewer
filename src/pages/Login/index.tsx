@@ -15,7 +15,9 @@ export function Login() {
 
   useEffect(() => {
     axios.post("/api/oauth/login", { code }).then(() => {
-      window.location.href = "/";
+      const redirectFrom = localStorage.getItem("redirect_from");
+
+      window.location.href = redirectFrom || "/";
     });
   }, [code]);
 
