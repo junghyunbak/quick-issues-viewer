@@ -9,13 +9,11 @@ import { GithubLoginButton } from "@/components/core/Button/GithubLoginButton";
 import { LogoutButton } from "@/components/core/Button/LogoutButton";
 import { ProfileButton } from "@/components/core/Button/ProfileButton";
 import { NonModal } from "@/components/Overlay/NonModal";
+import { HamburgerMenuButton } from "@/components/core/Button/HamburgerMenuButton";
 
 // styles
 import { css } from "@emotion/react";
 import { size, color, device } from "@/assets/styles";
-
-// svgs
-import { ReactComponent as Hamburger } from "@/assets/svgs/hamburger.svg";
 
 // hooks
 import { useOctokit } from "@/hooks";
@@ -82,29 +80,12 @@ export function Header() {
         >
           <div
             css={css`
-              display: flex;
-              align-items: center;
-              justify-content: center;
-
-              padding: 0.5rem;
-
-              cursor: pointer;
-
-              border-radius: ${size.BORDER_RADIUS}px;
-
-              &:hover {
-                @media ${device.canHover} {
-                  background-color: ${color.g100};
-                }
-              }
-
               @media ${device.pc} {
                 display: none;
               }
             `}
-            onClick={handleMemuButtonClick}
           >
-            <Hamburger />
+            <HamburgerMenuButton onClick={handleMemuButtonClick} />
           </div>
 
           <div
