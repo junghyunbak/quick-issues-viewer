@@ -58,6 +58,8 @@ export function IssueListFilterStateElement() {
           font-size: 0.875rem;
           font-weight: 600;
 
+          cursor: pointer;
+
           &:first-of-type {
             border-left: 0;
           }
