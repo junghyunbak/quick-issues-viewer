@@ -49,13 +49,17 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
     };
 
     const reissueAccessTokenSilently = async () => {
-      const {
-        data: { accessToken },
-      } = await axios.post<{ accessToken: string | null }>(
-        "/api/oauth/slient-refresh"
-      );
+      try {
+        const {
+          data: { accessToken },
+        } = await axios.post<{ accessToken: string | null }>(
+          "/api/oauth/slient-refresh"
+        );
 
-      return accessToken;
+        return accessToken;
+      } catch (e) {
+        return null;
+      }
     };
 
     const accessToken = await reissueAccessTokenSilently();
