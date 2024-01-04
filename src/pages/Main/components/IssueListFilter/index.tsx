@@ -1,9 +1,9 @@
 // styles
 import { css } from "@emotion/react";
-import { color, size } from "@/assets/styles";
 
 // components
 import { IssueListFilterStateElement } from "./IssueListFilterStateElement";
+import { IssueListFilterSortElement } from "./IssueListFilterSortElement";
 
 export function IssueListFilter() {
   return (
@@ -14,9 +14,12 @@ export function IssueListFilter() {
 
         padding: 1.25rem;
         padding-bottom: 0;
+
+        gap: 0.5rem;
       `}
     >
       <IssueListFilterStateElement />
+      <IssueListFilterSortElement />
     </div>
   );
 }
