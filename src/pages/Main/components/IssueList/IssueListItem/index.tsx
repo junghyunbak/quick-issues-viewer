@@ -219,6 +219,7 @@ export function IssueListItem({
 
             <p
               css={css`
+                white-space: nowrap;
                 font-size: 0.75rem;
                 color: gray;
               `}
