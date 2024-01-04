@@ -6,7 +6,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 
 // styles
 import { css } from "@emotion/react";
-import { color, size } from "@/assets/styles";
+import { color, device, size } from "@/assets/styles";
 
 // constants
 import { defaultValue } from "@/constants";
@@ -94,6 +94,10 @@ export function IssueList() {
         gap: 1.25rem;
 
         padding: 1.25rem;
+
+        @media ${device.mobile} {
+          padding: 1.25rem 0;
+        }
       `}
     >
       <Fragment>
@@ -106,6 +110,12 @@ export function IssueList() {
               border: 1px solid ${color.g200};
 
               overflow: hidden;
+
+              @media ${device.mobile} {
+                border-radius: 0;
+                border-left: 0;
+                border-right: 0;
+              }
             `}
           >
             {issues.data.items.map((issue) => {
