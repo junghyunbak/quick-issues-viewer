@@ -25,44 +25,53 @@ interface IssueCommentProps {
   issueUrl: string;
 
   user: components["schemas"]["nullable-simple-user"];
+
+  isComment?: boolean;
 }
 
 export function IssueComment({
   markdownText,
   issueUrl,
   user,
+  isComment = true,
 }: IssueCommentProps) {
   return (
     <FixedAndVariableLayout
       fixedElement={
-        <a
+        <div
           css={css`
-            display: block;
-
-            width: 2.5rem;
-            height: 2.5rem;
-
-            border-radius: 9999px;
-            border: 1px solid ${color.g200};
-
-            overflow: hidden;
-
-            @media ${device.mobile} {
-              display: none;
-            }
+            padding: ${isComment ? "1.25rem 0" : "0 0 1.25rem 0"};
           `}
-          target="__blank"
-          href={user?.html_url}
         >
-          <img
-            src={user?.avatar_url}
+          <a
             css={css`
-              width: 100%;
-              height: 100%;
+              display: block;
+
+              width: 2.5rem;
+              height: 2.5rem;
+
+              border-radius: 9999px;
+              border: 1px solid ${color.g200};
+
+              overflow: hidden;
+
+              @media ${device.mobile} {
+                display: none;
+              }
             `}
-            alt="issue-writer-profile"
-          />
-        </a>
+            target="__blank"
+            href={user?.html_url}
+          >
+            <img
+              src={user?.avatar_url}
+              css={css`
+                width: 100%;
+                height: 100%;
+              `}
+              alt="issue-writer-profile"
+            />
+          </a>
+        </div>
       }
       variableElement={
         <div
@@ -78,6 +87,20 @@ export function IssueComment({
             css={css`
               display: flex;
               flex-direction: column;
+
+              position: relative;
+
+              padding: ${isComment ? "1.25rem 0" : "0 0 1.25rem 0"};
+
+              &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 1.25rem;
+
+                border-left: 2px solid #d0d7de;
+              }
             `}
           >
             <div
@@ -169,6 +192,10 @@ export function IssueComment({
                 border-top: 0;
                 border-bottom-left-radius: ${size.BORDER_RADIUS}px;
                 border-bottom-right-radius: ${size.BORDER_RADIUS}px;
+
+                background-color: ${color.w};
+
+                z-index: 1;
 
                 padding: 0.75rem;
               `}

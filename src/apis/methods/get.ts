@@ -173,5 +173,19 @@ export function get(octokit: Octokit) {
 
       return data;
     },
+
+    getIssueComments: async (
+      owner: string,
+      repo: string,
+      issueNumber: number
+    ): Promise<components["schemas"]["issue-comment"][]> => {
+      const { data } = await octokit.rest.issues.listComments({
+        owner,
+        repo,
+        issue_number: issueNumber,
+      });
+
+      return data;
+    },
   };
 }

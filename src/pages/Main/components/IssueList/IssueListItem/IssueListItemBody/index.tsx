@@ -1,3 +1,7 @@
+// react
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+
 // components
 import { IssueComment } from "@/pages/Main/components/IssueList/IssueListItem/IssueListItemBody/IssueComment";
 
@@ -12,6 +16,8 @@ import { type components } from "@octokit/openapi-types";
 import { useOctokit } from "@/hooks";
 
 interface IssueListItemBodyProps {
+  issueNumber: number;
+
   markdownText: string;
 
   issueUrl: string;
@@ -19,8 +25,26 @@ interface IssueListItemBodyProps {
   user: components["schemas"]["nullable-simple-user"];
 }
 
-export function IssueListItemBody(props: IssueListItemBodyProps) {
+export function IssueListItemBody({
+  issueNumber,
+  ...props
+}: IssueListItemBodyProps) {
+  const { owner, repo } = useParams();
+
   const { apiService } = useOctokit();
+
+  const comments = useQuery(
+    ["issue", "comment", owner, repo, issueNumber],
+    async () => {
+      const comments = apiService.getIssueComments(
+        owner || "",
+        repo || "",
+        issueNumber
+      );
+
+      return comments;
+    }
+  );
 
   return (
     <div
@@ -30,7 +54,25 @@ export function IssueListItemBody(props: IssueListItemBodyProps) {
         padding: 0.75rem;
       `}
     >
-      <IssueComment {...props} />
+      <IssueComment {...props} isComment={false} />
+
+      {comments.data && (
+        <ul>
+          {comments.data.map((comment) => {
+            const { id, body, html_url, user } = comment;
+
+            return (
+              <li key={id}>
+                <IssueComment
+                  markdownText={body || ""}
+                  issueUrl={html_url}
+                  user={user}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }

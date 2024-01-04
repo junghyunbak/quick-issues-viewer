@@ -34,6 +34,7 @@ export function IssueListItem({
 }: IssueListItemProps) {
   const {
     id,
+    number,
     title,
     labels,
     state,
@@ -231,6 +232,7 @@ export function IssueListItem({
       {selectedIssueId === id && (
         <IssueListItemBody
           markdownText={body || ""}
+          issueNumber={number}
           issueUrl={html_url}
           user={user}
         />
