@@ -7,7 +7,7 @@ import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 // styles
 import { css } from "@emotion/react";
-import { color, device, size } from "@/assets/styles";
+import { color, device, size, zIndex } from "@/assets/styles";
 import "github-markdown-css";
 
 // svgs
@@ -199,7 +199,7 @@ export function IssueComment({
 
                 background-color: ${color.w};
 
-                z-index: 1;
+                z-index: ${zIndex.MARKDOWN_BODY};
 
                 padding: 0.75rem;
               `}
