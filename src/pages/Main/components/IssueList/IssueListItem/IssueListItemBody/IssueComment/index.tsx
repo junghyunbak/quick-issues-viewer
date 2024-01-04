@@ -213,6 +213,8 @@ export function IssueComment({
                   pre {
                     padding: 0;
                   }
+
+                  font-size: 1rem;
                 `}
                 className="markdown-body"
                 remarkPlugins={[remarkGfm]}
