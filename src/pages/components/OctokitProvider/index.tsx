@@ -33,7 +33,7 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
         }
 
         try {
-          axios.post("/api/log/create", { logLevel, message });
+          axios.post("/api/log", { logLevel, message });
         } catch (e) {
           console.log(e);
         }
