@@ -58,7 +58,9 @@ export function get(octokit: Octokit) {
       labels: string[],
       perPage: number,
       page: number,
-      state: IssuesState
+      state: IssuesState,
+      sort: IssuesSort,
+      direction: IssuesSortDirection
     ): Promise<{
       pageCount: number;
       items: components["schemas"]["issue"][];
@@ -70,6 +72,8 @@ export function get(octokit: Octokit) {
         labels: labels.join(","),
         page,
         state,
+        sort,
+        direction,
       });
 
       const {

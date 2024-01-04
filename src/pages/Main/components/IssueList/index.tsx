@@ -27,7 +27,7 @@ export function IssueList() {
 
   const { apiService } = useOctokit();
 
-  const { label, per_page, page, state } = queryString.parse(
+  const { label, per_page, page, state, sort, direction } = queryString.parse(
     searchParams.toString()
   );
 
@@ -41,6 +41,8 @@ export function IssueList() {
       per_page || defaultValue.DEFAULT_ISSUE_PER_PAGE,
       page || defaultValue.DEFAULT_ISSUE_PAGE,
       state || defaultValue.DEFAULT_ISSUE_STATE,
+      sort || defaultValue.DEFAULT_ISSUES_SORT,
+      direction || defaultValue.DEFAULT_ISSUES_SORT_DIRECTION,
     ],
     async () => {
       if (label instanceof Array) {
@@ -53,7 +55,10 @@ export function IssueList() {
         (label || "").split(","),
         Number(per_page) || defaultValue.DEFAULT_ISSUE_PER_PAGE,
         Number(page) || defaultValue.DEFAULT_ISSUE_PAGE,
-        (state as IssuesState) || defaultValue.DEFAULT_ISSUE_STATE
+        (state as IssuesState) || defaultValue.DEFAULT_ISSUE_STATE,
+        (sort as IssuesSort) || defaultValue.DEFAULT_ISSUES_SORT_DIRECTION,
+        (direction as IssuesSortDirection) ||
+          defaultValue.DEFAULT_ISSUES_SORT_DIRECTION
       );
     }
   );
