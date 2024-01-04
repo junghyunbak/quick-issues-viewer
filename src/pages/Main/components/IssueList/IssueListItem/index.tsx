@@ -17,6 +17,7 @@ import { ReactComponent as Reference } from "@/assets/svgs/reference.svg";
 import { ReactComponent as PrOpen } from "@/assets/svgs/pr-open.svg";
 import { ReactComponent as PrClosed } from "@/assets/svgs/pr-closed.svg";
 import { ReactComponent as PrMerged } from "@/assets/svgs/pr-merged.svg";
+import { ReactComponent as Comment } from "@/assets/svgs/comment.svg";
 
 // styles
 import { css } from "@emotion/react";
@@ -48,6 +49,7 @@ export function IssueListItem({
     created_at,
     html_url,
     pull_request,
+    comments,
   } = issue;
 
   const handleIssueItemClick = useCallback(
@@ -139,10 +141,9 @@ export function IssueListItem({
       <div
         css={css`
           display: flex;
+          justify-content: space-between;
 
           padding: 0.5rem;
-
-          gap: 0.5rem;
 
           &:hover {
             @media ${device.canHover} {
@@ -156,45 +157,82 @@ export function IssueListItem({
       >
         <div
           css={css`
-            padding-left: 0.25rem;
+            display: flex;
+
+            gap: 0.5rem;
           `}
         >
-          {StatusIcon}
-        </div>
-
-        <div>
           <div
             css={css`
-              display: flex;
-              align-items: center;
-              flex-wrap: wrap;
-              gap: 0.375em;
+              padding-left: 0.25rem;
             `}
           >
-            <p
-              css={css`
-                font-weight: 600;
-                line-height: 1.5rem;
-              `}
-            >
-              {title}
-            </p>
-
-            <IssueListItemLabelList labels={labels} />
+            {StatusIcon}
           </div>
 
           <div>
-            <p
+            <div
               css={css`
-                color: gray;
-                font-size: 0.75rem;
-                line-height: 1.5rem;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 0.375em;
               `}
             >
-              {new Date(created_at).toLocaleString()}
-            </p>
+              <p
+                css={css`
+                  font-weight: 600;
+                  line-height: 1.5rem;
+                `}
+              >
+                {title}
+              </p>
+
+              <IssueListItemLabelList labels={labels} />
+            </div>
+
+            <div>
+              <p
+                css={css`
+                  color: gray;
+                  font-size: 0.75rem;
+                  line-height: 1.5rem;
+                `}
+              >
+                {new Date(created_at).toLocaleString()}
+              </p>
+            </div>
           </div>
         </div>
+
+        {comments > 0 && (
+          <div
+            css={css`
+              display: flex;
+              align-items: top;
+              gap: 0.2rem;
+
+              padding-right: 0.25rem;
+            `}
+          >
+            <Comment
+              css={css`
+                path {
+                  fill: gray;
+                }
+              `}
+            />
+
+            <p
+              css={css`
+                font-size: 0.75rem;
+                color: gray;
+              `}
+            >
+              {comments}
+            </p>
+          </div>
+        )}
       </div>
 
       {selectedIssueId === id && (
