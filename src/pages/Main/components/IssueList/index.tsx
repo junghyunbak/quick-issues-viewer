@@ -53,7 +53,7 @@ export function IssueList() {
         (label || "").split(","),
         Number(per_page) || defaultValue.DEFAULT_ISSUE_PER_PAGE,
         Number(page) || defaultValue.DEFAULT_ISSUE_PAGE,
-        (state as IssueState) || defaultValue.DEFAULT_ISSUE_STATE
+        (state as IssuesState) || defaultValue.DEFAULT_ISSUE_STATE
       );
     }
   );

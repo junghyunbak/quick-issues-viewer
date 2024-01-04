@@ -58,7 +58,7 @@ export function get(octokit: Octokit) {
       labels: string[],
       perPage: number,
       page: number,
-      state: IssueState
+      state: IssuesState
     ): Promise<{
       pageCount: number;
       items: components["schemas"]["issue"][];

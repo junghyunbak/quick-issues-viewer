@@ -17,7 +17,7 @@ export function IssueListFilterStateElement() {
 
   const { state } = queryString.parse(searchParams.toString());
 
-  const issueStates: IssueState[] = useMemo(
+  const issueStates: IssuesState[] = useMemo(
     () => ["open", "closed", "all"],
     []
   );

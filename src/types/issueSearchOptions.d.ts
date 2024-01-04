@@ -1,1 +1,1 @@
-type IssueState = "all" | "closed" | "open";
+type IssuesState = "all" | "closed" | "open";
