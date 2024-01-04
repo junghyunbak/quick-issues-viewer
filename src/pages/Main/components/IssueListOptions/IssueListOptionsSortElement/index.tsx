@@ -15,7 +15,7 @@ import { ReactComponent as Down } from "@/assets/svgs/down.svg";
 // constants
 import { defaultValue } from "@/constants";
 
-export function IssueListFilterSortElement() {
+export function IssueListOptionsSortElement() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { sort, direction } = queryString.parse(searchParams.toString());

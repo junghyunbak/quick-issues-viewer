@@ -3,11 +3,11 @@ import { IssueList } from "@/pages/Main/components/IssueList";
 import { LabelList } from "@/pages/Main/components/LabelList";
 import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
 import { Header } from "./components/Header";
+import { IssueListOptions } from "./components/IssueListOptions";
 
 // styles
 import { css } from "@emotion/react";
 import { size, color, device } from "@/assets/styles";
-import { IssueListFilter } from "./components/IssueListFilter";
 
 export function Main() {
   return (
@@ -49,7 +49,7 @@ export function Main() {
                   margin: 0 auto;
                 `}
               >
-                <IssueListFilter />
+                <IssueListOptions />
                 <IssueList />
               </div>
             }

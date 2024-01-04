@@ -12,7 +12,7 @@ import queryString from "query-string";
 // constants
 import { defaultValue } from "@/constants";
 
-export function IssueListFilterStateElement() {
+export function IssueListOptionsStateElement() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { state } = queryString.parse(searchParams.toString());
