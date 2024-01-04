@@ -32,19 +32,8 @@ export function IssueListItem({
   selectedIssueId,
   setSelectedIssueId,
 }: IssueListItemProps) {
-  const {
-    id,
-    number,
-    title,
-    labels,
-    state,
-    body,
-    user,
-    created_at,
-    pull_request,
-    comments,
-    html_url,
-  } = issue;
+  const { id, title, labels, state, created_at, pull_request, comments } =
+    issue;
 
   const handleIssueItemClick = useCallback(
     (issueId: number) => {
@@ -230,14 +219,7 @@ export function IssueListItem({
         )}
       </div>
 
-      {selectedIssueId === id && (
-        <IssueListItemBody
-          markdownText={body || ""}
-          issueNumber={number}
-          issueUrl={html_url}
-          user={user}
-        />
-      )}
+      {selectedIssueId === id && <IssueListItemBody issue={issue} />}
     </li>
   );
 }

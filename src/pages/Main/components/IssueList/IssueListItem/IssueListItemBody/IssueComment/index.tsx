@@ -18,6 +18,7 @@ import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayo
 
 // apis
 import { type components } from "@octokit/openapi-types";
+import { IssueCommentReactions } from "./IssueCommentReactions";
 
 interface IssueCommentProps {
   markdownText: string;
@@ -26,6 +27,8 @@ interface IssueCommentProps {
 
   user: components["schemas"]["nullable-simple-user"];
 
+  reactions?: components["schemas"]["reaction-rollup"];
+
   isComment?: boolean;
 }
 
@@ -33,6 +36,7 @@ export function IssueComment({
   markdownText,
   issueUrl,
   user,
+  reactions,
   isComment = true,
 }: IssueCommentProps) {
   return (
@@ -243,6 +247,16 @@ export function IssueComment({
               >
                 {markdownText}
               </Markdown>
+
+              {reactions && reactions.total_count > 0 && (
+                <div
+                  css={css`
+                    padding-top: 0.75rem;
+                  `}
+                >
+                  <IssueCommentReactions reactions={reactions} />
+                </div>
+              )}
             </div>
           </div>
         </div>

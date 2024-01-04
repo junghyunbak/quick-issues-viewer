@@ -16,30 +16,23 @@ import { type components } from "@octokit/openapi-types";
 import { useOctokit } from "@/hooks";
 
 interface IssueListItemBodyProps {
-  issueNumber: number;
-
-  markdownText: string;
-
-  issueUrl: string;
-
-  user: components["schemas"]["nullable-simple-user"];
+  issue: components["schemas"]["issue"];
 }
 
-export function IssueListItemBody({
-  issueNumber,
-  ...props
-}: IssueListItemBodyProps) {
+export function IssueListItemBody({ issue }: IssueListItemBodyProps) {
   const { owner, repo } = useParams();
 
   const { apiService } = useOctokit();
 
+  const { number, body, user, html_url, reactions } = issue;
+
   const comments = useQuery(
-    ["issue", "comment", owner, repo, issueNumber],
+    ["issue", "comment", owner, repo, number],
     async () => {
       const comments = apiService.getIssueComments(
         owner || "",
         repo || "",
-        issueNumber
+        number
       );
 
       return comments;
@@ -54,12 +47,18 @@ export function IssueListItemBody({
         padding: 0.75rem;
       `}
     >
-      <IssueComment {...props} isComment={false} />
+      <IssueComment
+        markdownText={body || ""}
+        user={user}
+        issueUrl={html_url}
+        isComment={false}
+        reactions={reactions}
+      />
 
       {comments.data && (
         <ul>
           {comments.data.map((comment) => {
-            const { id, body, html_url, user } = comment;
+            const { id, body, html_url, user, reactions } = comment;
 
             return (
               <li key={id}>
@@ -67,12 +66,19 @@ export function IssueListItemBody({
                   markdownText={body || ""}
                   issueUrl={html_url}
                   user={user}
+                  reactions={reactions}
                 />
               </li>
             );
           })}
         </ul>
       )}
+
+      <div
+        css={css`
+          border-top: 2px solid #d0d7de;
+        `}
+      />
     </div>
   );
 }
