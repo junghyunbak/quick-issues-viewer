@@ -27,7 +27,9 @@ export function IssueList() {
 
   const { apiService } = useOctokit();
 
-  const { label, per_page, page } = queryString.parse(searchParams.toString());
+  const { label, per_page, page, state } = queryString.parse(
+    searchParams.toString()
+  );
 
   const issues = useQuery(
     [
@@ -36,16 +38,22 @@ export function IssueList() {
       owner,
       repo,
       label,
-      per_page || defaultValue.DEFAULT_PER_PAGE,
-      page || 1,
+      per_page || defaultValue.DEFAULT_ISSUE_PER_PAGE,
+      page || defaultValue.DEFAULT_ISSUE_PAGE,
+      state || defaultValue.DEFAULT_ISSUE_STATE,
     ],
     async () => {
+      if (label instanceof Array) {
+        return;
+      }
+
       return await apiService.getRepoIssueList(
         owner || "",
         repo || "",
-        [label as string],
-        Number(per_page) || defaultValue.DEFAULT_PER_PAGE,
-        Number(page) || 1
+        (label || "").split(","),
+        Number(per_page) || defaultValue.DEFAULT_ISSUE_PER_PAGE,
+        Number(page) || defaultValue.DEFAULT_ISSUE_PAGE,
+        (state as IssueState) || defaultValue.DEFAULT_ISSUE_STATE
       );
     }
   );

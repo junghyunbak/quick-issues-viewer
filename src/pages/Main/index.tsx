@@ -7,6 +7,7 @@ import { Header } from "./components/Header";
 // styles
 import { css } from "@emotion/react";
 import { size, color, device } from "@/assets/styles";
+import { IssueListOptions } from "./components/IssueListOptions";
 
 export function Main() {
   return (
@@ -48,6 +49,7 @@ export function Main() {
                   margin: 0 auto;
                 `}
               >
+                <IssueListOptions />
                 <IssueList />
               </div>
             }
