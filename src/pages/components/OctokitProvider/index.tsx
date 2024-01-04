@@ -25,14 +25,23 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
   const [octokit, setOctokit] = useState<Octokit | null>(null);
 
   const initializeOctokit = async () => {
-    const logger = (logLevel: string) => (message: string) => {
-      axios.post("/api/log/create", { logLevel, message }).catch();
-    };
+    const logger =
+      (logLevel: "debug" | "info" | "warn" | "error") =>
+      async (message: string) => {
+        if (logLevel === "debug") {
+          return;
+        }
+
+        try {
+          axios.post("/api/log/create", { logLevel, message });
+        } catch (e) {
+          console.log(e);
+        }
+      };
 
     const octokitOptions: OctokitOptions = {
-      throttle: { enabled: false },
       log: {
-        debug: () => {},
+        debug: logger("debug"),
         info: logger("info"),
         warn: logger("warn"),
         error: logger("error"),
@@ -53,9 +62,13 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
 
     if (accessToken) {
       octokitOptions.auth = accessToken;
+    } else {
+      octokitOptions.throttle = { enabled: false };
     }
 
-    setOctokit(new MyOctoKit(octokitOptions));
+    const octokit = new MyOctoKit(octokitOptions);
+
+    setOctokit(octokit);
   };
 
   useEffect(() => {
