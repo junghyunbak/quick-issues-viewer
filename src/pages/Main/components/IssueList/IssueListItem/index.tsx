@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from "react";
 
 // components
 import { IssueListItemLabelList } from "@/pages/Main/components/IssueList/IssueListItem/IssueListItemLabelList";
-import { IssueComment } from "@/pages/Main/components/IssueList/IssueListItem/IssueComment";
+import { IssueListItemBody } from "./IssueListItemBody";
 
 // svgs
 import { ReactComponent as IssueOpened } from "@/assets/svgs/issue-opened.svg";
@@ -16,7 +16,6 @@ import { ReactComponent as Comment } from "@/assets/svgs/comment.svg";
 // styles
 import { css } from "@emotion/react";
 import { color, device } from "@/assets/styles";
-import "github-markdown-css";
 
 // apis
 import { type components } from "@octokit/openapi-types";
@@ -41,9 +40,9 @@ export function IssueListItem({
     body,
     user,
     created_at,
-    html_url,
     pull_request,
     comments,
+    html_url,
   } = issue;
 
   const handleIssueItemClick = useCallback(
@@ -230,19 +229,11 @@ export function IssueListItem({
       </div>
 
       {selectedIssueId === id && (
-        <div
-          css={css`
-            border-top: 1px solid ${color.g200};
-
-            padding: 0.75rem;
-          `}
-        >
-          <IssueComment
-            user={user}
-            issueUrl={html_url}
-            markdownText={body || ""}
-          />
-        </div>
+        <IssueListItemBody
+          markdownText={body || ""}
+          issueUrl={html_url}
+          user={user}
+        />
       )}
     </li>
   );

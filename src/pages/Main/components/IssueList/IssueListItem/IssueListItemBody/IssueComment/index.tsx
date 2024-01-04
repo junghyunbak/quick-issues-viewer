@@ -8,6 +8,7 @@ import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 // styles
 import { css } from "@emotion/react";
 import { color, device, size } from "@/assets/styles";
+import "github-markdown-css";
 
 // svgs
 import { ReactComponent as Reference } from "@/assets/svgs/reference.svg";
