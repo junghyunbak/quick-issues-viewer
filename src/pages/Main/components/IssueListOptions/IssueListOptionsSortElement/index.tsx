@@ -30,7 +30,7 @@ export function IssueListOptionsSortElement() {
 
           prev.set("sort", issueSort);
 
-          if (sort !== issueSort) {
+          if ((sort || defaultValue.DEFAULT_ISSUES_SORT) !== issueSort) {
             prev.delete("direction");
 
             return prev;
