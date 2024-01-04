@@ -11,6 +11,9 @@ import { css } from "@emotion/react";
 // hooks
 import { useOctokit } from "@/hooks";
 
+// apis
+import { RequestError } from "octokit";
+
 interface SearchModalRepoListProps {
   inputValue: string;
 
@@ -28,21 +31,25 @@ export function SearchModalRepoList({
 
   const [owner] = searchValue.split("/");
 
-  const repoList = useQuery(["search", "repos", owner], async () => {
-    if (owner === "") {
-      return null;
-    }
-
+  const repos = useQuery(["search", "repos", owner], async () => {
     try {
-      const repoList = await apiService.getRepoList(owner);
+      const repos = await apiService.getRepos(owner);
 
-      return repoList;
+      return repos;
     } catch (e) {
-      return null;
+      if (!(e instanceof RequestError)) {
+        return null;
+      }
+
+      if (e.status === 403) {
+        throw e;
+      } else {
+        return null;
+      }
     }
   });
 
-  if (!repoList.data) {
+  if (!repos.data || !repos.data.length) {
     return null;
   }
 
@@ -60,7 +67,7 @@ export function SearchModalRepoList({
       </p>
 
       <ul>
-        {repoList.data
+        {repos.data
           .filter((repo) => {
             const repoName = repo.full_name.split("/")[1];
 

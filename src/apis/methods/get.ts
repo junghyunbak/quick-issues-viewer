@@ -114,9 +114,13 @@ export function get(octokit: Octokit) {
 
       return labels;
     },
-    getRepoList: async (
+    getRepos: async (
       owner: string
-    ): Promise<components["schemas"]["minimal-repository"][]> => {
+    ): Promise<components["schemas"]["minimal-repository"][] | null> => {
+      if (owner === "") {
+        return null;
+      }
+
       const { data } = await octokit.rest.repos.listForUser({
         username: owner,
         per_page: 100,
@@ -124,9 +128,13 @@ export function get(octokit: Octokit) {
 
       return data;
     },
-    getUserList: async (
+    getUsers: async (
       owner: string
-    ): Promise<components["schemas"]["user-search-result-item"][]> => {
+    ): Promise<components["schemas"]["user-search-result-item"][] | null> => {
+      if (owner === "") {
+        return null;
+      }
+
       const queries: string[] = [`${owner} in:login`];
 
       const {

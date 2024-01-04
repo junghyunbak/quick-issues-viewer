@@ -11,6 +11,9 @@ import { SearchModalUserListItem } from "./SearchModalUserListItem";
 // hooks
 import { useOctokit } from "@/hooks";
 
+// apis
+import { RequestError } from "octokit";
+
 interface SearchModalUserListProps {
   searchValue: string;
 
@@ -21,28 +24,35 @@ export function SearchModalUserList({
   searchValue,
   setInputValue,
 }: SearchModalUserListProps) {
-  const [owner, repo] = searchValue.split("/");
-
   const { apiService } = useOctokit();
 
-  const userList = useQuery(["search", "users", owner], async () => {
-    if (owner === "") {
-      return null;
-    }
+  const [owner, repo] = searchValue.split("/");
 
+  const users = useQuery(["search", "users", owner], async () => {
     try {
-      const userList = await apiService.getUserList(owner);
+      const users = await apiService.getUsers(owner);
 
-      return userList;
+      return users;
     } catch (e) {
-      return null;
+      if (!(e instanceof RequestError)) {
+        return null;
+      }
+
+      if (e.status === 403) {
+        throw e;
+      } else {
+        return null;
+      }
     }
   });
 
-  if (!userList.data) {
+  if (!users.data || !users.data.length) {
     return null;
   }
 
+  /**
+   * 레포지토리 검색 시에는 유저 검색결과 숨김
+   */
   if (repo !== undefined) {
     return null;
   }
@@ -60,8 +70,8 @@ export function SearchModalUserList({
         owner
       </p>
 
-      <ul css={css``}>
-        {userList.data.map((user) => {
+      <ul>
+        {users.data.map((user) => {
           return (
             <SearchModalUserListItem
               key={user.id}
