@@ -183,6 +183,7 @@ export function get(octokit: Octokit) {
         owner,
         repo,
         issue_number: issueNumber,
+        per_page: 100,
       });
 
       return data;
