@@ -1,7 +1,9 @@
 // react
-import { Fragment, useCallback, useState } from "react";
+import { Fragment, useCallback, useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import { IssueSelectionStateContext } from "../../index.context";
+import { IssueContext } from "../index.context";
 
 // components
 import { IssueComment } from "@/pages/Main/components/IssueList/IssueListItem/IssueListItemBody/IssueComment";
@@ -11,34 +13,28 @@ import { CloseBodyButton } from "./CloseBodyButton";
 import { css } from "@emotion/react";
 import { color, size } from "@/assets/styles";
 
-// apis
-import { type components } from "@octokit/openapi-types";
-
 // hooks
 import { useOctokit } from "@/hooks";
 
-interface CommentListProps {
-  issueNumber: number;
-
-  setSelectedIssueId: React.Dispatch<React.SetStateAction<number | null>>;
-}
-
-function CommentList({ issueNumber, setSelectedIssueId }: CommentListProps) {
+function CommentList() {
   const { owner, repo } = useParams();
 
   const { apiService } = useOctokit();
+
+  const { number } = useContext(IssueContext);
+  const { setSelectedIssueId } = useContext(IssueSelectionStateContext);
 
   const handleIssueBodyCloseButtonClick = useCallback(() => {
     setSelectedIssueId(null);
   }, [setSelectedIssueId]);
 
   const comments = useQuery(
-    ["issue", "comment", owner, repo, issueNumber],
+    ["issue", "comment", owner, repo, number],
     async () => {
       const comments = apiService.getIssueComments(
         owner || "",
         repo || "",
-        issueNumber
+        number
       );
 
       return comments;
@@ -84,23 +80,21 @@ function CommentList({ issueNumber, setSelectedIssueId }: CommentListProps) {
   );
 }
 
-interface IssueListItemBodyProps {
-  issue: components["schemas"]["issue"];
+export function IssueListItemBody() {
+  const { id, body, user, html_url, reactions, comments } =
+    useContext(IssueContext);
 
-  setSelectedIssueId: React.Dispatch<React.SetStateAction<number | null>>;
-}
-
-export function IssueListItemBody({
-  issue,
-  setSelectedIssueId,
-}: IssueListItemBodyProps) {
-  const { number, body, user, html_url, reactions, comments } = issue;
+  const { selectedIssueId } = useContext(IssueSelectionStateContext);
 
   const [commentsIsOpen, setCommentsIsOpen] = useState(false);
 
   const handleCommentsOpenButtonClick = useCallback(() => {
     setCommentsIsOpen(true);
   }, [setCommentsIsOpen]);
+
+  if (id !== selectedIssueId) {
+    return null;
+  }
 
   return (
     <div
@@ -160,12 +154,7 @@ export function IssueListItemBody({
         </div>
       )}
 
-      {commentsIsOpen && (
-        <CommentList
-          issueNumber={number}
-          setSelectedIssueId={setSelectedIssueId}
-        />
-      )}
+      {commentsIsOpen && <CommentList />}
     </div>
   );
 }

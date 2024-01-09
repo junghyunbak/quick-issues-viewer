@@ -1,8 +1,9 @@
 // react
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useQuery } from "react-query";
 import { RotatingLines } from "react-loader-spinner";
 import { useParams, useSearchParams } from "react-router-dom";
+import { IssueSelectionStateProvider } from "./index.context";
 
 // styles
 import { css } from "@emotion/react";
@@ -64,92 +65,85 @@ export function IssueList() {
     }
   );
 
-  const [selectedIssueId, setSelectedIssueId] = useState<number | null>(null);
-
   return (
-    <div
-      css={css`
-        display: flex;
-        flex-direction: column;
-
-        height: 100%;
-      `}
-    >
+    <IssueSelectionStateProvider>
       <div
         css={css`
-          padding: 1.25rem;
-        `}
-      >
-        <IssueListOptions />
-      </div>
+          display: flex;
+          flex-direction: column;
 
-      <div
-        css={css`
-          width: 100%;
           height: 100%;
-
-          padding: 0 1.25rem;
-
-          @media ${device.mobile} {
-            padding-left: 0;
-            padding-right: 0;
-          }
         `}
       >
-        {issues.isLoading ? (
-          <div
-            css={css`
-              display: flex;
-              align-items: center;
-              justify-content: center;
+        <div
+          css={css`
+            padding: 1.25rem;
+          `}
+        >
+          <IssueListOptions />
+        </div>
 
-              width: 100%;
-              height: 100%;
-            `}
-          >
-            <RotatingLines width="2rem" strokeColor="gray" />
-          </div>
-        ) : (
-          issues.data &&
-          issues.data.items.length > 0 && (
-            <Fragment>
-              <ul
-                css={css`
-                  width: 100%;
+        <div
+          css={css`
+            width: 100%;
+            height: 100%;
 
-                  border-radius: ${size.BORDER_RADIUS}px;
-                  border: 1px solid ${color.g200};
+            padding: 0 1.25rem;
 
-                  @media ${device.mobile} {
-                    border-radius: 0;
-                    border-left: 0;
-                    border-right: 0;
-                  }
-                `}
-              >
-                {issues.data.items.map((issue) => {
-                  return (
-                    <IssueListItem
-                      key={issue.id}
-                      issue={issue}
-                      selectedIssueId={selectedIssueId}
-                      setSelectedIssueId={setSelectedIssueId}
-                    />
-                  );
-                })}
-              </ul>
+            @media ${device.mobile} {
+              padding-left: 0;
+              padding-right: 0;
+            }
+          `}
+        >
+          {issues.isLoading ? (
+            <div
+              css={css`
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
-              <div
-                css={css`
-                  padding: 1.25rem 0;
-                `}
-              >
-                <IssueListPaginate pageCount={issues.data.pageCount} />
-              </div>
-            </Fragment>
-          )
-        )}
+                width: 100%;
+                height: 100%;
+              `}
+            >
+              <RotatingLines width="2rem" strokeColor="gray" />
+            </div>
+          ) : (
+            issues.data &&
+            issues.data.items.length > 0 && (
+              <Fragment>
+                <ul
+                  css={css`
+                    width: 100%;
+
+                    border-radius: ${size.BORDER_RADIUS}px;
+                    border: 1px solid ${color.g200};
+
+                    @media ${device.mobile} {
+                      border-radius: 0;
+                      border-left: 0;
+                      border-right: 0;
+                    }
+                  `}
+                >
+                  {issues.data.items.map((issue) => {
+                    return <IssueListItem key={issue.id} issue={issue} />;
+                  })}
+                </ul>
+
+                <div
+                  css={css`
+                    padding: 1.25rem 0;
+                  `}
+                >
+                  <IssueListPaginate pageCount={issues.data.pageCount} />
+                </div>
+              </Fragment>
+            )
+          )}
+        </div>
       </div>
-    </div>
+    </IssueSelectionStateProvider>
   );
 }

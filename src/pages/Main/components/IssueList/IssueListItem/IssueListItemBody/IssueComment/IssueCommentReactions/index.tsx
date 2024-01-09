@@ -1,6 +1,6 @@
 // styles
 import { css } from "@emotion/react";
-import { color, size } from "@/assets/styles";
+import { color } from "@/assets/styles";
 
 // apis
 import { type components } from "@octokit/openapi-types";
@@ -48,7 +48,7 @@ export function IssueCommentReactions({
             case "rocket":
               return "🚀";
             default:
-              return "sd";
+              return "";
           }
         })();
 
