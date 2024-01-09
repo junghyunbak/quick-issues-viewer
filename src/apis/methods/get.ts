@@ -179,14 +179,33 @@ export function get(octokit: Octokit) {
       repo: string,
       issueNumber: number
     ): Promise<components["schemas"]["issue-comment"][]> => {
-      const { data } = await octokit.rest.issues.listComments({
-        owner,
-        repo,
-        issue_number: issueNumber,
-        per_page: 100,
-      });
+      const comments: components["schemas"]["issue-comment"][] = [];
 
-      return data;
+      let page = 1;
+      let pageLinks = null;
+
+      do {
+        const response = await octokit.rest.issues.listComments({
+          owner,
+          repo,
+          issue_number: issueNumber,
+          per_page: 100,
+          page,
+        });
+
+        const {
+          data,
+          headers: { link },
+        } = response;
+
+        comments.push(...data);
+
+        pageLinks = parseLink(link);
+
+        page += 1;
+      } while (pageLinks && !isLastPage(pageLinks));
+
+      return comments;
     },
   };
 }
