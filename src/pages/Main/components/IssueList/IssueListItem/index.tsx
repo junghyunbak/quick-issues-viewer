@@ -109,8 +109,6 @@ export function IssueListItem({
 
         list-style: none;
 
-        border-bottom: 1px solid ${color.g200};
-
         &:first-of-type {
           > div:first-child {
             border-top-right-radius: ${size.BORDER_RADIUS}px;
@@ -124,6 +122,8 @@ export function IssueListItem({
           > div:last-child {
             border-bottom-right-radius: ${size.BORDER_RADIUS}px;
             border-bottom-left-radius: ${size.BORDER_RADIUS}px;
+
+            border-bottom: 0;
           }
         }
       `}
@@ -134,6 +134,13 @@ export function IssueListItem({
           justify-content: space-between;
 
           padding: 0.5rem;
+
+          position: sticky;
+          top: 0;
+          background-color: ${color.w};
+          z-index: 6;
+
+          border-bottom: 1px solid ${color.g200};
 
           &:hover {
             @media ${device.canHover} {

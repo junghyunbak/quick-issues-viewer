@@ -105,7 +105,7 @@ export function IssueListItemBody({
   return (
     <div
       css={css`
-        border-top: 1px solid ${color.g200};
+        border-bottom: 1px solid ${color.g200};
 
         display: flex;
         flex-direction: column;
