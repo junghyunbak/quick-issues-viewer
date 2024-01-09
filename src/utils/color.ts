@@ -11,13 +11,7 @@ export function hexToRgb(hex: string) {
 }
 
 export function hexToHSL(hex: string) {
-  hex = hex.replace(/^#/, "");
-
-  let bigint = parseInt(hex, 16);
-
-  let r = (bigint >> 16) & 255;
-  let g = (bigint >> 8) & 255;
-  let b = bigint & 255;
+  let [r, g, b] = hexToRgb(hex);
 
   r /= 255;
   g /= 255;
@@ -26,22 +20,31 @@ export function hexToHSL(hex: string) {
   let max = Math.max(r, g, b);
   let min = Math.min(r, g, b);
 
-  let h;
+  let h, s, l;
 
-  if (max == min) {
+  if (max === min) {
     h = 0;
-  } else if (max == r) {
-    h = ((g - b) / (max - min) + 6) % 6;
-  } else if (max == g) {
-    h = (b - r) / (max - min) + 2;
+    s = 0;
+    l = Math.round(max * 100);
   } else {
-    h = (r - g) / (max - min) + 4;
+    const delta = max - min;
+    s = delta / (1 - Math.abs(2 * max - 1));
+    l = (max + min) / 2;
+
+    if (delta === 0) {
+      h = 0;
+    } else if (max === r) {
+      h = ((g - b) / delta + 6) % 6;
+    } else if (max === g) {
+      h = (b - r) / delta + 2;
+    } else {
+      h = (r - g) / delta + 4;
+    }
+
+    h = Math.round(h * 60);
+    s = Math.round(s * 100);
+    l = Math.round(l * 100);
   }
-
-  h = Math.round(h * 60);
-
-  let s = Math.round(((max - min) / (1 - Math.abs(2 * max - 1))) * 100);
-  let l = Math.round(((max + min) / 2) * 100);
 
   return [h, s, l];
 }
