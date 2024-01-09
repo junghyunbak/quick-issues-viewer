@@ -20,4 +20,9 @@ module.exports = {
       url: require.resolve("url/"),
     },
   },
+  devServer: {
+    client: {
+      overlay: false,
+    },
+  },
 };
