@@ -1,13 +1,12 @@
 // react
 import { IssueProvider } from "./index.context";
-import { IssueListItemHeader } from "./IssueListItemHeader";
 
 // components
+import { IssueListItemHeader } from "./IssueListItemHeader";
 import { IssueListItemBody } from "./IssueListItemBody";
 
 // styles
 import * as S from "./index.styles";
-import { css } from "@emotion/react";
 
 // apis
 import { type components } from "@octokit/openapi-types";
