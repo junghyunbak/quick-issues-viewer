@@ -6,8 +6,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { IssueSelectionStateProvider } from "./index.context";
 
 // styles
-import { css } from "@emotion/react";
-import { color, device, size } from "@/assets/styles";
+import * as S from "./index.styles";
 
 // constants
 import { defaultValue } from "@/constants";
@@ -15,11 +14,11 @@ import { defaultValue } from "@/constants";
 // components
 import { IssueListItem } from "./IssueListItem";
 import { IssueListPaginate } from "./IssueListPaginate";
-import { IssueListOptions } from "./IssueListOptions";
 
 // utils
 import queryString from "query-string";
 
+// hooks
 import { useOctokit } from "@/hooks";
 
 export function IssueList() {
@@ -65,85 +64,35 @@ export function IssueList() {
     }
   );
 
+  if (issues.isLoading) {
+    return (
+      <S.IssueListLoadingBox>
+        <RotatingLines width="2rem" strokeColor="gray" />
+      </S.IssueListLoadingBox>
+    );
+  }
+
   return (
-    <IssueSelectionStateProvider>
-      <div
-        css={css`
-          display: flex;
-          flex-direction: column;
+    <S.IssueListLayout>
+      {issues.data && issues.data.items.length > 0 && (
+        <Fragment>
+          <IssueSelectionStateProvider>
+            <S.IssueList>
+              {issues.data.items.map((issue) => {
+                return (
+                  <S.IssueItem key={issue.id}>
+                    <IssueListItem issue={issue} />
+                  </S.IssueItem>
+                );
+              })}
+            </S.IssueList>
+          </IssueSelectionStateProvider>
 
-          height: 100%;
-        `}
-      >
-        <div
-          css={css`
-            padding: 1.25rem;
-          `}
-        >
-          <IssueListOptions />
-        </div>
-
-        <div
-          css={css`
-            width: 100%;
-            height: 100%;
-
-            padding: 0 1.25rem;
-
-            @media ${device.mobile} {
-              padding-left: 0;
-              padding-right: 0;
-            }
-          `}
-        >
-          {issues.isLoading ? (
-            <div
-              css={css`
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                width: 100%;
-                height: 100%;
-              `}
-            >
-              <RotatingLines width="2rem" strokeColor="gray" />
-            </div>
-          ) : (
-            issues.data &&
-            issues.data.items.length > 0 && (
-              <Fragment>
-                <ul
-                  css={css`
-                    width: 100%;
-
-                    border-radius: ${size.BORDER_RADIUS}px;
-                    border: 1px solid ${color.g200};
-
-                    @media ${device.mobile} {
-                      border-radius: 0;
-                      border-left: 0;
-                      border-right: 0;
-                    }
-                  `}
-                >
-                  {issues.data.items.map((issue) => {
-                    return <IssueListItem key={issue.id} issue={issue} />;
-                  })}
-                </ul>
-
-                <div
-                  css={css`
-                    padding: 1.25rem 0;
-                  `}
-                >
-                  <IssueListPaginate pageCount={issues.data.pageCount} />
-                </div>
-              </Fragment>
-            )
-          )}
-        </div>
-      </div>
-    </IssueSelectionStateProvider>
+          <S.IssueListPaginateLayout>
+            <IssueListPaginate pageCount={issues.data.pageCount} />
+          </S.IssueListPaginateLayout>
+        </Fragment>
+      )}
+    </S.IssueListLayout>
   );
 }

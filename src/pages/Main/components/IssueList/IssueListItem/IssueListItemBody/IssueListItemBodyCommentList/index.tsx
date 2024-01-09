@@ -1,10 +1,8 @@
 // react
-import { useContext } from "react";
-import { IssueContext } from "../../index.context";
-
-// react
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { IssueContext } from "../../index.context";
 
 // hooks
 import { useOctokit } from "@/hooks";
@@ -13,7 +11,7 @@ import { useOctokit } from "@/hooks";
 import { IssueComment } from "@/components/widgets/IssueComment";
 
 // styles
-import { css } from "@emotion/react";
+import * as S from "./index.styles";
 
 export function IssueListItemBodyCommentList() {
   const { owner, repo } = useParams();
@@ -40,25 +38,21 @@ export function IssueListItemBodyCommentList() {
   }
 
   return (
-    <ul
-      css={css`
-        width: 100%;
-      `}
-    >
+    <S.CommentList>
       {comments.data.map((comment) => {
         const { id, body, html_url, user, reactions } = comment;
 
         return (
-          <li key={id}>
+          <S.CommentItem key={id}>
             <IssueComment
               markdownText={body || ""}
               issueUrl={html_url}
               user={user}
               reactions={reactions}
             />
-          </li>
+          </S.CommentItem>
         );
       })}
-    </ul>
+    </S.CommentList>
   );
 }

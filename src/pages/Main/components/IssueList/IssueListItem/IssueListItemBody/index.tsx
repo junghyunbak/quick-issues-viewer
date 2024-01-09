@@ -1,8 +1,7 @@
 // react
 import { useCallback, useContext, useState } from "react";
-
-import { IssueSelectionStateContext } from "../../index.context";
 import { IssueContext } from "../index.context";
+import { IssueSelectionStateContext } from "../../index.context";
 
 // components
 import { IssueComment } from "@/components/widgets/IssueComment";
@@ -10,8 +9,7 @@ import { IssueListItemBodyCommentList } from "./IssueListItemBodyCommentList";
 import { IssueListItemBodyShowCommentsButton } from "./IssueListItemBodyShowCommentsButton";
 
 // styles
-import { css } from "@emotion/react";
-import { color } from "@/assets/styles";
+import * as S from "./index.styles";
 
 export function IssueListItemBody() {
   const { id, body, user, html_url, reactions, comments } =
@@ -32,17 +30,7 @@ export function IssueListItemBody() {
   }
 
   return (
-    <div
-      css={css`
-        border-bottom: 1px solid ${color.g200};
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        padding: 0.75rem;
-      `}
-    >
+    <S.IssueBodyLayout>
       <IssueComment
         markdownText={body || ""}
         user={user}
@@ -53,19 +41,13 @@ export function IssueListItemBody() {
 
       {commentsIsOpen && <IssueListItemBodyCommentList />}
 
-      <div
-        css={css`
-          width: 100%;
-
-          border-top: 2px solid #d0d7de;
-        `}
-      />
+      <S.IssueBodySplitLineBox />
 
       {!commentsIsOpen && isCommentsExist && (
         <IssueListItemBodyShowCommentsButton
           onClick={handleCommentsOpenButtonClick}
         />
       )}
-    </div>
+    </S.IssueBodyLayout>
   );
 }

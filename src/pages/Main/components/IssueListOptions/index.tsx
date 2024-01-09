@@ -1,5 +1,5 @@
 // styles
-import { css } from "@emotion/react";
+import * as S from "./index.styles";
 
 // components
 import { IssueListOptionsStateElement } from "./IssueListOptionsStateElement";
@@ -7,16 +7,9 @@ import { IssueListOptionsSortElement } from "./IssueListOptionsSortElement";
 
 export function IssueListOptions() {
   return (
-    <div
-      css={css`
-        display: flex;
-        flex-wrap: wrap;
-
-        gap: 0.5rem;
-      `}
-    >
+    <S.IssueListOptionsLayout>
       <IssueListOptionsStateElement />
       <IssueListOptionsSortElement />
-    </div>
+    </S.IssueListOptionsLayout>
   );
 }

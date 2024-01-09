@@ -2,30 +2,17 @@
 import { useContext } from "react";
 import { IssueContext } from "../../index.context";
 
-// styles
-import { css } from "@emotion/react";
-
 // components
 import { Label } from "@/components/widgets/Label";
+
+// styles
+import * as S from "./index.styles";
 
 export function IssueListItemHeaderLabelList() {
   const { labels } = useContext(IssueContext);
 
   return (
-    <ul
-      css={css`
-        display: flex;
-        flex-wrap: wrap;
-
-        padding: 0;
-
-        gap: 4px;
-
-        li {
-          list-style: none;
-        }
-      `}
-    >
+    <S.LabelList>
       {labels.map((label) => {
         if (typeof label === "string") {
           return null;
@@ -37,8 +24,12 @@ export function IssueListItemHeaderLabelList() {
           return null;
         }
 
-        return <Label key={id} labelName={name} labelBgColor={color} />;
+        return (
+          <S.LabelItem key={id}>
+            <Label labelName={name} labelBgColor={color} />
+          </S.LabelItem>
+        );
       })}
-    </ul>
+    </S.LabelList>
   );
 }

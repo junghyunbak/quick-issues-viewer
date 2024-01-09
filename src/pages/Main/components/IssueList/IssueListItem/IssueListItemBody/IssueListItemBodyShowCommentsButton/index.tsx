@@ -2,8 +2,7 @@
 import React from "react";
 
 // styles
-import { css } from "@emotion/react";
-import { color, size } from "@/assets/styles";
+import * as S from "./index.styles";
 
 interface IssueListItemBodyShowCommentsButtonProps
   extends React.DetailedHTMLProps<
@@ -15,32 +14,8 @@ export function IssueListItemBodyShowCommentsButton(
   props: IssueListItemBodyShowCommentsButtonProps
 ) {
   return (
-    <div
-      css={css`
-        width: 100%;
-
-        background-color: ${color.g100};
-
-        border: 1px solid ${color.g200};
-        border-radius: ${size.BORDER_RADIUS}px;
-
-        margin-top: 0.75rem;
-
-        cursor: pointer;
-
-        padding: 0.3125rem 1rem;
-      `}
-      {...props}
-    >
-      <p
-        css={css`
-          text-align: center;
-          font-weight: 600;
-          font-size: 0.875rem;
-        `}
-      >
-        Show comments
-      </p>
-    </div>
+    <S.ShowCommentButtonLayout {...props}>
+      <S.ShowCommentButtonParagraph>Show comments</S.ShowCommentButtonParagraph>
+    </S.ShowCommentButtonLayout>
   );
 }
