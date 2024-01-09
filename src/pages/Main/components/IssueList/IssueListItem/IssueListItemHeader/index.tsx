@@ -44,7 +44,7 @@ export function IssueListItemHeader() {
   const isCommentExist = comments > 0;
 
   return (
-    <S.HeaderLayout onClick={handleIssueItemClick}>
+    <S.IssueListItemHeaderLayout onClick={handleIssueItemClick}>
       <S.IssueInfoLayout>
         <S.IssueInfoStatusBox>{StatusIcon}</S.IssueInfoStatusBox>
 
@@ -68,6 +68,6 @@ export function IssueListItemHeader() {
           <S.CommentCountParagraph>{comments}</S.CommentCountParagraph>
         </S.CommentCountingBox>
       )}
-    </S.HeaderLayout>
+    </S.IssueListItemHeaderLayout>
   );
 }

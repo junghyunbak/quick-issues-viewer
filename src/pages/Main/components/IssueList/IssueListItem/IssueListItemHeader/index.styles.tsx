@@ -34,7 +34,7 @@ export const Comment = styled(CommentIcon)`
   fill: gray;
 `;
 
-export const HeaderLayout = styled.div`
+export const IssueListItemHeaderLayout = styled.div`
   display: flex;
   justify-content: space-between;
 
