@@ -25,6 +25,8 @@ export function IssueListItemBody() {
     setCommentsIsOpen(true);
   }, [setCommentsIsOpen]);
 
+  const isCommentsExist = comments > 0;
+
   if (id !== selectedIssueId) {
     return null;
   }
@@ -49,22 +51,20 @@ export function IssueListItemBody() {
         reactions={reactions}
       />
 
-      {commentsIsOpen ? (
-        <IssueListItemBodyCommentList />
-      ) : (
-        <div
-          css={css`
-            width: 100%;
+      {commentsIsOpen && <IssueListItemBodyCommentList />}
 
-            border-top: 2px solid #d0d7de;
-          `}
-        >
-          {comments > 0 && (
-            <IssueListItemBodyShowCommentsButton
-              onClick={handleCommentsOpenButtonClick}
-            />
-          )}
-        </div>
+      <div
+        css={css`
+          width: 100%;
+
+          border-top: 2px solid #d0d7de;
+        `}
+      />
+
+      {!commentsIsOpen && isCommentsExist && (
+        <IssueListItemBodyShowCommentsButton
+          onClick={handleCommentsOpenButtonClick}
+        />
       )}
     </div>
   );

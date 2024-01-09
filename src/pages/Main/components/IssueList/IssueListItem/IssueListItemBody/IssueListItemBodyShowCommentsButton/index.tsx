@@ -17,6 +17,8 @@ export function IssueListItemBodyShowCommentsButton(
   return (
     <div
       css={css`
+        width: 100%;
+
         background-color: ${color.g100};
 
         border: 1px solid ${color.g200};

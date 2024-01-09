@@ -1,7 +1,6 @@
 // react
-import { Fragment, useContext, useCallback } from "react";
+import { useContext } from "react";
 import { IssueContext } from "../../index.context";
-import { IssueSelectionStateContext } from "../../../index.context";
 
 // react
 import { useQuery } from "react-query";
@@ -11,7 +10,6 @@ import { useParams } from "react-router-dom";
 import { useOctokit } from "@/hooks";
 
 // components
-import { CircleCloseButton } from "@/components/core/Button/CircleCloseButton";
 import { IssueComment } from "@/components/widgets/IssueComment";
 
 // styles
@@ -23,11 +21,6 @@ export function IssueListItemBodyCommentList() {
   const { apiService } = useOctokit();
 
   const { number } = useContext(IssueContext);
-  const { setSelectedIssueId } = useContext(IssueSelectionStateContext);
-
-  const handleIssueBodyCloseButtonClick = useCallback(() => {
-    setSelectedIssueId(null);
-  }, [setSelectedIssueId]);
 
   const comments = useQuery(
     ["issue", "comment", owner, repo, number],
@@ -47,37 +40,25 @@ export function IssueListItemBodyCommentList() {
   }
 
   return (
-    <Fragment>
-      <ul
-        css={css`
-          width: 100%;
-        `}
-      >
-        {comments.data.map((comment) => {
-          const { id, body, html_url, user, reactions } = comment;
+    <ul
+      css={css`
+        width: 100%;
+      `}
+    >
+      {comments.data.map((comment) => {
+        const { id, body, html_url, user, reactions } = comment;
 
-          return (
-            <li key={id}>
-              <IssueComment
-                markdownText={body || ""}
-                issueUrl={html_url}
-                user={user}
-                reactions={reactions}
-              />
-            </li>
-          );
-        })}
-      </ul>
-
-      <div
-        css={css`
-          width: 100%;
-
-          border-top: 2px solid #d0d7de;
-        `}
-      />
-
-      <CircleCloseButton onClick={handleIssueBodyCloseButtonClick} />
-    </Fragment>
+        return (
+          <li key={id}>
+            <IssueComment
+              markdownText={body || ""}
+              issueUrl={html_url}
+              user={user}
+              reactions={reactions}
+            />
+          </li>
+        );
+      })}
+    </ul>
   );
 }
