@@ -1,9 +1,11 @@
 // react
+import { Fragment } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
 // components
 import { IssueComment } from "@/pages/Main/components/IssueList/IssueListItem/IssueListItemBody/IssueComment";
+import { CloseBodyButton } from "./CloseBodyButton";
 
 // styles
 import { css } from "@emotion/react";
@@ -44,6 +46,10 @@ export function IssueListItemBody({ issue }: IssueListItemBodyProps) {
       css={css`
         border-top: 1px solid ${color.g200};
 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
         padding: 0.75rem;
       `}
     >
@@ -55,30 +61,48 @@ export function IssueListItemBody({ issue }: IssueListItemBodyProps) {
         reactions={reactions}
       />
 
-      {comments.data && (
-        <ul>
-          {comments.data.map((comment) => {
-            const { id, body, html_url, user, reactions } = comment;
+      {comments.data && comments.data.length > 0 ? (
+        <Fragment>
+          <ul
+            css={css`
+              width: 100%;
+            `}
+          >
+            {comments.data.map((comment) => {
+              const { id, body, html_url, user, reactions } = comment;
 
-            return (
-              <li key={id}>
-                <IssueComment
-                  markdownText={body || ""}
-                  issueUrl={html_url}
-                  user={user}
-                  reactions={reactions}
-                />
-              </li>
-            );
-          })}
-        </ul>
+              return (
+                <li key={id}>
+                  <IssueComment
+                    markdownText={body || ""}
+                    issueUrl={html_url}
+                    user={user}
+                    reactions={reactions}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+
+          <div
+            css={css`
+              width: 100%;
+
+              border-top: 2px solid #d0d7de;
+            `}
+          />
+
+          <CloseBodyButton />
+        </Fragment>
+      ) : (
+        <div
+          css={css`
+            width: 100%;
+
+            border-top: 2px solid #d0d7de;
+          `}
+        />
       )}
-
-      <div
-        css={css`
-          border-top: 2px solid #d0d7de;
-        `}
-      />
     </div>
   );
 }

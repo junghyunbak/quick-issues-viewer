@@ -109,8 +109,6 @@ export function IssueList() {
               border-radius: ${size.BORDER_RADIUS}px;
               border: 1px solid ${color.g200};
 
-              overflow: hidden;
-
               @media ${device.mobile} {
                 border-radius: 0;
                 border-left: 0;
