@@ -15,7 +15,7 @@ import { ReactComponent as Comment } from "@/assets/svgs/comment.svg";
 
 // styles
 import { css } from "@emotion/react";
-import { color, device } from "@/assets/styles";
+import { color, device, size } from "@/assets/styles";
 
 // apis
 import { type components } from "@octokit/openapi-types";
@@ -116,8 +116,20 @@ export function IssueListItem({
 
         border-bottom: 1px solid ${color.g200};
 
+        &:first-of-type {
+          > div:first-child {
+            border-top-right-radius: ${size.BORDER_RADIUS}px;
+            border-top-left-radius: ${size.BORDER_RADIUS}px;
+          }
+        }
+
         &:last-child {
           border-bottom: 0;
+
+          > div:last-child {
+            border-bottom-right-radius: ${size.BORDER_RADIUS}px;
+            border-bottom-left-radius: ${size.BORDER_RADIUS}px;
+          }
         }
       `}
     >
