@@ -13,8 +13,8 @@ export function Main() {
   return (
     <div
       css={css`
-        width: 100vw;
-        height: 100vh;
+        position: absolute;
+        inset: 0;
       `}
     >
       <FixedAndVariableLayout
