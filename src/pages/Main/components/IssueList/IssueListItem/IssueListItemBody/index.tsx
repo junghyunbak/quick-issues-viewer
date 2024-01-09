@@ -1,7 +1,7 @@
 // react
 import { useCallback, useContext, useState } from "react";
-import { IssueContext } from "../index.context";
-import { IssueSelectionStateContext } from "../../index.context";
+import { IssueContext } from "@/pages/Main/components/IssueList/IssueListItem/index.context";
+import { IssueSelectionStateContext } from "@/pages/Main/components/IssueList/index.context";
 
 // components
 import { IssueComment } from "@/components/widgets/IssueComment";

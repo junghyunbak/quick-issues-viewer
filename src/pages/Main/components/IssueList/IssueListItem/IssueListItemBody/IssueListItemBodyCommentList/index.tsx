@@ -2,7 +2,7 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
-import { IssueContext } from "../../index.context";
+import { IssueContext } from "@/pages/Main/components/IssueList/IssueListItem/index.context";
 
 // hooks
 import { useOctokit } from "@/hooks";

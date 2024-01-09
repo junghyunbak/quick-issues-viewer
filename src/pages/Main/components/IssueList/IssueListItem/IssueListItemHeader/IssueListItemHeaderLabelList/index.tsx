@@ -1,6 +1,6 @@
 // react
 import { useContext } from "react";
-import { IssueContext } from "../../index.context";
+import { IssueContext } from "@/pages/Main/components/IssueList/IssueListItem/index.context";
 
 // components
 import { Label } from "@/components/widgets/Label";
