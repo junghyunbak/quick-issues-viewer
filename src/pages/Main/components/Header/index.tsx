@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 // components
 import { Search } from "@/components/widgets/Search";
 import { LabelListModal } from "@/pages/Main/components/LabelListModal";
-import { RepositoryLink } from "@/pages/Main/components/RepositoryLink";
+import { RepositoryLink } from "@/components/widgets/RepositoryLink";
 import { GithubLoginButton } from "@/components/core/Button/GithubLoginButton";
 import { LogoutButton } from "@/components/core/Button/LogoutButton";
 import { ProfileButton } from "@/components/core/Button/ProfileButton";

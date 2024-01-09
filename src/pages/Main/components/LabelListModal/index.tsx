@@ -8,7 +8,7 @@ import { color, device, size, zIndex } from "@/assets/styles";
 // components
 import { LabelList } from "@/pages/Main/components/LabelList";
 import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
-import { RepositoryLink } from "@/pages/Main/components/RepositoryLink";
+import { RepositoryLink } from "@/components/widgets/RepositoryLink";
 
 // svgs
 import { ReactComponent as X } from "@/assets/svgs/x.svg";
