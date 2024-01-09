@@ -5,13 +5,13 @@ import { color, zIndex } from "@/assets/styles";
 // svgs
 import { ReactComponent as X } from "@/assets/svgs/x.svg";
 
-interface CloseBodyButtonProps
+interface CircleCloseButtonProps
   extends React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > {}
 
-export function CloseBodyButton(props: CloseBodyButtonProps) {
+export function CircleCloseButton(props: CircleCloseButtonProps) {
   return (
     <div
       css={css`

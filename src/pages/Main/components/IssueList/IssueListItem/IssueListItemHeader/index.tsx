@@ -1,9 +1,10 @@
 // react
 import { useCallback, useMemo, useContext } from "react";
 import { IssueContext } from "../index.context";
+import { IssueSelectionStateContext } from "../../index.context";
 
 // components
-import { IssueListItemLabelList } from "@/pages/Main/components/IssueList/IssueListItem/IssueListItemLabelList";
+import { IssueListItemHeaderLabelList } from "./IssueListItemHeaderLabelList";
 
 // svgs
 import { ReactComponent as Comment } from "@/assets/svgs/comment.svg";
@@ -16,10 +17,9 @@ import { ReactComponent as PrMerged } from "@/assets/svgs/pr-merged.svg";
 // styles
 import { css } from "@emotion/react";
 import { color, device, zIndex } from "@/assets/styles";
-import { IssueSelectionStateContext } from "../../index.context";
 
 export function IssueListItemHeader() {
-  const { id, state, title, labels, comments, created_at, pull_request } =
+  const { id, state, title, comments, created_at, pull_request } =
     useContext(IssueContext);
 
   const { setSelectedIssueId } = useContext(IssueSelectionStateContext);
@@ -148,7 +148,7 @@ export function IssueListItemHeader() {
               {title}
             </p>
 
-            <IssueListItemLabelList labels={labels} />
+            <IssueListItemHeaderLabelList />
           </div>
 
           <div>

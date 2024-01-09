@@ -15,10 +15,10 @@ import { ReactComponent as Reference } from "@/assets/svgs/reference.svg";
 
 // components
 import { FixedAndVariableLayout } from "@/components/Layout/FixedAndVariableLayout";
+import { IssueCommentReactions } from "./IssueCommentReactions";
 
 // apis
 import { type components } from "@octokit/openapi-types";
-import { IssueCommentReactions } from "./IssueCommentReactions";
 
 interface IssueCommentProps {
   markdownText: string;
