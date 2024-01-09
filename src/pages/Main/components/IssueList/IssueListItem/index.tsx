@@ -15,7 +15,7 @@ import { ReactComponent as Comment } from "@/assets/svgs/comment.svg";
 
 // styles
 import { css } from "@emotion/react";
-import { color, device, size } from "@/assets/styles";
+import { color, device, size, zIndex } from "@/assets/styles";
 
 // apis
 import { type components } from "@octokit/openapi-types";
@@ -138,7 +138,7 @@ export function IssueListItem({
           position: sticky;
           top: 0;
           background-color: ${color.w};
-          z-index: 6;
+          z-index: ${zIndex.ISSUE_ITEM_HEADER};
 
           border-bottom: 1px solid ${color.g200};
 

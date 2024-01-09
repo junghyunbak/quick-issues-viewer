@@ -1,6 +1,6 @@
 // styles
 import { css } from "@emotion/react";
-import { color } from "@/assets/styles";
+import { color, zIndex } from "@/assets/styles";
 
 // svgs
 import { ReactComponent as X } from "@/assets/svgs/x.svg";
@@ -18,7 +18,7 @@ export function CloseBodyButton(props: CloseBodyButtonProps) {
         position: sticky;
         bottom: 0;
 
-        z-index: 5;
+        z-index: ${zIndex.ISSUE_ITEM_BODY_CLOSE_BUTTON};
 
         padding-top: 1.75rem;
         padding-bottom: 1rem;
