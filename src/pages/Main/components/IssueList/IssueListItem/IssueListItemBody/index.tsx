@@ -1,5 +1,5 @@
 // react
-import { Fragment } from "react";
+import { Fragment, useCallback } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
@@ -19,9 +19,14 @@ import { useOctokit } from "@/hooks";
 
 interface IssueListItemBodyProps {
   issue: components["schemas"]["issue"];
+
+  setSelectedIssueId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-export function IssueListItemBody({ issue }: IssueListItemBodyProps) {
+export function IssueListItemBody({
+  issue,
+  setSelectedIssueId,
+}: IssueListItemBodyProps) {
   const { owner, repo } = useParams();
 
   const { apiService } = useOctokit();
@@ -40,6 +45,10 @@ export function IssueListItemBody({ issue }: IssueListItemBodyProps) {
       return comments;
     }
   );
+
+  const handleIssueBodyCloseButtonClick = useCallback(() => {
+    setSelectedIssueId(null);
+  }, [setSelectedIssueId]);
 
   return (
     <div
@@ -92,7 +101,7 @@ export function IssueListItemBody({ issue }: IssueListItemBodyProps) {
             `}
           />
 
-          <CloseBodyButton />
+          <CloseBodyButton onClick={handleIssueBodyCloseButtonClick} />
         </Fragment>
       ) : (
         <div

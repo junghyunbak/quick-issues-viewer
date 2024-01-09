@@ -5,7 +5,13 @@ import { color } from "@/assets/styles";
 // svgs
 import { ReactComponent as X } from "@/assets/svgs/x.svg";
 
-export function CloseBodyButton() {
+interface CloseBodyButtonProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {}
+
+export function CloseBodyButton(props: CloseBodyButtonProps) {
   return (
     <div
       css={css`
@@ -17,6 +23,7 @@ export function CloseBodyButton() {
         padding-top: 1.75rem;
         padding-bottom: 1rem;
       `}
+      {...props}
     >
       <div
         css={css`
@@ -33,6 +40,8 @@ export function CloseBodyButton() {
           display: flex;
           align-items: center;
           justify-content: center;
+
+          box-shadow: rgba(140, 149, 159, 0.2) 0px 8px 24px 0px;
         `}
       >
         <X />

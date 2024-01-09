@@ -35,20 +35,15 @@ export function IssueListItem({
   const { id, title, labels, state, created_at, pull_request, comments } =
     issue;
 
-  const handleIssueItemClick = useCallback(
-    (issueId: number) => {
-      return () => {
-        setSelectedIssueId((prev) => {
-          if (prev === issueId) {
-            return null;
-          }
+  const handleIssueItemClick = useCallback(() => {
+    setSelectedIssueId((prev) => {
+      if (prev === id) {
+        return null;
+      }
 
-          return issueId;
-        });
-      };
-    },
-    [setSelectedIssueId]
-  );
+      return id;
+    });
+  }, [id, setSelectedIssueId]);
 
   const StatusIcon = useMemo<React.ReactNode>(() => {
     if (pull_request) {
@@ -148,7 +143,7 @@ export function IssueListItem({
 
           cursor: pointer;
         `}
-        onClick={handleIssueItemClick(id)}
+        onClick={handleIssueItemClick}
       >
         <div
           css={css`
@@ -231,7 +226,12 @@ export function IssueListItem({
         )}
       </div>
 
-      {selectedIssueId === id && <IssueListItemBody issue={issue} />}
+      {selectedIssueId === id && (
+        <IssueListItemBody
+          issue={issue}
+          setSelectedIssueId={setSelectedIssueId}
+        />
+      )}
     </li>
   );
 }
