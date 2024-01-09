@@ -1,5 +1,4 @@
 // react
-import { Fragment } from "react";
 import { useQuery } from "react-query";
 import { RotatingLines } from "react-loader-spinner";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -72,27 +71,27 @@ export function IssueList() {
     );
   }
 
-  return (
-    <S.IssueListLayout>
-      {issues.data && issues.data.items.length > 0 && (
-        <Fragment>
-          <IssueSelectionStateProvider>
-            <S.IssueList>
-              {issues.data.items.map((issue) => {
-                return (
-                  <S.IssueItem key={issue.id}>
-                    <IssueListItem issue={issue} />
-                  </S.IssueItem>
-                );
-              })}
-            </S.IssueList>
-          </IssueSelectionStateProvider>
+  if (!issues.data || issues.data.items.length === 0) {
+    return null;
+  }
 
-          <S.IssueListPaginateLayout>
-            <IssueListPaginate pageCount={issues.data.pageCount} />
-          </S.IssueListPaginateLayout>
-        </Fragment>
-      )}
-    </S.IssueListLayout>
+  return (
+    <IssueSelectionStateProvider>
+      <S.IssueListLayout>
+        <S.IssueList>
+          {issues.data.items.map((issue) => {
+            return (
+              <S.IssueItem key={issue.id}>
+                <IssueListItem issue={issue} />
+              </S.IssueItem>
+            );
+          })}
+        </S.IssueList>
+
+        <S.IssueListPaginateLayout>
+          <IssueListPaginate pageCount={issues.data.pageCount} />
+        </S.IssueListPaginateLayout>
+      </S.IssueListLayout>
+    </IssueSelectionStateProvider>
   );
 }
