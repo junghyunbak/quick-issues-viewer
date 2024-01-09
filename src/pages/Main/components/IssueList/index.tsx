@@ -88,8 +88,7 @@ export function IssueList() {
           width: 100%;
           height: 100%;
 
-          padding: 1.25rem;
-          padding-top: 0;
+          padding: 0 1.25rem;
 
           @media ${device.mobile} {
             padding-left: 0;
@@ -142,7 +141,7 @@ export function IssueList() {
 
               <div
                 css={css`
-                  margin-top: 1.25rem;
+                  padding: 1.25rem 0;
                 `}
               >
                 <IssueListPaginate pageCount={issues.data.pageCount} />
