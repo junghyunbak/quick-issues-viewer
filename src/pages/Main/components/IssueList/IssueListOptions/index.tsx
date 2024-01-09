@@ -12,9 +12,6 @@ export function IssueListOptions() {
         display: flex;
         flex-wrap: wrap;
 
-        padding: 1.25rem;
-        padding-bottom: 0;
-
         gap: 0.5rem;
       `}
     >

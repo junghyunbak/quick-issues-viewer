@@ -14,6 +14,7 @@ import { defaultValue } from "@/constants";
 // components
 import { IssueListItem } from "./IssueListItem";
 import { IssueListPaginate } from "./IssueListPaginate";
+import { IssueListOptions } from "./IssueListOptions";
 
 // utils
 import queryString from "query-string";
@@ -65,72 +66,91 @@ export function IssueList() {
 
   const [selectedIssueId, setSelectedIssueId] = useState<number | null>(null);
 
-  if (issues.isLoading) {
-    return (
-      <div
-        css={css`
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          width: 100%;
-          height: 100%;
-        `}
-      >
-        <RotatingLines width="2rem" strokeColor="gray" />
-      </div>
-    );
-  }
-
-  if (!issues.data) {
-    return null;
-  }
-
   return (
     <div
       css={css`
         display: flex;
         flex-direction: column;
-        gap: 1.25rem;
 
-        padding: 1.25rem;
-
-        @media ${device.mobile} {
-          padding: 1.25rem 0;
-        }
+        height: 100%;
       `}
     >
-      <Fragment>
-        {issues.data.items.length > 0 && (
-          <ul
+      <div
+        css={css`
+          padding: 1.25rem;
+        `}
+      >
+        <IssueListOptions />
+      </div>
+
+      <div
+        css={css`
+          width: 100%;
+          height: 100%;
+
+          padding: 1.25rem;
+          padding-top: 0;
+
+          @media ${device.mobile} {
+            padding-left: 0;
+            padding-right: 0;
+          }
+        `}
+      >
+        {issues.isLoading ? (
+          <div
             css={css`
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
               width: 100%;
-
-              border-radius: ${size.BORDER_RADIUS}px;
-              border: 1px solid ${color.g200};
-
-              @media ${device.mobile} {
-                border-radius: 0;
-                border-left: 0;
-                border-right: 0;
-              }
+              height: 100%;
             `}
           >
-            {issues.data.items.map((issue) => {
-              return (
-                <IssueListItem
-                  key={issue.id}
-                  issue={issue}
-                  selectedIssueId={selectedIssueId}
-                  setSelectedIssueId={setSelectedIssueId}
-                />
-              );
-            })}
-          </ul>
-        )}
+            <RotatingLines width="2rem" strokeColor="gray" />
+          </div>
+        ) : (
+          issues.data &&
+          issues.data.items.length > 0 && (
+            <Fragment>
+              <ul
+                css={css`
+                  width: 100%;
 
-        <IssueListPaginate pageCount={issues.data.pageCount} />
-      </Fragment>
+                  border-radius: ${size.BORDER_RADIUS}px;
+                  border: 1px solid ${color.g200};
+
+                  @media ${device.mobile} {
+                    border-radius: 0;
+                    border-left: 0;
+                    border-right: 0;
+                  }
+                `}
+              >
+                {issues.data.items.map((issue) => {
+                  return (
+                    <IssueListItem
+                      key={issue.id}
+                      issue={issue}
+                      selectedIssueId={selectedIssueId}
+                      setSelectedIssueId={setSelectedIssueId}
+                    />
+                  );
+                })}
+              </ul>
+
+              <div
+                css={css`
+                  margin-top: 1.25rem;
+                `}
+              >
+                <IssueListPaginate pageCount={issues.data.pageCount} />
+              </div>
+            </Fragment>
+          )
+        )}
+      </div>
     </div>
   );
 }
