@@ -19,6 +19,10 @@ const GlobalStyles = css`
     }
   }
 
+  body {
+    overflow: hidden;
+  }
+
   *:not(.markdown-body *) {
     box-sizing: border-box;
     word-break: break-all;
