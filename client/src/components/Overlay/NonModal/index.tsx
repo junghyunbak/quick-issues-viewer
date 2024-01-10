@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 
 // styles
 import { css } from "@emotion/react";
+import { zIndex } from "@/assets/styles";
 
 interface NonModalProps {
   target: React.MutableRefObject<HTMLElement | null>;
@@ -65,6 +66,7 @@ export function NonModal({
     <div
       css={css`
         position: fixed;
+        z-index: ${zIndex.NON_MODAL};
       `}
       ref={modal}
     >
