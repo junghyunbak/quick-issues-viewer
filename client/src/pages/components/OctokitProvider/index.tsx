@@ -53,7 +53,7 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
         const {
           data: { accessToken },
         } = await axios.post<{ accessToken: string | null }>(
-          "/api/oauth/slient-refresh"
+          "/api/oauth/silent-refresh"
         );
 
         return accessToken;

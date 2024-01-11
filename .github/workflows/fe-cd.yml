@@ -1,0 +1,27 @@
+name: Frontend Auto Deployment
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - client/**
+
+jobs:
+  deploy_master:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ssh action
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.RELEASE_HOST }}
+          username: ${{ secrets.RELEASE_USERNAME }}
+          password: ${{ secrets.RELEASE_PASSWORD }}
+          script: |
+            cd ./git-repo/github-issues-viewer
+
+            git clean -fd
+            git checkout master
+            git pull origin master
+
+            ./client/docker/build-and-run.sh
