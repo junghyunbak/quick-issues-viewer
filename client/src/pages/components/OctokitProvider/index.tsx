@@ -3,11 +3,44 @@ import React, { createContext, useEffect, useState } from "react";
 
 // apis
 import { Octokit } from "octokit";
-import { requestLog } from "@octokit/plugin-request-log";
+import { type Octokit as OctokitCore } from "@octokit/core";
 import { type OctokitOptions } from "@octokit/core/dist-types/types";
 import axios from "axios";
 
-const MyOctoKit = Octokit.plugin(requestLog);
+const requestLog = (isLogin: boolean) => (octokit: OctokitCore) => {
+  octokit.hook.wrap("request", (request, options) => {
+    octokit.log.debug("request", options);
+
+    const start = Date.now();
+    const requestOptions = octokit.request.endpoint.parse(options);
+    const path = requestOptions.url.replace(options.baseUrl, "");
+
+    return (request as typeof octokit.request)(options)
+      .then((response) => {
+        axios.post("/api/log", {
+          method: requestOptions.method,
+          status: response.status,
+          path,
+          time: Date.now() - start,
+          isLogin,
+        });
+
+        return response;
+      })
+
+      .catch((error) => {
+        axios.post("/api/log", {
+          method: requestOptions.method,
+          status: error.status,
+          path,
+          time: Date.now() - start,
+          isLogin,
+        });
+
+        throw error;
+      });
+  });
+};
 
 type OctokitContextValue = {
   octokit: Octokit;
@@ -25,29 +58,6 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
   const [octokit, setOctokit] = useState<Octokit | null>(null);
 
   const initializeOctokit = async () => {
-    const logger =
-      (logLevel: "debug" | "info" | "warn" | "error") =>
-      async (message: string) => {
-        if (logLevel === "debug") {
-          return;
-        }
-
-        try {
-          axios.post("/api/log", { logLevel, message });
-        } catch (e) {
-          console.log(e);
-        }
-      };
-
-    const octokitOptions: OctokitOptions = {
-      log: {
-        debug: logger("debug"),
-        info: logger("info"),
-        warn: logger("warn"),
-        error: logger("error"),
-      },
-    };
-
     const reissueAccessTokenSilently = async () => {
       try {
         const {
@@ -63,6 +73,10 @@ export function OctokitProvider({ children }: OctokitProviderProps) {
     };
 
     const accessToken = await reissueAccessTokenSilently();
+
+    const MyOctoKit = Octokit.plugin(requestLog(accessToken ? true : false));
+
+    const octokitOptions: OctokitOptions = {};
 
     if (accessToken) {
       octokitOptions.auth = accessToken;
