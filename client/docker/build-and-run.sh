@@ -8,4 +8,6 @@ docker build --file "$SCRIPT_DIR/Dockerfile" --tag ${FE_IMAGE_NAME} "$SCRIPT_DIR
 
 docker rm --force ${FE_IMAGE_NAME}
 
+docker image prune --force
+
 docker run --detach --publish 3000:3000 --name ${FE_IMAGE_NAME} ${FE_IMAGE_NAME}
