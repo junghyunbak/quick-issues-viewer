@@ -43,8 +43,12 @@ export class OAuthController {
 
       res.cookie('gh_rt', refreshToken);
 
-      return { accessToken, refreshToken };
+      return { accessToken };
     } catch (e) {
+      if (gh_rt) {
+        res.clearCookie('gh_rt');
+      }
+
       return null;
     }
   }
