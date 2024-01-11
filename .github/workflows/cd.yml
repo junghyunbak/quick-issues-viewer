@@ -22,8 +22,5 @@ jobs:
             git checkout master
             git pull origin master
 
-            ./client/docker/build.sh
-            ./client/docker/run.sh
-
-            ./server/docker/build.sh
-            ./server/docker/run.sh
+            ./client/docker/build-and-run.sh
+            ./server/docker/build-and-run.sh
