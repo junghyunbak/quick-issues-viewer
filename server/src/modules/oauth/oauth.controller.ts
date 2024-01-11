@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { OAuthService } from './oauth.service';
-import type { Request, Response } from 'express';
 import { TokenCreateDto } from './dto/TokenCreate.dto';
+import type { Request, Response } from 'express';
 
 @Controller('oauth')
 export class OAuthController {
