@@ -30,8 +30,8 @@ export class OAuthController {
     res.clearCookie('gh_rt');
   }
 
-  @Post('slient-refresh')
-  async slientRefresh(
+  @Post('silent-refresh')
+  async silentRefresh(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ) {
