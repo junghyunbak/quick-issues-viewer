@@ -1,9 +1,11 @@
-name: Auto Deployment
+name: Frontend Auto Deployment
 
 on:
   push:
     branches:
       - master
+    paths:
+      - client/**
 
 jobs:
   deploy_master:
@@ -23,4 +25,3 @@ jobs:
             git pull origin master
 
             ./client/docker/build-and-run.sh
-            ./server/docker/build-and-run.sh
