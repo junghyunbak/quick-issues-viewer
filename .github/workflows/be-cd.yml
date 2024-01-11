@@ -21,7 +21,7 @@ jobs:
           username: ${{ secrets.RELEASE_USERNAME}}
           password: ${{ secrets.RELEASE_PASSWORD}}
           source: "./.env"
-          target: "/git-repo/github-issues-viewer/server"
+          target: "~/git-repo/github-issues-viewer/server"
 
       - name: ssh action
         uses: appleboy/ssh-action@master
