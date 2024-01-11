@@ -10,4 +10,4 @@ docker rm --force ${BE_IMAGE_NAME}
 
 docker image prune --force
 
-docker run --detach --publish 3001:3001 --name ${BE_IMAGE_NAME} ${BE_IMAGE_NAME}
+docker run --detach --publish 3001:3001 --name ${BE_IMAGE_NAME} --volume /etc/sqlite:/etc/sqlite ${BE_IMAGE_NAME}
