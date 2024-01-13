@@ -21,9 +21,18 @@ export class LogService {
   }
 
   async getLogs() {
-    return await this.logRepository.find({
+    const logs = await this.logRepository.find({
       order: { createdAt: 'desc' },
       take: 100,
+    });
+
+    return logs.map((log) => {
+      const [octet1, octet2, octet3] = log.ip.split('.');
+
+      return {
+        ...log,
+        ip: [octet1, octet2, octet3, 'xxx'].join('.'),
+      };
     });
   }
 }
