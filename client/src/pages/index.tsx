@@ -12,6 +12,7 @@ import { ReactQueryProvider } from "./components/ReactQueryProvider";
 import { GlobalErrorBoundary } from "./components/GlobalErrorBoundary";
 import { OctokitProvider } from "./components/OctokitProvider";
 import { Login } from "./Login";
+import { Monitoring } from "./Monitoring";
 
 export function Index() {
   return (
@@ -31,6 +32,7 @@ export function Index() {
                   }
                 />
                 <Route path="/login" element={<Login />} />
+                <Route path="/monitoring" element={<Monitoring />} />
                 <Route path="/:owner/:repo" element={<Main />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
