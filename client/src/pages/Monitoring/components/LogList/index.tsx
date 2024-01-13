@@ -8,10 +8,22 @@ export function LogList() {
   const { data: logs } = useQuery([], async () => {
     const { data } = await axios.get<Log[]>("/api/log");
 
-    console.log(data);
-
     return data;
   });
+
+  const handlePathClick = (fullPath: string) => () => {
+    const obj: { [key: string]: string } = {};
+
+    const [origin, queryString] = fullPath.split("?");
+
+    queryString.split("&").forEach((query) => {
+      const [key, value] = query.split("=");
+
+      obj[key] = value;
+    });
+
+    alert(origin + "\n" + JSON.stringify(obj, null, 2));
+  };
 
   if (!logs) {
     return null;
@@ -111,7 +123,14 @@ export function LogList() {
               <td
                 css={css`
                   text-align: left;
+
+                  &:hover {
+                    background-color: ${color.g100};
+                    border-radius: ${size.BORDER_RADIUS}px;
+                    cursor: pointer;
+                  }
                 `}
+                onClick={handlePathClick(path)}
               >
                 {" "}
                 {path.length > 100 ? path.slice(0, 100) + "..." : path}{" "}
