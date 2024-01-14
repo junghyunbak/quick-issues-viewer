@@ -8,7 +8,7 @@ import { color, size } from "@/assets/styles";
 // svgs
 import { ReactComponent as Magnifier } from "@/assets/svgs/magnifier.svg";
 
-interface LabelListFilterInput {
+interface LabelListFilterInputProps {
   inputValue: string;
 
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
@@ -17,7 +17,7 @@ interface LabelListFilterInput {
 export function LabelListFilterInput({
   inputValue,
   setInputValue,
-}: LabelListFilterInput) {
+}: LabelListFilterInputProps) {
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value);

@@ -176,7 +176,7 @@ export function LabelList() {
             >
               {labelList.data
                 .filter((label) => {
-                  return label.name.startsWith(searchLabel);
+                  return new RegExp(searchLabel, "i").test(label.name);
                 })
                 .map((label) => {
                   return <MemoizedLabelListItem key={label.id} label={label} />;
