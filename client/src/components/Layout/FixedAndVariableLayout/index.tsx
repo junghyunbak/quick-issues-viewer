@@ -1,5 +1,5 @@
 // react
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 
 // styles
 import { css } from "@emotion/react";
@@ -12,6 +12,8 @@ interface FixedAndVariableLayoutProps {
   direction?: "row" | "column";
 
   reverse?: boolean;
+
+  scrollRef?: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 export function FixedAndVariableLayout({
@@ -19,6 +21,7 @@ export function FixedAndVariableLayout({
   variableElement,
   direction = "row",
   reverse = false,
+  scrollRef,
 }: FixedAndVariableLayoutProps) {
   const flexDirection = useMemo(() => {
     let tmp = direction;
@@ -58,6 +61,7 @@ export function FixedAndVariableLayout({
 
           overflow: auto;
         `}
+        ref={scrollRef}
       >
         {variableElement}
       </div>
