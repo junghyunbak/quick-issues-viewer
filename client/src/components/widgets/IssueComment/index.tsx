@@ -214,6 +214,10 @@ export function IssueComment({
                     padding: 0;
                   }
 
+                  a[href*="fn"] {
+                    scroll-margin-top: 4rem;
+                  }
+
                   font-size: 1rem;
                 `}
                 className="markdown-body"
