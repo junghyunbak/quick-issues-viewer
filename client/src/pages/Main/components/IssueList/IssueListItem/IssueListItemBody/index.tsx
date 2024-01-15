@@ -33,6 +33,9 @@ export function IssueListItemBody({
   const issueBodyRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    /**
+     * 이슈의 body가 열렸을 때 scroll 영역과 body의 올바른 offset값을 구하여 스크롤 위치를 변경
+     */
     if (
       !scrollRef.current ||
       !contentRef.current ||
@@ -57,6 +60,10 @@ export function IssueListItemBody({
     }
 
     return () => {
+      /**
+       * 이슈의 body가 닫혔을 경우 scroll 영역과 header의 올바른 offset값을 구하여 해당 위치로 이동
+       */
+      /*
       if (
         !scrollRef.current ||
         !issueItemHeaderRef.current ||
@@ -75,6 +82,7 @@ export function IssueListItemBody({
       if (headerY < scrollY || headerY > scrollY + scorllHeight) {
         scrollRef.current?.scrollTo(0, headerOffset);
       }
+      */
     };
   }, [scrollRef, contentRef, issueBodyRef, issueItemHeaderRef]);
 
