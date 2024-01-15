@@ -52,11 +52,30 @@ export function IssueListItemBody({
 
     const bodyOffset = bodyY - contentY;
 
-    const headerOffset = bodyOffset - headerHeight;
-
     if (bodyY < scrollY || bodyY > scrollY + scorllHeight) {
-      scrollRef.current?.scrollTo(0, headerOffset);
+      scrollRef.current?.scrollTo(0, bodyOffset - headerHeight);
     }
+
+    return () => {
+      if (
+        !scrollRef.current ||
+        !issueItemHeaderRef.current ||
+        !contentRef.current
+      ) {
+        return;
+      }
+
+      const { y: scrollY, height: scorllHeight } =
+        scrollRef.current.getClientRects()[0];
+      const { y: contentY } = contentRef.current.getClientRects()[0];
+      const { y: headerY } = issueItemHeaderRef.current.getClientRects()[0];
+
+      const headerOffset = headerY - contentY;
+
+      if (headerY < scrollY || headerY > scrollY + scorllHeight) {
+        scrollRef.current?.scrollTo(0, headerOffset);
+      }
+    };
   }, [scrollRef, contentRef, issueBodyRef, issueItemHeaderRef]);
 
   const [commentsIsOpen, setCommentsIsOpen] = useState(false);
