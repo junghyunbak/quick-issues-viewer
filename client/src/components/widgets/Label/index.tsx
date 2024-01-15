@@ -85,7 +85,7 @@ export function Label({ labelName, labelBgColor }: IssueListItemProps) {
           css={css`
             font-size: 12px;
             line-height: 18px;
-            font-weight: 500;
+            font-weight: 600;
 
             color: hsl(0deg, 0%, calc(var(--lightness-switch) * 100%));
           `}
