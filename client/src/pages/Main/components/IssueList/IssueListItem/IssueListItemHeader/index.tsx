@@ -72,19 +72,19 @@ export function IssueListItemHeader({
 
       <S.CountingBox>
         {isCommentExist && (
-          <S.CountingBoxItemLayout>
+          <S.CountingBoxItem>
             <S.Comment />
             <S.CountingBoxItemParagraph>{comments}</S.CountingBoxItemParagraph>
-          </S.CountingBoxItemLayout>
+          </S.CountingBoxItem>
         )}
 
         {reactions && reactions["+1"] > 0 && (
-          <S.CountingBoxItemLayout>
+          <S.CountingBoxItem>
             <S.CountingBoxItemParagraph>
               {"👍"}
               {reactions["+1"]}
             </S.CountingBoxItemParagraph>
-          </S.CountingBoxItemLayout>
+          </S.CountingBoxItem>
         )}
       </S.CountingBox>
     </S.IssueListItemHeaderLayout>

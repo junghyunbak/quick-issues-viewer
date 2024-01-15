@@ -30,10 +30,6 @@ export const IssueClosed = styled(IssueClosedIcon)`
   fill: ${color.complete};
 `;
 
-export const Comment = styled(CommentIcon)`
-  fill: gray;
-`;
-
 export const IssueListItemHeaderLayout = styled.div`
   display: flex;
   justify-content: space-between;
@@ -94,13 +90,15 @@ export const CountingBox = styled.div`
   display: flex;
   gap: 0.2rem;
 
-  padding-right: 0.25rem;
+  padding: 0 0.25rem 0 0.5rem;
 `;
 
-export const CountingBoxItemLayout = styled.div`
+export const Comment = styled(CommentIcon)`
+  fill: gray;
+`;
+
+export const CountingBoxItem = styled.div`
   display: flex;
-  align-items: top;
-  gap: 0.2rem;
 `;
 
 export const CountingBoxItemParagraph = styled.p`
