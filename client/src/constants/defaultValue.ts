@@ -4,7 +4,7 @@ export const DEFAULT_REPO_NAME = "github-issues-viewer";
 /**
  * TODO: issue 복수형으로 변경, 유니온 타입 지정
  */
-export const DEFAULT_ISSUE_PER_PAGE = 10;
+export const DEFAULT_ISSUE_PER_PAGE = 25;
 export const DEFAULT_ISSUE_PAGE = 1;
 export const DEFAULT_ISSUE_STATE = "open";
 

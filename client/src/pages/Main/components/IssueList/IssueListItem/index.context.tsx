@@ -4,14 +4,14 @@ import React, { createContext } from "react";
 // apis
 import { type components } from "@octokit/openapi-types";
 
-export const IssueContext = createContext<components["schemas"]["issue"]>(
-  {} as components["schemas"]["issue"]
-);
+export const IssueContext = createContext<
+  components["schemas"]["issue-search-result-item"]
+>({} as components["schemas"]["issue-search-result-item"]);
 
 interface IssueProviderProps {
   children: React.ReactNode;
 
-  value: components["schemas"]["issue"];
+  value: components["schemas"]["issue-search-result-item"];
 }
 
 export function IssueProvider({ children, value }: IssueProviderProps) {

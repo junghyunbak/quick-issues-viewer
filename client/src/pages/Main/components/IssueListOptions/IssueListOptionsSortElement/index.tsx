@@ -20,7 +20,7 @@ export function IssueListOptionsSortElement() {
 
   const { sort, direction } = queryString.parse(searchParams.toString());
 
-  const issueSorts: IssuesSort[] = ["created", "comments"];
+  const issueSorts: IssuesSort[] = ["created", "comments", "reactions-+1"];
 
   const handleIssueSortButtonClick = useCallback(
     (issueSort: string) => () => {
@@ -104,7 +104,7 @@ export function IssueListOptionsSortElement() {
                 color: ${isActive ? color.w : color.b};
               `}
             >
-              {issueSort}
+              {issueSort === "reactions-+1" ? "👍" : issueSort}
             </p>
 
             {isActive && (
