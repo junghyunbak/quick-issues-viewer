@@ -82,6 +82,8 @@ export function IssueListItemHeader({
           <S.CountingBoxItem>
             <S.CountingBoxItemParagraph>
               {"👍"}
+            </S.CountingBoxItemParagraph>
+            <S.CountingBoxItemParagraph>
               {reactions["+1"]}
             </S.CountingBoxItemParagraph>
           </S.CountingBoxItem>

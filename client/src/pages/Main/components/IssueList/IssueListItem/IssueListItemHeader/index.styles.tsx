@@ -88,6 +88,7 @@ export const IssueInfoSubTitleParagraph = styled.p`
 
 export const CountingBox = styled.div`
   display: flex;
+  align-items: flex-start;
   gap: 0.2rem;
 
   padding: 0 0.25rem 0 0.5rem;
@@ -99,9 +100,12 @@ export const Comment = styled(CommentIcon)`
 
 export const CountingBoxItem = styled.div`
   display: flex;
+  gap: 0.2rem;
+  align-items: center;
 `;
 
 export const CountingBoxItemParagraph = styled.p`
+  line-height: 1rem;
   white-space: nowrap;
   font-size: 0.75rem;
   color: gray;
