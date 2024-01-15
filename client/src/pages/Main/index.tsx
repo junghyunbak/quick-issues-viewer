@@ -1,6 +1,6 @@
 // react
 import { useRef } from "react";
-import { IssueListScrollProvider } from "./index.context";
+import { IssueListRefsProvider } from "./index.context";
 
 // components
 import { IssueList } from "@/pages/Main/components/IssueList";
@@ -14,34 +14,37 @@ import * as S from "./index.styles";
 
 export function Main() {
   const issueListScrollRef = useRef<HTMLDivElement | null>(null);
+  const issueListContentRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <S.MainLayout>
-      <FixedAndVariableLayout
-        direction="column"
-        fixedElement={<Header />}
-        variableElement={
-          <FixedAndVariableLayout
-            scrollRef={issueListScrollRef}
-            fixedElement={
-              <S.LabelListLayout>
-                <LabelList />
-              </S.LabelListLayout>
-            }
-            variableElement={
-              <IssueListScrollProvider value={issueListScrollRef}>
-                <S.IssueListLayout>
+    <IssueListRefsProvider
+      value={{ scrollRef: issueListScrollRef, contentRef: issueListContentRef }}
+    >
+      <S.MainLayout>
+        <FixedAndVariableLayout
+          direction="column"
+          fixedElement={<Header />}
+          variableElement={
+            <FixedAndVariableLayout
+              scrollRef={issueListScrollRef}
+              fixedElement={
+                <S.LabelListLayout>
+                  <LabelList />
+                </S.LabelListLayout>
+              }
+              variableElement={
+                <S.IssueListLayout ref={issueListContentRef}>
                   <S.IssueListOptionsLayout>
                     <IssueListOptions />
                   </S.IssueListOptionsLayout>
 
                   <IssueList />
                 </S.IssueListLayout>
-              </IssueListScrollProvider>
-            }
-          />
-        }
-      />
-    </S.MainLayout>
+              }
+            />
+          }
+        />
+      </S.MainLayout>
+    </IssueListRefsProvider>
   );
 }
