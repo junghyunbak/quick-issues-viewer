@@ -52,7 +52,7 @@ export function IssueList() {
       return await apiService.getRepoIssueList(
         owner || "",
         repo || "",
-        (label || "").split(","),
+        !label ? [] : label.split(","),
         Number(per_page) || defaultValue.DEFAULT_ISSUE_PER_PAGE,
         Number(page) || defaultValue.DEFAULT_ISSUE_PAGE,
         (state as IssuesState) || defaultValue.DEFAULT_ISSUE_STATE,

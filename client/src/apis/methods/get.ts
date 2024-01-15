@@ -63,27 +63,31 @@ export function get(octokit: Octokit) {
       direction: IssuesSortDirection
     ): Promise<{
       pageCount: number;
-      items: components["schemas"]["issue"][];
+      items: components["schemas"]["issue-search-result-item"][];
     }> => {
-      const response = await octokit.rest.issues.listForRepo({
-        owner,
-        repo,
+      const queries = [`type:issue`, `repo:${owner}/${repo}`];
+
+      if (labels.length > 0) {
+        queries.push(`label:${labels.join(",")}`);
+      }
+
+      if (state !== "all") {
+        queries.push(`state:${state}`);
+      }
+
+      const response = await octokit.rest.search.issuesAndPullRequests({
+        q: queries.join("+"),
         per_page: perPage,
-        labels: labels.join(","),
         page,
-        state,
         sort,
-        direction,
+        order: direction,
       });
 
       const {
-        data,
-        headers: { link },
+        data: { total_count, items },
       } = response;
 
-      const pageCount = getPageCount(parseLink(link), data.length);
-
-      return { pageCount, items: data };
+      return { pageCount: total_count, items };
     },
     /**
      * TODO?: 라벨 필터링 기능을 삭제하고 더보기로 api 요청을 최소화

@@ -12,7 +12,7 @@ import * as S from "./index.styles";
 import { type components } from "@octokit/openapi-types";
 
 interface IssueListItemProps {
-  issue: components["schemas"]["issue"];
+  issue: components["schemas"]["issue-search-result-item"];
 }
 
 export function IssueListItem({ issue }: IssueListItemProps) {
