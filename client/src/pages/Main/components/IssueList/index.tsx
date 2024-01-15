@@ -56,7 +56,7 @@ export function IssueList() {
         Number(per_page) || defaultValue.DEFAULT_ISSUE_PER_PAGE,
         Number(page) || defaultValue.DEFAULT_ISSUE_PAGE,
         (state as IssuesState) || defaultValue.DEFAULT_ISSUE_STATE,
-        (sort as IssuesSort) || defaultValue.DEFAULT_ISSUES_SORT_DIRECTION,
+        (sort as IssuesSort) || defaultValue.DEFAULT_ISSUES_SORT,
         (direction as IssuesSortDirection) ||
           defaultValue.DEFAULT_ISSUES_SORT_DIRECTION
       );
