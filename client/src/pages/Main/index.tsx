@@ -1,3 +1,7 @@
+// react
+import { useRef } from "react";
+import { IssueListScrollProvider } from "./index.context";
+
 // components
 import { IssueList } from "@/pages/Main/components/IssueList";
 import { LabelList } from "@/pages/Main/components/LabelList";
@@ -9,6 +13,8 @@ import { IssueListOptions } from "@/pages/Main/components/IssueListOptions";
 import * as S from "./index.styles";
 
 export function Main() {
+  const issueListScrollRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <S.MainLayout>
       <FixedAndVariableLayout
@@ -16,19 +22,22 @@ export function Main() {
         fixedElement={<Header />}
         variableElement={
           <FixedAndVariableLayout
+            scrollRef={issueListScrollRef}
             fixedElement={
               <S.LabelListLayout>
                 <LabelList />
               </S.LabelListLayout>
             }
             variableElement={
-              <S.IssueListLayout>
-                <S.IssueListOptionsLayout>
-                  <IssueListOptions />
-                </S.IssueListOptionsLayout>
+              <IssueListScrollProvider value={issueListScrollRef}>
+                <S.IssueListLayout>
+                  <S.IssueListOptionsLayout>
+                    <IssueListOptions />
+                  </S.IssueListOptionsLayout>
 
-                <IssueList />
-              </S.IssueListLayout>
+                  <IssueList />
+                </S.IssueListLayout>
+              </IssueListScrollProvider>
             }
           />
         }

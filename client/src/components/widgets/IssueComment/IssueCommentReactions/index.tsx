@@ -54,6 +54,7 @@ export function IssueCommentReactions({
 
         return (
           <li
+            key={key}
             css={css`
               display: flex;
               align-items: center;
