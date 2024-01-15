@@ -90,15 +90,20 @@ export const IssueInfoSubTitleParagraph = styled.p`
   line-height: 1.5rem;
 `;
 
-export const CommentCountingBox = styled.div`
+export const CountingBox = styled.div`
   display: flex;
-  align-items: top;
   gap: 0.2rem;
 
   padding-right: 0.25rem;
 `;
 
-export const CommentCountParagraph = styled.p`
+export const CountingBoxItemLayout = styled.div`
+  display: flex;
+  align-items: top;
+  gap: 0.2rem;
+`;
+
+export const CountingBoxItemParagraph = styled.p`
   white-space: nowrap;
   font-size: 0.75rem;
   color: gray;

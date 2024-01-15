@@ -10,7 +10,7 @@ import { IssueListItemHeaderLabelList } from "./IssueListItemHeaderLabelList";
 import * as S from "./index.styles";
 
 export function IssueListItemHeader() {
-  const { id, state, title, comments, created_at, pull_request } =
+  const { id, state, title, comments, created_at, pull_request, reactions } =
     useContext(IssueContext);
 
   const { setSelectedIssueId } = useContext(IssueSelectionStateContext);
@@ -61,13 +61,23 @@ export function IssueListItemHeader() {
         </S.IssueInfoTextBoxLayout>
       </S.IssueInfoLayout>
 
-      {isCommentExist && (
-        <S.CommentCountingBox>
-          <S.Comment />
+      <S.CountingBox>
+        {isCommentExist && (
+          <S.CountingBoxItemLayout>
+            <S.Comment />
+            <S.CountingBoxItemParagraph>{comments}</S.CountingBoxItemParagraph>
+          </S.CountingBoxItemLayout>
+        )}
 
-          <S.CommentCountParagraph>{comments}</S.CommentCountParagraph>
-        </S.CommentCountingBox>
-      )}
+        {reactions && reactions["+1"] > 0 && (
+          <S.CountingBoxItemLayout>
+            <S.CountingBoxItemParagraph>
+              {"👍"}
+              {reactions["+1"]}
+            </S.CountingBoxItemParagraph>
+          </S.CountingBoxItemLayout>
+        )}
+      </S.CountingBox>
     </S.IssueListItemHeaderLayout>
   );
 }
