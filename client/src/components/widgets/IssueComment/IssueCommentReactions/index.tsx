@@ -1,6 +1,5 @@
 // styles
-import { css } from "@emotion/react";
-import { color } from "@/assets/styles";
+import * as S from "./index.styles";
 
 // apis
 import { type components } from "@octokit/openapi-types";
@@ -13,13 +12,7 @@ export function IssueCommentReactions({
   reactions,
 }: IssueCommentReactionsProps) {
   return (
-    <ul
-      css={css`
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      `}
-    >
+    <S.ReactionList>
       {Object.entries(reactions).map(([key, value]) => {
         if (key === "url" || key === "total_count") {
           return null;
@@ -40,7 +33,7 @@ export function IssueCommentReactions({
             case "confused":
               return "😕";
             case "heart":
-              return "❤";
+              return "❤️️";
             case "hooray":
               return "🎉";
             case "eyes":
@@ -53,29 +46,13 @@ export function IssueCommentReactions({
         })();
 
         return (
-          <li
-            key={key}
-            css={css`
-              display: flex;
-              align-items: center;
-
-              border-radius: 9999px;
-              border: 1px solid ${color.g200};
-
-              padding: 0.125rem 0.5rem;
-            `}
-          >
-            <p
-              css={css`
-                font-size: 0.875rem;
-                color: gray;
-              `}
-            >
+          <S.ReactionItem key={key}>
+            <S.ReactionItemParagraph>
               {`${emoji} ${value}`}
-            </p>
-          </li>
+            </S.ReactionItemParagraph>
+          </S.ReactionItem>
         );
       })}
-    </ul>
+    </S.ReactionList>
   );
 }
