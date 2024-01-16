@@ -20,29 +20,6 @@ export const IssueList = styled.ul`
   border: 1px solid ${color.g200};
   border-radius: ${size.BORDER_RADIUS}px;
 
-  > li:first-of-type {
-    & > div > div:first-of-type {
-      border-top-left-radius: ${size.BORDER_RADIUS}px;
-      border-top-right-radius: ${size.BORDER_RADIUS}px;
-
-      @media ${device.mobile} {
-        border-radius: 0;
-      }
-    }
-  }
-
-  > li:last-of-type {
-    & > div > div:last-of-type {
-      border-bottom: 0;
-      border-bottom-left-radius: ${size.BORDER_RADIUS}px;
-      border-bottom-right-radius: ${size.BORDER_RADIUS}px;
-
-      @media ${device.mobile} {
-        border-radius: 0;
-      }
-    }
-  }
-
   @media ${device.mobile} {
     border-radius: 0;
     border-left: 0;

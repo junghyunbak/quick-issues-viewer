@@ -80,11 +80,7 @@ export function IssueList() {
       <S.IssueListLayout>
         <S.IssueList>
           {issues.data.items.map((issue) => {
-            return (
-              <S.IssueItem key={issue.id}>
-                <IssueListItem issue={issue} />
-              </S.IssueItem>
-            );
+            return <IssueListItem key={issue.id} issue={issue} />;
           })}
         </S.IssueList>
 
