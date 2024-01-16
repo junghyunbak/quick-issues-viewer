@@ -1,7 +1,7 @@
 export enum IssuesState {
-  "all" = "all",
-  "closed" = "closed",
   "open" = "open",
+  "closed" = "closed",
+  "all" = "all",
 }
 
 export enum IssuesSort {
