@@ -2,8 +2,7 @@
 import { useCallback } from "react";
 
 // styles
-import { css } from "@emotion/react";
-import { device, size, color } from "@/assets/styles";
+import * as S from "./index.styles";
 
 // apis
 import { type components } from "@octokit/openapi-types";
@@ -28,41 +27,14 @@ export function SearchModalUserListItem({
   }, [setInputValue, login]);
 
   return (
-    <div
-      css={css`
-        display: flex;
-        align-items: center;
-        gap: 0.375rem;
-
-        cursor: pointer;
-
-        border-radius: ${size.BORDER_RADIUS}px;
-
-        &:hover {
-          @media ${device.canHover} {
-            background-color: ${color.g100};
-          }
-        }
-
-        padding: 0.375rem 0.5rem;
-      `}
-      onClick={handleUserItemClick}
-    >
-      <img
+    <S.SearchModalUserListItemLayout onClick={handleUserItemClick}>
+      <S.SearchModalUserListItemImage
         src={avatar_url}
-        css={css`
-          width: 1rem;
-          height: 1rem;
-          border-radius: 9999px;
-        `}
-      />
-      <p
-        css={css`
-          font-size: 0.875rem;
-        `}
-      >
+      ></S.SearchModalUserListItemImage>
+
+      <S.SearchModalUserListItemParagraph>
         {login}
-      </p>
-    </div>
+      </S.SearchModalUserListItemParagraph>
+    </S.SearchModalUserListItemLayout>
   );
 }

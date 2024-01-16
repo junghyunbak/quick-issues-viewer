@@ -3,7 +3,7 @@ import React from "react";
 import { useQuery } from "react-query";
 
 // styles
-import { css } from "@emotion/react";
+import * as S from "./index.styles";
 
 // components
 import { SearchModalUserListItem } from "./SearchModalUserListItem";
@@ -58,19 +58,12 @@ export function SearchModalUserList({
   }
 
   return (
-    <div>
-      <p
-        css={css`
-          font-size: 0.75rem;
-          font-weight: bold;
-
-          padding: 0.375rem 0.5rem;
-        `}
-      >
+    <S.SearchModalUserListLayout>
+      <S.SearchModalUserListTitleParagraph>
         owner
-      </p>
+      </S.SearchModalUserListTitleParagraph>
 
-      <ul>
+      <S.SearchModalUserList>
         {users.data.map((user) => {
           return (
             <SearchModalUserListItem
@@ -80,7 +73,7 @@ export function SearchModalUserList({
             />
           );
         })}
-      </ul>
-    </div>
+      </S.SearchModalUserList>
+    </S.SearchModalUserListLayout>
   );
 }

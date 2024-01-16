@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 import { SearchModalRepoListItem } from "./SearchModalRepoListItem";
 
 // styles
-import { css } from "@emotion/react";
+import * as S from "./index.styles";
 
 // hooks
 import { useOctokit } from "@/hooks";
@@ -54,19 +54,12 @@ export function SearchModalRepoList({
   }
 
   return (
-    <div>
-      <p
-        css={css`
-          font-size: 0.75rem;
-          font-weight: bold;
-
-          padding: 0.375rem 0.5rem;
-        `}
-      >
+    <S.SearchModalRepoListLayout>
+      <S.SearchModalRepoListTitleParagraph>
         repository
-      </p>
+      </S.SearchModalRepoListTitleParagraph>
 
-      <ul>
+      <S.SearchModalRepoList>
         {repos.data
           .filter((repo) => {
             const repoName = repo.full_name.split("/")[1];
@@ -88,7 +81,7 @@ export function SearchModalRepoList({
               />
             );
           })}
-      </ul>
-    </div>
+      </S.SearchModalRepoList>
+    </S.SearchModalRepoListLayout>
   );
 }
