@@ -1,6 +1,9 @@
 // react
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "react-query";
+
+// zustand
+import useStore from "@/store";
 
 // components
 import { SearchModalRepoListItem } from "./SearchModalRepoListItem";
@@ -29,6 +32,8 @@ export function SearchModalRepoList({
 }: SearchModalRepoListProps) {
   const { apiService } = useOctokit();
 
+  const [setRepoSearching] = useStore((state) => [state.setRepoSearching]);
+
   const [owner] = searchValue.split("/");
 
   const repos = useQuery(["search", "repos", owner], async () => {
@@ -48,6 +53,10 @@ export function SearchModalRepoList({
       }
     }
   });
+
+  useEffect(() => {
+    setRepoSearching(repos.isLoading);
+  }, [repos.isLoading, setRepoSearching]);
 
   if (!repos.data || !repos.data.length) {
     return null;

@@ -1,6 +1,9 @@
 // react
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "react-query";
+
+// zustand
+import useStore from "@/store";
 
 // styles
 import * as S from "./index.styles";
@@ -26,6 +29,8 @@ export function SearchModalUserList({
 }: SearchModalUserListProps) {
   const { apiService } = useOctokit();
 
+  const [setUserSearching] = useStore((state) => [state.setUserSearching]);
+
   const [owner, repo] = searchValue.split("/");
 
   const users = useQuery(["search", "users", owner], async () => {
@@ -45,6 +50,10 @@ export function SearchModalUserList({
       }
     }
   });
+
+  useEffect(() => {
+    setUserSearching(users.isLoading);
+  }, [users.isLoading, setUserSearching]);
 
   if (!users.data || !users.data.length) {
     return null;
