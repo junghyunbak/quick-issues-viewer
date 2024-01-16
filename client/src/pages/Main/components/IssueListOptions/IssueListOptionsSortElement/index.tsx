@@ -15,32 +15,43 @@ import { ReactComponent as Down } from "@/assets/svgs/down.svg";
 // constants
 import { defaultValue } from "@/constants";
 
+// types
+import {
+  IssuesSort,
+  IssuesSortDirection,
+  isIssuesSortDirectionUnion,
+  isIssuesSortUnion,
+} from "@/types/issueSearchOptions";
+
 export function IssueListOptionsSortElement() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { sort, direction } = queryString.parse(searchParams.toString());
 
-  const issueSorts: IssuesSort[] = ["created", "comments", "reactions-+1"];
+  const currentSort = isIssuesSortUnion(sort) ? sort : defaultValue.ISSUES_SORT;
+
+  const currentDirection = isIssuesSortDirectionUnion(direction)
+    ? direction
+    : defaultValue.ISSUES_SORT_DIRECTION;
 
   const handleIssueSortButtonClick = useCallback(
-    (issueSort: string) => () => {
+    (issuesSort: IssuesSort) => () => {
       setSearchParams(
         (prev) => {
           prev.delete("page");
 
-          prev.set("sort", issueSort);
+          prev.set("sort", issuesSort);
 
-          if ((sort || defaultValue.ISSUES_SORT) !== issueSort) {
+          if (currentSort !== issuesSort) {
             prev.delete("direction");
 
             return prev;
           }
 
-          const nextDirection: IssuesSortDirection =
-            ((direction as IssuesSortDirection) ||
-              defaultValue.ISSUES_SORT_DIRECTION) === "desc"
-              ? "asc"
-              : "desc";
+          const nextDirection =
+            currentDirection === IssuesSortDirection.desc
+              ? IssuesSortDirection.asc
+              : IssuesSortDirection.desc;
 
           prev.set("direction", nextDirection);
 
@@ -51,7 +62,7 @@ export function IssueListOptionsSortElement() {
         }
       );
     },
-    [sort, direction, setSearchParams]
+    [currentSort, currentDirection, setSearchParams]
   );
 
   return (
@@ -80,15 +91,18 @@ export function IssueListOptionsSortElement() {
         }
       `}
     >
-      {issueSorts.map((issueSort) => {
-        const isActive = issueSort === (sort || defaultValue.ISSUES_SORT);
+      {Object.keys(IssuesSort).map((issuesSort) => {
+        if (!isIssuesSortUnion(issuesSort)) {
+          return null;
+        }
 
-        const isDesc =
-          (direction || defaultValue.ISSUES_SORT_DIRECTION) === "desc";
+        const isActive = issuesSort === currentSort;
+
+        const isDesc = currentDirection === IssuesSortDirection.desc;
 
         return (
           <li
-            key={issueSort}
+            key={issuesSort}
             css={css`
               display: flex;
               align-items: center;
@@ -96,14 +110,14 @@ export function IssueListOptionsSortElement() {
 
               background-color: ${isActive ? color.active : "transparent"};
             `}
-            onClick={handleIssueSortButtonClick(issueSort)}
+            onClick={handleIssueSortButtonClick(issuesSort)}
           >
             <p
               css={css`
                 color: ${isActive ? color.w : color.b};
               `}
             >
-              {issueSort === "reactions-+1" ? "👍" : issueSort}
+              {issuesSort === IssuesSort["reactions-+1"] ? "👍" : issuesSort}
             </p>
 
             {isActive && (
