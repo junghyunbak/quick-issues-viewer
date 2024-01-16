@@ -1,5 +1,9 @@
 // react
 import React, { useCallback, useEffect, useRef } from "react";
+import { RotatingLines } from "react-loader-spinner";
+
+// zustand
+import useStore from "@/store";
 
 // styles
 import * as S from "./index.styles";
@@ -15,6 +19,11 @@ export function SearchModalInput({
   setInputValue,
 }: SearchModalInputProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const [repoSearching, userSearching] = useStore((state) => [
+    state.repoSearching,
+    state.userSearching,
+  ]);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -38,6 +47,10 @@ export function SearchModalInput({
           onChange={handleInputChange}
           placeholder="{owner}/{repo}"
         />
+
+        {(repoSearching || userSearching) && (
+          <RotatingLines width="16px" strokeColor="gray" />
+        )}
       </S.SearchInputLabel>
     </S.SearchInputLayout>
   );

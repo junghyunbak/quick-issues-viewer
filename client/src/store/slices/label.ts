@@ -1,16 +1,22 @@
 // zustand
 import { type StateCreator } from "zustand";
 
-type LabelSlice = {
-  searchLabel: string;
-  setSearchLabel: (searchLabel: string) => void;
+type SearchingSlice = {
+  userSearching: boolean;
+  repoSearching: boolean;
+  setUserSearching: (userSearching: boolean) => void;
+  setRepoSearching: (repoSearching: boolean) => void;
 };
 
-export const createLabelSlice: StateCreator<LabelSlice> = (
+export const createSearchingSlice: StateCreator<SearchingSlice> = (
   set
-): LabelSlice => ({
-  searchLabel: "",
-  setSearchLabel(searchLabel) {
-    set(() => ({ searchLabel }));
+): SearchingSlice => ({
+  userSearching: false,
+  repoSearching: false,
+  setRepoSearching(repoSearching) {
+    set((state) => ({ ...state, repoSearching }));
+  },
+  setUserSearching(userSearching) {
+    set((state) => ({ ...state, userSearching }));
   },
 });

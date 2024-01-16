@@ -26,7 +26,6 @@ export const IssueList = styled.ul`
     border-right: 0;
   }
 `;
-export const IssueItem = styled.li``;
 
 export const IssueListLoadingBox = styled.div`
   display: flex;

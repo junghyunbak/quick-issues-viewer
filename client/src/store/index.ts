@@ -4,15 +4,15 @@ import { shallow } from "zustand/shallow";
 import { devtools, persist } from "zustand/middleware";
 
 // slices
-import { createLabelSlice } from "./slices/label";
+import { createSearchingSlice } from "./slices/label";
 
-export type StoreState = ReturnType<typeof createLabelSlice>;
+export type StoreState = ReturnType<typeof createSearchingSlice>;
 
 const useStoreBase = create<StoreState>()(
   devtools(
     persist(
       (...a) => ({
-        ...createLabelSlice(...a),
+        ...createSearchingSlice(...a),
       }),
       { name: "zustandStore" }
     )
