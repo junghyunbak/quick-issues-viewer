@@ -40,33 +40,46 @@ export function IssueList() {
     searchParams.toString()
   );
 
+  const searchOwner = owner || "";
+  const searchRepo = repo || "";
+  const searchLabels = isLabelsString(label) ? label.split(",") : [];
+  const searchPerPage = isNumberString(per_page)
+    ? parseInt(per_page, 10)
+    : defaultValue.ISSUES_PER_PAGE;
+  const searchPage = isNumberString(page)
+    ? parseInt(page, 10)
+    : defaultValue.ISSUES_PAGE;
+  const searchState = isIssuesStateUnion(state)
+    ? state
+    : defaultValue.ISSUES_STATE;
+  const searchSort = isIssuesSortUnion(sort) ? sort : defaultValue.ISSUES_SORT;
+  const searchDirection = isIssuesSortDirectionUnion(direction)
+    ? direction
+    : defaultValue.ISSUES_SORT_DIRECTION;
+
   const issues = useQuery(
     [
       "issue",
       "list",
-      owner,
-      repo,
-      label,
-      per_page || defaultValue.ISSUES_PER_PAGE,
-      page || defaultValue.ISSUES_PAGE,
-      state || defaultValue.ISSUES_STATE,
-      sort || defaultValue.ISSUES_SORT,
-      direction || defaultValue.ISSUES_SORT_DIRECTION,
+      searchOwner,
+      searchRepo,
+      searchLabels,
+      searchPerPage,
+      searchPage,
+      searchState,
+      searchSort,
+      searchDirection,
     ],
     async () => {
       return await apiService.getRepoIssueList(
-        owner || "",
-        repo || "",
-        isLabelsString(label) ? label.split(",") : [],
-        isNumberString(per_page)
-          ? parseInt(per_page, 10)
-          : defaultValue.ISSUES_PER_PAGE,
-        isNumberString(page) ? parseInt(page, 10) : defaultValue.ISSUES_PAGE,
-        isIssuesStateUnion(state) ? state : defaultValue.ISSUES_STATE,
-        isIssuesSortUnion(sort) ? sort : defaultValue.ISSUES_SORT,
-        isIssuesSortDirectionUnion(direction)
-          ? direction
-          : defaultValue.ISSUES_SORT_DIRECTION
+        searchOwner,
+        searchRepo,
+        searchLabels,
+        searchPerPage,
+        searchPage,
+        searchState,
+        searchSort,
+        searchDirection
       );
     }
   );
