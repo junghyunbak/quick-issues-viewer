@@ -1,5 +1,6 @@
 // react
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 // styles
 import { css } from "@emotion/react";
@@ -29,6 +30,10 @@ export function RepositoryLink() {
         }
       `}
     >
+      <Helmet>
+        <title>Github Issues Viewer - {`${repo} (${owner})`}</title>
+      </Helmet>
+
       <a href={`https://github.com/${owner}`} target="__blank">
         {owner}
       </a>
