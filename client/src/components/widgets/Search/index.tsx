@@ -2,11 +2,7 @@
 import { useCallback, useState, Fragment } from "react";
 
 // styles
-import { css } from "@emotion/react";
-import { size, color } from "@/assets/styles";
-
-// svgs
-import { ReactComponent as Magnifier } from "@/assets/svgs/magnifier.svg";
+import * as S from "./index.styles";
 
 // components
 import { SearchModal } from "./SearchModal";
@@ -22,59 +18,17 @@ export function Search() {
 
   return (
     <Fragment>
-      <div
-        css={css`
-          display: flex;
-          align-items: center;
-
-          height: 2rem;
-
-          border-radius: ${size.BORDER_RADIUS}px;
-          border: 1px solid ${color.g200};
-
-          overflow: hidden;
-
-          cursor: pointer;
-        `}
-        onClick={handleSearchButtonClick}
-      >
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-
-            height: 100%;
-
-            padding: 0 0.75rem;
-
-            border-right: 1px solid ${color.g200};
-          `}
-        >
-          <p
-            css={css`
-              font-size: 0.875rem;
-              color: ${color.g600};
-            `}
-          >
+      <S.SearchButtonLayout onClick={handleSearchButtonClick}>
+        <S.SearchButtonTextBox>
+          <S.SearchButtonTextParagraph>
             Find Repository
-          </p>
-        </div>
+          </S.SearchButtonTextParagraph>
+        </S.SearchButtonTextBox>
 
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            width: 2rem;
-            height: 100%;
-
-            background-color: ${color.g100};
-          `}
-        >
-          <Magnifier />
-        </div>
-      </div>
+        <S.SearchButtonIconBox>
+          <S.Magnifier />
+        </S.SearchButtonIconBox>
+      </S.SearchButtonLayout>
 
       {modalIsOpen && <SearchModal setIsModalOpen={setIsModalOpen} />}
     </Fragment>

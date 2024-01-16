@@ -1,26 +1,12 @@
 // styles
-import { css } from "@emotion/react";
-import { color } from "@/assets/styles";
+import * as S from "./index.styles";
 
 export function SearchModalFooter() {
   return (
-    <div
-      css={css`
-        display: flex;
-        justify-content: flex-end;
-
-        border-top: 1px solid ${color.g200};
-
-        padding: 0.5rem 0.75rem;
-      `}
-    >
-      <p
-        css={css`
-          font-size: 0.75rem;
-        `}
-      >
+    <S.FooterLayout>
+      <S.FooterGuideParagraph>
         <b>owner</b>: change input value / <b>repository</b>: change url path
-      </p>
-    </div>
+      </S.FooterGuideParagraph>
+    </S.FooterLayout>
   );
 }
