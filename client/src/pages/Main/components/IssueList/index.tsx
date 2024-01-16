@@ -20,6 +20,15 @@ import queryString from "query-string";
 // hooks
 import { useOctokit } from "@/hooks";
 
+// types
+import {
+  isIssuesStateUnion,
+  isIssuesSortUnion,
+  isIssuesSortDirectionUnion,
+  isNumberString,
+  isLabelsString,
+} from "@/types/issueSearchOptions";
+
 export function IssueList() {
   const { owner, repo } = useParams();
 
@@ -45,19 +54,19 @@ export function IssueList() {
       direction || defaultValue.ISSUES_SORT_DIRECTION,
     ],
     async () => {
-      if (label instanceof Array) {
-        return;
-      }
-
       return await apiService.getRepoIssueList(
         owner || "",
         repo || "",
-        !label ? [] : label.split(","),
-        Number(per_page) || defaultValue.ISSUES_PER_PAGE,
-        Number(page) || defaultValue.ISSUES_PAGE,
-        (state as IssuesState) || defaultValue.ISSUES_STATE,
-        (sort as IssuesSort) || defaultValue.ISSUES_SORT,
-        (direction as IssuesSortDirection) || defaultValue.ISSUES_SORT_DIRECTION
+        isLabelsString(label) ? label.split(",") : [],
+        isNumberString(per_page)
+          ? parseInt(per_page, 10)
+          : defaultValue.ISSUES_PER_PAGE,
+        isNumberString(page) ? parseInt(page, 10) : defaultValue.ISSUES_PAGE,
+        isIssuesStateUnion(state) ? state : defaultValue.ISSUES_STATE,
+        isIssuesSortUnion(sort) ? sort : defaultValue.ISSUES_SORT,
+        isIssuesSortDirectionUnion(direction)
+          ? direction
+          : defaultValue.ISSUES_SORT_DIRECTION
       );
     }
   );
