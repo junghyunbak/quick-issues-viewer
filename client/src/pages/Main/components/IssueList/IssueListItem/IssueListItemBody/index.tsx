@@ -3,7 +3,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useRef,
   useState,
   MutableRefObject,
 } from "react";
@@ -20,17 +19,17 @@ import * as S from "./index.styles";
 
 interface IssueListItemBodyProps {
   issueItemHeaderRef: MutableRefObject<HTMLDivElement | null>;
+  issueBodyRef: MutableRefObject<HTMLDivElement | null>;
 }
 
 export function IssueListItemBody({
   issueItemHeaderRef,
+  issueBodyRef,
 }: IssueListItemBodyProps) {
   const { body, user, html_url, reactions, comments } =
     useContext(IssueContext);
 
   const { scrollRef, contentRef } = useContext(IssueListRefsContext);
-
-  const issueBodyRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     /**
@@ -58,32 +57,6 @@ export function IssueListItemBody({
     if (bodyY < scrollY || bodyY > scrollY + scorllHeight) {
       scrollRef.current?.scrollTo(0, bodyOffset - headerHeight);
     }
-
-    return () => {
-      /**
-       * 이슈의 body가 닫혔을 경우 scroll 영역과 header의 올바른 offset값을 구하여 해당 위치로 이동
-       */
-      /*
-      if (
-        !scrollRef.current ||
-        !issueItemHeaderRef.current ||
-        !contentRef.current
-      ) {
-        return;
-      }
-
-      const { y: scrollY, height: scorllHeight } =
-        scrollRef.current.getClientRects()[0];
-      const { y: contentY } = contentRef.current.getClientRects()[0];
-      const { y: headerY } = issueItemHeaderRef.current.getClientRects()[0];
-
-      const headerOffset = headerY - contentY;
-
-      if (headerY < scrollY || headerY > scrollY + scorllHeight) {
-        scrollRef.current?.scrollTo(0, headerOffset);
-      }
-      */
-    };
   }, [scrollRef, contentRef, issueBodyRef, issueItemHeaderRef]);
 
   const [commentsIsOpen, setCommentsIsOpen] = useState(false);

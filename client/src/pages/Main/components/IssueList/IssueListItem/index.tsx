@@ -21,13 +21,20 @@ export function IssueListItem({ issue }: IssueListItemProps) {
   const { selectedIssueId } = useContext(IssueSelectionStateContext);
 
   const issueItemHeaderRef = useRef<HTMLDivElement | null>(null);
+  const issueBodyRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <IssueProvider value={issue}>
       <S.IssueItemLayout>
-        <IssueListItemHeader issueItemHeaderRef={issueItemHeaderRef} />
+        <IssueListItemHeader
+          issueItemHeaderRef={issueItemHeaderRef}
+          issueBodyRef={issueBodyRef}
+        />
         {selectedIssueId === issue.id && (
-          <IssueListItemBody issueItemHeaderRef={issueItemHeaderRef} />
+          <IssueListItemBody
+            issueItemHeaderRef={issueItemHeaderRef}
+            issueBodyRef={issueBodyRef}
+          />
         )}
       </S.IssueItemLayout>
     </IssueProvider>
