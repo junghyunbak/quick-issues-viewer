@@ -1,6 +1,12 @@
 import { type Octokit } from "octokit";
 import { type components } from "@octokit/openapi-types";
 
+import {
+  IssuesState,
+  IssuesSort,
+  IssuesSortDirection,
+} from "@/types/issueSearchOptions";
+
 import parseLink from "parse-link-header";
 
 declare namespace parseLinkHeader {
@@ -96,9 +102,6 @@ export function get(octokit: Octokit) {
         items,
       };
     },
-    /**
-     * TODO?: 라벨 필터링 기능을 삭제하고 더보기로 api 요청을 최소화
-     */
     getRepoIssueLabelList: async (
       owner: string,
       repo: string

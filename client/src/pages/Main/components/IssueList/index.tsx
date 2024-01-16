@@ -20,6 +20,15 @@ import queryString from "query-string";
 // hooks
 import { useOctokit } from "@/hooks";
 
+// types
+import {
+  isIssuesStateUnion,
+  isIssuesSortUnion,
+  isIssuesSortDirectionUnion,
+  isNumberString,
+  isLabelsString,
+} from "@/types/issueSearchOptions";
+
 export function IssueList() {
   const { owner, repo } = useParams();
 
@@ -31,34 +40,46 @@ export function IssueList() {
     searchParams.toString()
   );
 
+  const searchOwner = owner || "";
+  const searchRepo = repo || "";
+  const searchLabels = isLabelsString(label) ? label.split(",") : [];
+  const searchPerPage = isNumberString(per_page)
+    ? parseInt(per_page, 10)
+    : defaultValue.ISSUES_PER_PAGE;
+  const searchPage = isNumberString(page)
+    ? parseInt(page, 10)
+    : defaultValue.ISSUES_PAGE;
+  const searchState = isIssuesStateUnion(state)
+    ? state
+    : defaultValue.ISSUES_STATE;
+  const searchSort = isIssuesSortUnion(sort) ? sort : defaultValue.ISSUES_SORT;
+  const searchDirection = isIssuesSortDirectionUnion(direction)
+    ? direction
+    : defaultValue.ISSUES_SORT_DIRECTION;
+
   const issues = useQuery(
     [
       "issue",
       "list",
-      owner,
-      repo,
-      label,
-      per_page || defaultValue.DEFAULT_ISSUE_PER_PAGE,
-      page || defaultValue.DEFAULT_ISSUE_PAGE,
-      state || defaultValue.DEFAULT_ISSUE_STATE,
-      sort || defaultValue.DEFAULT_ISSUES_SORT,
-      direction || defaultValue.DEFAULT_ISSUES_SORT_DIRECTION,
+      searchOwner,
+      searchRepo,
+      searchLabels,
+      searchPerPage,
+      searchPage,
+      searchState,
+      searchSort,
+      searchDirection,
     ],
     async () => {
-      if (label instanceof Array) {
-        return;
-      }
-
       return await apiService.getRepoIssueList(
-        owner || "",
-        repo || "",
-        !label ? [] : label.split(","),
-        Number(per_page) || defaultValue.DEFAULT_ISSUE_PER_PAGE,
-        Number(page) || defaultValue.DEFAULT_ISSUE_PAGE,
-        (state as IssuesState) || defaultValue.DEFAULT_ISSUE_STATE,
-        (sort as IssuesSort) || defaultValue.DEFAULT_ISSUES_SORT,
-        (direction as IssuesSortDirection) ||
-          defaultValue.DEFAULT_ISSUES_SORT_DIRECTION
+        searchOwner,
+        searchRepo,
+        searchLabels,
+        searchPerPage,
+        searchPage,
+        searchState,
+        searchSort,
+        searchDirection
       );
     }
   );

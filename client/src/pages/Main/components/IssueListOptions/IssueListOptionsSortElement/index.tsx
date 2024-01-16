@@ -30,7 +30,7 @@ export function IssueListOptionsSortElement() {
 
           prev.set("sort", issueSort);
 
-          if ((sort || defaultValue.DEFAULT_ISSUES_SORT) !== issueSort) {
+          if ((sort || defaultValue.ISSUES_SORT) !== issueSort) {
             prev.delete("direction");
 
             return prev;
@@ -38,7 +38,7 @@ export function IssueListOptionsSortElement() {
 
           const nextDirection: IssuesSortDirection =
             ((direction as IssuesSortDirection) ||
-              defaultValue.DEFAULT_ISSUES_SORT_DIRECTION) === "desc"
+              defaultValue.ISSUES_SORT_DIRECTION) === "desc"
               ? "asc"
               : "desc";
 
@@ -81,11 +81,10 @@ export function IssueListOptionsSortElement() {
       `}
     >
       {issueSorts.map((issueSort) => {
-        const isActive =
-          issueSort === (sort || defaultValue.DEFAULT_ISSUES_SORT);
+        const isActive = issueSort === (sort || defaultValue.ISSUES_SORT);
 
         const isDesc =
-          (direction || defaultValue.DEFAULT_ISSUES_SORT_DIRECTION) === "desc";
+          (direction || defaultValue.ISSUES_SORT_DIRECTION) === "desc";
 
         return (
           <li
