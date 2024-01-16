@@ -27,7 +27,7 @@ export function Index() {
                   element={
                     <Navigate
                       replace
-                      to={`/${defaultValue.DEFAULT_REPO_OWNER}/${defaultValue.DEFAULT_REPO_NAME}`}
+                      to={`/${defaultValue.REPO_OWNER}/${defaultValue.REPO_NAME}`}
                     />
                   }
                 />

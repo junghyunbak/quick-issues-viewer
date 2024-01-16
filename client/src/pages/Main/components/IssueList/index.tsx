@@ -38,11 +38,11 @@ export function IssueList() {
       owner,
       repo,
       label,
-      per_page || defaultValue.DEFAULT_ISSUE_PER_PAGE,
-      page || defaultValue.DEFAULT_ISSUE_PAGE,
-      state || defaultValue.DEFAULT_ISSUE_STATE,
-      sort || defaultValue.DEFAULT_ISSUES_SORT,
-      direction || defaultValue.DEFAULT_ISSUES_SORT_DIRECTION,
+      per_page || defaultValue.ISSUES_PER_PAGE,
+      page || defaultValue.ISSUES_PAGE,
+      state || defaultValue.ISSUES_STATE,
+      sort || defaultValue.ISSUES_SORT,
+      direction || defaultValue.ISSUES_SORT_DIRECTION,
     ],
     async () => {
       if (label instanceof Array) {
@@ -53,12 +53,11 @@ export function IssueList() {
         owner || "",
         repo || "",
         !label ? [] : label.split(","),
-        Number(per_page) || defaultValue.DEFAULT_ISSUE_PER_PAGE,
-        Number(page) || defaultValue.DEFAULT_ISSUE_PAGE,
-        (state as IssuesState) || defaultValue.DEFAULT_ISSUE_STATE,
-        (sort as IssuesSort) || defaultValue.DEFAULT_ISSUES_SORT,
-        (direction as IssuesSortDirection) ||
-          defaultValue.DEFAULT_ISSUES_SORT_DIRECTION
+        Number(per_page) || defaultValue.ISSUES_PER_PAGE,
+        Number(page) || defaultValue.ISSUES_PAGE,
+        (state as IssuesState) || defaultValue.ISSUES_STATE,
+        (sort as IssuesSort) || defaultValue.ISSUES_SORT,
+        (direction as IssuesSortDirection) || defaultValue.ISSUES_SORT_DIRECTION
       );
     }
   );

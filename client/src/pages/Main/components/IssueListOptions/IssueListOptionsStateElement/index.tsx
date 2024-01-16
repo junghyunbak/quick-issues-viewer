@@ -67,8 +67,7 @@ export function IssueListOptionsStateElement() {
       `}
     >
       {issueStates.map((issueState) => {
-        const isActive =
-          issueState === (state || defaultValue.DEFAULT_ISSUE_STATE);
+        const isActive = issueState === (state || defaultValue.ISSUES_STATE);
 
         return (
           <li
