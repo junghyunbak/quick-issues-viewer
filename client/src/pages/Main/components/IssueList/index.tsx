@@ -22,9 +22,9 @@ import { useOctokit } from "@/hooks";
 
 // types
 import {
-  isIssuesStateUnion,
-  isIssuesSortUnion,
-  isIssuesSortDirectionUnion,
+  isIssuesStateEnum,
+  isIssuesSortEnum,
+  isIssuesSortDirectionEnum,
   isNumberString,
   isLabelsString,
 } from "@/types/issueSearchOptions";
@@ -49,11 +49,11 @@ export function IssueList() {
   const searchPage = isNumberString(page)
     ? parseInt(page, 10)
     : defaultValue.ISSUES_PAGE;
-  const searchState = isIssuesStateUnion(state)
+  const searchState = isIssuesStateEnum(state)
     ? state
     : defaultValue.ISSUES_STATE;
-  const searchSort = isIssuesSortUnion(sort) ? sort : defaultValue.ISSUES_SORT;
-  const searchDirection = isIssuesSortDirectionUnion(direction)
+  const searchSort = isIssuesSortEnum(sort) ? sort : defaultValue.ISSUES_SORT;
+  const searchDirection = isIssuesSortDirectionEnum(direction)
     ? direction
     : defaultValue.ISSUES_SORT_DIRECTION;
 

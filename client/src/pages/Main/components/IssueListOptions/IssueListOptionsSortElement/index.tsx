@@ -19,8 +19,8 @@ import { defaultValue } from "@/constants";
 import {
   IssuesSort,
   IssuesSortDirection,
-  isIssuesSortDirectionUnion,
-  isIssuesSortUnion,
+  isIssuesSortDirectionEnum,
+  isIssuesSortEnum,
 } from "@/types/issueSearchOptions";
 
 export function IssueListOptionsSortElement() {
@@ -28,9 +28,9 @@ export function IssueListOptionsSortElement() {
 
   const { sort, direction } = queryString.parse(searchParams.toString());
 
-  const currentSort = isIssuesSortUnion(sort) ? sort : defaultValue.ISSUES_SORT;
+  const currentSort = isIssuesSortEnum(sort) ? sort : defaultValue.ISSUES_SORT;
 
-  const currentDirection = isIssuesSortDirectionUnion(direction)
+  const currentDirection = isIssuesSortDirectionEnum(direction)
     ? direction
     : defaultValue.ISSUES_SORT_DIRECTION;
 
@@ -92,7 +92,7 @@ export function IssueListOptionsSortElement() {
       `}
     >
       {Object.keys(IssuesSort).map((issuesSort) => {
-        if (!isIssuesSortUnion(issuesSort)) {
+        if (!isIssuesSortEnum(issuesSort)) {
           return null;
         }
 

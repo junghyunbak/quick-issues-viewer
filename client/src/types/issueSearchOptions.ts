@@ -15,15 +15,15 @@ export enum IssuesSortDirection {
   "asc" = "asc",
 }
 
-export function isIssuesStateUnion(value: any): value is IssuesState {
+export function isIssuesStateEnum(value: any): value is IssuesState {
   return Object.keys(IssuesState).includes(value);
 }
 
-export function isIssuesSortUnion(value: any): value is IssuesSort {
+export function isIssuesSortEnum(value: any): value is IssuesSort {
   return Object.keys(IssuesSort).includes(value);
 }
 
-export function isIssuesSortDirectionUnion(
+export function isIssuesSortDirectionEnum(
   value: any
 ): value is IssuesSortDirection {
   return Object.keys(IssuesSortDirection).includes(value);

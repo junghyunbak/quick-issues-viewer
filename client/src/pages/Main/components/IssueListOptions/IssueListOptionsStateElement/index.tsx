@@ -13,14 +13,14 @@ import queryString from "query-string";
 import { defaultValue } from "@/constants";
 
 // types
-import { IssuesState, isIssuesStateUnion } from "@/types/issueSearchOptions";
+import { IssuesState, isIssuesStateEnum } from "@/types/issueSearchOptions";
 
 export function IssueListOptionsStateElement() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { state } = queryString.parse(searchParams.toString());
 
-  const currentIssuesState = isIssuesStateUnion(state)
+  const currentIssuesState = isIssuesStateEnum(state)
     ? state
     : defaultValue.ISSUES_STATE;
 
@@ -69,7 +69,7 @@ export function IssueListOptionsStateElement() {
       `}
     >
       {Object.keys(IssuesState).map((issuesState) => {
-        if (!isIssuesStateUnion(issuesState)) {
+        if (!isIssuesStateEnum(issuesState)) {
           return null;
         }
 
