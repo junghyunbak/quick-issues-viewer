@@ -1,7 +1,13 @@
 // react
-import { useCallback, useContext, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  MutableRefObject,
+} from "react";
 import { IssueContext } from "@/pages/Main/components/IssueList/IssueListItem/index.context";
-import { IssueSelectionStateContext } from "@/pages/Main/components/IssueList/index.context";
+import { IssueListRefsContext } from "@/pages/Main/index.context";
 
 // components
 import { IssueComment } from "@/components/widgets/IssueComment";
@@ -11,11 +17,47 @@ import { IssueListItemBodyShowCommentsButton } from "./IssueListItemBodyShowComm
 // styles
 import * as S from "./index.styles";
 
-export function IssueListItemBody() {
-  const { id, body, user, html_url, reactions, comments } =
+interface IssueListItemBodyProps {
+  issueItemHeaderRef: MutableRefObject<HTMLDivElement | null>;
+  issueBodyRef: MutableRefObject<HTMLDivElement | null>;
+}
+
+export function IssueListItemBody({
+  issueItemHeaderRef,
+  issueBodyRef,
+}: IssueListItemBodyProps) {
+  const { body, user, html_url, reactions, comments } =
     useContext(IssueContext);
 
-  const { selectedIssueId } = useContext(IssueSelectionStateContext);
+  const { scrollRef, contentRef } = useContext(IssueListRefsContext);
+
+  useEffect(() => {
+    /**
+     * 이슈의 body가 열렸을 때 scroll 영역과 body의 올바른 offset값을 구하여 스크롤 위치를 변경
+     */
+    if (
+      !scrollRef.current ||
+      !contentRef.current ||
+      !issueBodyRef.current ||
+      !issueItemHeaderRef.current
+    ) {
+      return;
+    }
+
+    const { y: scrollY, height: scorllHeight } =
+      scrollRef.current.getClientRects()[0];
+    const { y: contentY } = contentRef.current.getClientRects()[0];
+    const { y: bodyY } = issueBodyRef.current.getClientRects()[0];
+
+    const { height: headerHeight } =
+      issueItemHeaderRef.current.getClientRects()[0];
+
+    const bodyOffset = bodyY - contentY;
+
+    if (bodyY < scrollY || bodyY > scrollY + scorllHeight) {
+      scrollRef.current?.scrollTo(0, bodyOffset - headerHeight);
+    }
+  }, [scrollRef, contentRef, issueBodyRef, issueItemHeaderRef]);
 
   const [commentsIsOpen, setCommentsIsOpen] = useState(false);
 
@@ -25,12 +67,8 @@ export function IssueListItemBody() {
 
   const isCommentsExist = comments > 0;
 
-  if (id !== selectedIssueId) {
-    return null;
-  }
-
   return (
-    <S.IssueBodyLayout>
+    <S.IssueBodyLayout ref={issueBodyRef}>
       <IssueComment
         markdownText={body || ""}
         user={user}

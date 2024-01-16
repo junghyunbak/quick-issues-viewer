@@ -1,23 +1,28 @@
 // react
 import React, { MutableRefObject, createContext } from "react";
 
-export const IssueListScrollContext = createContext<
-  MutableRefObject<HTMLDivElement | null>
->({} as MutableRefObject<HTMLDivElement | null>);
+type IssueListRefsContextValue = {
+  scrollRef: MutableRefObject<HTMLDivElement | null>;
+  contentRef: MutableRefObject<HTMLDivElement | null>;
+};
 
-interface IssueListScrollProviderProps {
+export const IssueListRefsContext = createContext<IssueListRefsContextValue>(
+  {} as IssueListRefsContextValue
+);
+
+interface IssueListRefsProviderProps {
   children: React.ReactNode;
 
-  value: MutableRefObject<HTMLDivElement | null>;
+  value: IssueListRefsContextValue;
 }
 
-export function IssueListScrollProvider({
+export function IssueListRefsProvider({
   children,
   value,
-}: IssueListScrollProviderProps) {
+}: IssueListRefsProviderProps) {
   return (
-    <IssueListScrollContext.Provider value={value}>
+    <IssueListRefsContext.Provider value={value}>
       {children}
-    </IssueListScrollContext.Provider>
+    </IssueListRefsContext.Provider>
   );
 }

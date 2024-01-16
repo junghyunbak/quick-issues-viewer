@@ -1,5 +1,7 @@
 // react
+import { useContext, useRef } from "react";
 import { IssueProvider } from "./index.context";
+import { IssueSelectionStateContext } from "@/pages/Main/components/IssueList/index.context";
 
 // components
 import { IssueListItemHeader } from "./IssueListItemHeader";
@@ -16,11 +18,24 @@ interface IssueListItemProps {
 }
 
 export function IssueListItem({ issue }: IssueListItemProps) {
+  const { selectedIssueId } = useContext(IssueSelectionStateContext);
+
+  const issueItemHeaderRef = useRef<HTMLDivElement | null>(null);
+  const issueBodyRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <IssueProvider value={issue}>
       <S.IssueItemLayout>
-        <IssueListItemHeader />
-        <IssueListItemBody />
+        <IssueListItemHeader
+          issueItemHeaderRef={issueItemHeaderRef}
+          issueBodyRef={issueBodyRef}
+        />
+        {selectedIssueId === issue.id && (
+          <IssueListItemBody
+            issueItemHeaderRef={issueItemHeaderRef}
+            issueBodyRef={issueBodyRef}
+          />
+        )}
       </S.IssueItemLayout>
     </IssueProvider>
   );

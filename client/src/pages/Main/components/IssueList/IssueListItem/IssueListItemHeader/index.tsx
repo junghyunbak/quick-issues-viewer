@@ -1,7 +1,7 @@
 // react
-import { useCallback, useMemo, useContext, useRef } from "react";
-import { IssueListScrollContext } from "@/pages/Main/index.context";
+import { useCallback, useMemo, useContext, MutableRefObject } from "react";
 import { IssueContext } from "@/pages/Main/components/IssueList/IssueListItem/index.context";
+import { IssueListRefsContext } from "@/pages/Main/index.context";
 import { IssueSelectionStateContext } from "@/pages/Main/components/IssueList/index.context";
 
 // components
@@ -10,35 +10,59 @@ import { IssueListItemHeaderLabelList } from "./IssueListItemHeaderLabelList";
 // styles
 import * as S from "./index.styles";
 
-export function IssueListItemHeader() {
+interface IssueListItemHeaderProps {
+  issueItemHeaderRef: MutableRefObject<HTMLDivElement | null>;
+  issueBodyRef: MutableRefObject<HTMLDivElement | null>;
+}
+
+export function IssueListItemHeader({
+  issueItemHeaderRef,
+  issueBodyRef,
+}: IssueListItemHeaderProps) {
   const { id, state, title, comments, created_at, pull_request, reactions } =
     useContext(IssueContext);
 
-  const scrollRef = useContext(IssueListScrollContext);
+  const { scrollRef, contentRef } = useContext(IssueListRefsContext);
 
   const { setSelectedIssueId } = useContext(IssueSelectionStateContext);
-
-  const issueHeaderRef = useRef<HTMLDivElement | null>(null);
 
   const handleIssueItemClick = useCallback(() => {
     setSelectedIssueId((prev) => {
       if (prev === id) {
+        if (
+          scrollRef.current &&
+          issueBodyRef.current &&
+          contentRef.current &&
+          issueItemHeaderRef.current
+        ) {
+          const { y: scrollY, height: scorllHeight } =
+            scrollRef.current.getClientRects()[0];
+          const { y: contentY } = contentRef.current.getClientRects()[0];
+          const { y: bodyY } = issueBodyRef.current.getClientRects()[0];
+
+          const bodyOffset = bodyY - contentY;
+
+          const { height: headerHeight } =
+            issueItemHeaderRef.current.getClientRects()[0];
+
+          if (bodyY < scrollY || bodyY > scrollY + scorllHeight) {
+            scrollRef.current?.scrollTo(0, bodyOffset - headerHeight);
+          }
+        }
+
         return null;
       }
 
       return id;
     });
-
-    if (!issueHeaderRef.current || !scrollRef.current) {
-      return;
-    }
-
-    const { y: elementY } = issueHeaderRef.current.getClientRects()[0];
-
-    const { y: scrollY } = scrollRef.current.getClientRects()[0];
-
-    scrollRef.current.scrollTo(0, elementY - scrollY);
-  }, [id, setSelectedIssueId, scrollRef]);
+  }, [
+    id,
+    setSelectedIssueId,
+    scrollRef,
+    issueBodyRef,
+    contentRef,
+    issueItemHeaderRef,
+  ]);
 
   const StatusIcon = useMemo<React.ReactNode>(() => {
     if (pull_request) {
@@ -61,7 +85,7 @@ export function IssueListItemHeader() {
   return (
     <S.IssueListItemHeaderLayout
       onClick={handleIssueItemClick}
-      ref={issueHeaderRef}
+      ref={issueItemHeaderRef}
     >
       <S.IssueInfoLayout>
         <S.IssueInfoStatusBox>{StatusIcon}</S.IssueInfoStatusBox>
@@ -81,19 +105,19 @@ export function IssueListItemHeader() {
 
       <S.CountingBox>
         {isCommentExist && (
-          <S.CountingBoxItemLayout>
+          <S.CountingBoxItem>
             <S.Comment />
             <S.CountingBoxItemParagraph>{comments}</S.CountingBoxItemParagraph>
-          </S.CountingBoxItemLayout>
+          </S.CountingBoxItem>
         )}
 
         {reactions && reactions["+1"] > 0 && (
-          <S.CountingBoxItemLayout>
+          <S.CountingBoxItem>
+            <S.CountingBoxItemParagraph>{"👍"}</S.CountingBoxItemParagraph>
             <S.CountingBoxItemParagraph>
-              {"👍"}
               {reactions["+1"]}
             </S.CountingBoxItemParagraph>
-          </S.CountingBoxItemLayout>
+          </S.CountingBoxItem>
         )}
       </S.CountingBox>
     </S.IssueListItemHeaderLayout>
