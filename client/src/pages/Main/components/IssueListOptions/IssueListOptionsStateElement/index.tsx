@@ -1,6 +1,6 @@
 // react
 import { useSearchParams } from "react-router-dom";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
 // styles
 import { css } from "@emotion/react";
@@ -12,23 +12,25 @@ import queryString from "query-string";
 // constants
 import { defaultValue } from "@/constants";
 
+// types
+import { IssuesState, isIssuesStateEnum } from "@/types/issueSearchOptions";
+
 export function IssueListOptionsStateElement() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { state } = queryString.parse(searchParams.toString());
 
-  const issueStates: IssuesState[] = useMemo(
-    () => ["open", "closed", "all"],
-    []
-  );
+  const currentIssuesState = isIssuesStateEnum(state)
+    ? state
+    : defaultValue.ISSUES_STATE;
 
   const handleIssueStateButtonClick = useCallback(
-    (issueState: string) => () => {
+    (issuesState: IssuesState) => () => {
       setSearchParams(
         (prev) => {
           prev.delete("page");
 
-          prev.set("state", issueState);
+          prev.set("state", issuesState);
 
           return prev;
         },
@@ -66,23 +68,27 @@ export function IssueListOptionsStateElement() {
         }
       `}
     >
-      {issueStates.map((issueState) => {
-        const isActive = issueState === (state || defaultValue.ISSUES_STATE);
+      {Object.keys(IssuesState).map((issuesState) => {
+        if (!isIssuesStateEnum(issuesState)) {
+          return null;
+        }
+
+        const isActive = currentIssuesState === issuesState;
 
         return (
           <li
-            key={issueState}
+            key={issuesState}
             css={css`
               background-color: ${isActive ? color.active : "transparent"};
             `}
-            onClick={handleIssueStateButtonClick(issueState)}
+            onClick={handleIssueStateButtonClick(issuesState)}
           >
             <p
               css={css`
                 color: ${isActive ? color.w : color.b};
               `}
             >
-              {issueState}
+              {issuesState}
             </p>
           </li>
         );
