@@ -125,7 +125,11 @@ export function SearchModal() {
         <S.SearchModalContentBox>
           <SearchModalInput />
 
-          <S.SearchModalContentSearchResultBox>
+          <S.SearchModalContentSearchResultBox
+            onKeyDown={(e) => {
+              e.preventDefault();
+            }}
+          >
             {inputValue === "" ? (
               <SearchModalHistory />
             ) : (
