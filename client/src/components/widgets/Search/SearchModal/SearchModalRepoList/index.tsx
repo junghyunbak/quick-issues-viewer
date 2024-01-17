@@ -82,10 +82,13 @@ export function SearchModalRepoList({
             return repoName.startsWith(searchRepo);
           })
           .map((repo) => {
+            const { id, full_name } = repo;
+
             return (
               <SearchModalRepoListItem
                 key={repo.id}
-                repository={repo}
+                id={id}
+                full_name={full_name}
                 setIsModalOpen={setIsModalOpen}
               />
             );

@@ -74,10 +74,13 @@ export function SearchModalUserList({
 
       <S.SearchModalUserList>
         {users.data.map((user) => {
+          const { id, login, avatar_url } = user;
           return (
             <SearchModalUserListItem
               key={user.id}
-              user={user}
+              id={id}
+              login={login}
+              avatar_url={avatar_url}
               setInputValue={setInputValue}
             />
           );

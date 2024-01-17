@@ -1,5 +1,11 @@
 // react
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 // styles
 import * as S from "./index.styles";
@@ -9,6 +15,7 @@ import { SearchModalRepoList } from "./SearchModalRepoList";
 import { SearchModalUserList } from "./SearchModalUserList";
 import { SearchModalInput } from "./SearchModalInput";
 import { SearchModalFooter } from "./SearchModalFooter";
+import { SearchModalHistory } from "./SearchModalHistory";
 
 interface SearchModalProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,22 +25,9 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
   const [inputValue, setInputValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
-  useEffect(() => {
-    const searchKeyword = localStorage.getItem("searchKeyword");
-
-    if (!searchKeyword) {
-      return;
-    }
-
-    setInputValue(searchKeyword);
-    setSearchValue(searchKeyword);
-  }, []);
-
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    localStorage.setItem("searchKeyword", inputValue);
-
     if (timer.current) {
       clearTimeout(timer.current);
     }
@@ -58,16 +52,25 @@ export function SearchModal({ setIsModalOpen }: SearchModalProps) {
         />
 
         <S.SearchModalContentSearchResultBox>
-          <SearchModalUserList
-            searchValue={searchValue}
-            setInputValue={setInputValue}
-          />
+          {inputValue === "" ? (
+            <SearchModalHistory
+              setInputValue={setInputValue}
+              setIsModalOpen={setIsModalOpen}
+            />
+          ) : (
+            <Fragment>
+              <SearchModalUserList
+                searchValue={searchValue}
+                setInputValue={setInputValue}
+              />
 
-          <SearchModalRepoList
-            inputValue={inputValue}
-            searchValue={searchValue}
-            setIsModalOpen={setIsModalOpen}
-          />
+              <SearchModalRepoList
+                inputValue={inputValue}
+                searchValue={searchValue}
+                setIsModalOpen={setIsModalOpen}
+              />
+            </Fragment>
+          )}
         </S.SearchModalContentSearchResultBox>
 
         <SearchModalFooter />
