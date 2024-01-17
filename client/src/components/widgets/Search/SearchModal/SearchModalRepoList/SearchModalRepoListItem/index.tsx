@@ -57,7 +57,7 @@ export function SearchModalRepoListItem({
   }, [navigate, id, fullName, setIsModalOpen, setSearchHistory]);
 
   return (
-    <S.SearchModalRepoListItem onClick={handleItemClick}>
+    <S.SearchModalRepoListItem onClick={handleItemClick} tabIndex={0}>
       <S.Repository />
 
       <S.SearchModalRepoListItemParagraph>

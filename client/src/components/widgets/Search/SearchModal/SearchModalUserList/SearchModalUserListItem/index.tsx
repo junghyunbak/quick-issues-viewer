@@ -52,7 +52,7 @@ export function SearchModalUserListItem({
   }, [setInputValue, setSearchHistory, id, login, avatar_url]);
 
   return (
-    <S.SearchModalUserListItemLayout onClick={handleUserItemClick}>
+    <S.SearchModalUserListItem onClick={handleUserItemClick} tabIndex={0}>
       <S.SearchModalUserListItemImage
         src={avatar_url}
       ></S.SearchModalUserListItemImage>
@@ -60,6 +60,6 @@ export function SearchModalUserListItem({
       <S.SearchModalUserListItemParagraph>
         {login}
       </S.SearchModalUserListItemParagraph>
-    </S.SearchModalUserListItemLayout>
+    </S.SearchModalUserListItem>
   );
 }
