@@ -82,6 +82,13 @@ export function SearchModal() {
           if (li instanceof HTMLLIElement) {
             li.click();
           }
+
+          break;
+
+        case "Escape":
+          setInputValue("");
+
+          break;
       }
     };
 
@@ -90,7 +97,7 @@ export function SearchModal() {
     return () => {
       window.removeEventListener("keydown", KeyDownListener);
     };
-  }, [modalRef]);
+  }, [modalRef, setInputValue]);
 
   const handleDimmedClick = useCallback(() => {
     setIsModalOpen(false);
