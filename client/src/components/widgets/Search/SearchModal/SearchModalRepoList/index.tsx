@@ -1,6 +1,7 @@
 // react
-import React, { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useQuery } from "react-query";
+import { InputContext } from "@/components/widgets/Search/SearchModal/index.context";
 
 // zustand
 import useStore from "@/store";
@@ -18,18 +19,12 @@ import { useOctokit } from "@/hooks";
 import { RequestError } from "octokit";
 
 interface SearchModalRepoListProps {
-  inputValue: string;
-
   searchValue: string;
-
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function SearchModalRepoList({
-  inputValue,
-  searchValue,
-  setIsModalOpen,
-}: SearchModalRepoListProps) {
+export function SearchModalRepoList({ searchValue }: SearchModalRepoListProps) {
+  const { inputValue } = useContext(InputContext);
+
   const { apiService } = useOctokit();
 
   const [setRepoSearching] = useStore((state) => [state.setRepoSearching]);
@@ -82,11 +77,13 @@ export function SearchModalRepoList({
             return repoName.startsWith(searchRepo);
           })
           .map((repo) => {
+            const { id, full_name } = repo;
+
             return (
               <SearchModalRepoListItem
                 key={repo.id}
-                repository={repo}
-                setIsModalOpen={setIsModalOpen}
+                id={id}
+                fullName={full_name}
               />
             );
           })}

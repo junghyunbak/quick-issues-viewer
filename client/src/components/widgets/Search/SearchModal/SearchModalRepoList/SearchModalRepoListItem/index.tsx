@@ -1,39 +1,67 @@
 // react
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { ModalContext } from "@/components/widgets/Search/index.context";
+
+// zustand
+import useStore from "@/store";
 
 // styles
 import * as S from "./index.styles";
 
-// apis
-import { type components } from "@octokit/openapi-types";
-
 interface SearchModalItemProps {
-  repository: components["schemas"]["minimal-repository"];
+  id: number;
 
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  fullName: string;
 }
 
 export function SearchModalRepoListItem({
-  repository,
-  setIsModalOpen,
+  id,
+  fullName,
 }: SearchModalItemProps) {
+  const { setIsModalOpen } = useContext(ModalContext);
+
   const navigate = useNavigate();
 
+  const [setSearchHistory] = useStore((state) => [state.setSearchHistory]);
+
   const handleItemClick = useCallback(() => {
-    const [owner, repo] = repository.full_name.split("/");
+    setSearchHistory((prev) => {
+      const newSearchHistory = [...prev];
+
+      const searchHistoryElement = newSearchHistory.find(
+        (searchHistory) => searchHistory.id === id
+      );
+
+      if (searchHistoryElement) {
+        searchHistoryElement.createAt = new Date();
+
+        return newSearchHistory;
+      }
+
+      newSearchHistory.push({
+        id,
+        type: "repo",
+        name: fullName,
+        createAt: new Date(),
+      });
+
+      return newSearchHistory;
+    });
+
+    const [owner, repo] = fullName.split("/");
 
     navigate(`/${owner}/${repo}`);
 
     setIsModalOpen(false);
-  }, [navigate, repository, setIsModalOpen]);
+  }, [navigate, id, fullName, setIsModalOpen, setSearchHistory]);
 
   return (
     <S.SearchModalRepoListItem onClick={handleItemClick}>
       <S.Repository />
 
       <S.SearchModalRepoListItemParagraph>
-        {repository.full_name}
+        {fullName}
       </S.SearchModalRepoListItemParagraph>
     </S.SearchModalRepoListItem>
   );

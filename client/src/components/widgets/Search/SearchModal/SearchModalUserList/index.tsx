@@ -1,5 +1,5 @@
 // react
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 
 // zustand
@@ -19,14 +19,9 @@ import { RequestError } from "octokit";
 
 interface SearchModalUserListProps {
   searchValue: string;
-
-  setInputValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function SearchModalUserList({
-  searchValue,
-  setInputValue,
-}: SearchModalUserListProps) {
+export function SearchModalUserList({ searchValue }: SearchModalUserListProps) {
   const { apiService } = useOctokit();
 
   const [setUserSearching] = useStore((state) => [state.setUserSearching]);
@@ -74,11 +69,13 @@ export function SearchModalUserList({
 
       <S.SearchModalUserList>
         {users.data.map((user) => {
+          const { id, login, avatar_url } = user;
           return (
             <SearchModalUserListItem
               key={user.id}
-              user={user}
-              setInputValue={setInputValue}
+              id={id}
+              login={login}
+              avatar_url={avatar_url}
             />
           );
         })}

@@ -1,5 +1,6 @@
 // react
-import { useCallback, useState, Fragment } from "react";
+import { useCallback, useState } from "react";
+import { ModalContextProvider } from "./index.context";
 
 // styles
 import * as S from "./index.styles";
@@ -8,7 +9,7 @@ import * as S from "./index.styles";
 import { SearchModal } from "./SearchModal";
 
 export function Search() {
-  const [modalIsOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSearchButtonClick = useCallback(() => {
     setIsModalOpen((prevState) => {
@@ -17,7 +18,7 @@ export function Search() {
   }, [setIsModalOpen]);
 
   return (
-    <Fragment>
+    <ModalContextProvider value={{ isModalOpen, setIsModalOpen }}>
       <S.SearchButtonLayout onClick={handleSearchButtonClick}>
         <S.SearchButtonTextBox>
           <S.SearchButtonTextParagraph>
@@ -30,7 +31,7 @@ export function Search() {
         </S.SearchButtonIconBox>
       </S.SearchButtonLayout>
 
-      {modalIsOpen && <SearchModal setIsModalOpen={setIsModalOpen} />}
-    </Fragment>
+      {isModalOpen && <SearchModal />}
+    </ModalContextProvider>
   );
 }

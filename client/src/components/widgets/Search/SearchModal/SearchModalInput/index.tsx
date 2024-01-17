@@ -1,6 +1,7 @@
 // react
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useContext, useEffect, useRef } from "react";
 import { RotatingLines } from "react-loader-spinner";
+import { InputContext } from "@/components/widgets/Search/SearchModal/index.context";
 
 // zustand
 import useStore from "@/store";
@@ -8,16 +9,9 @@ import useStore from "@/store";
 // styles
 import * as S from "./index.styles";
 
-interface SearchModalInputProps {
-  inputValue: string;
+export function SearchModalInput() {
+  const { inputValue, setInputValue } = useContext(InputContext);
 
-  setInputValue: React.Dispatch<React.SetStateAction<string>>;
-}
-
-export function SearchModalInput({
-  inputValue,
-  setInputValue,
-}: SearchModalInputProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const [repoSearching, userSearching] = useStore((state) => [
@@ -36,6 +30,10 @@ export function SearchModalInput({
     [setInputValue]
   );
 
+  const handleTextRemoveButtonClick = useCallback(() => {
+    setInputValue("");
+  }, [setInputValue]);
+
   return (
     <S.SearchInputLayout>
       <S.SearchInputLabel>
@@ -48,9 +46,15 @@ export function SearchModalInput({
           placeholder="{owner}/{repo}"
         />
 
-        {(repoSearching || userSearching) && (
-          <RotatingLines width="16px" strokeColor="gray" />
-        )}
+        <S.SearchInputUtilBox>
+          {(repoSearching || userSearching) && (
+            <RotatingLines width="1rem" strokeColor="gray" />
+          )}
+
+          {inputValue !== "" && (
+            <S.CircleX onClick={handleTextRemoveButtonClick} />
+          )}
+        </S.SearchInputUtilBox>
       </S.SearchInputLabel>
     </S.SearchInputLayout>
   );

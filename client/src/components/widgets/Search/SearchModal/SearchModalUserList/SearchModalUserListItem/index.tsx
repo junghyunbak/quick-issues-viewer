@@ -1,30 +1,55 @@
 // react
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
+import { InputContext } from "../../index.context";
 
 // styles
 import * as S from "./index.styles";
 
-// apis
-import { type components } from "@octokit/openapi-types";
+// zustand
+import useStore from "@/store";
 
 interface SearchModalUserListItemProps {
-  user: components["schemas"]["user-search-result-item"];
-
-  setInputValue: React.Dispatch<React.SetStateAction<string>>;
+  id: number;
+  login: string;
+  avatar_url: string;
 }
 
 export function SearchModalUserListItem({
-  user,
-  setInputValue,
+  id,
+  login,
+  avatar_url,
 }: SearchModalUserListItemProps) {
-  const { login, avatar_url } = user;
+  const { setInputValue } = useContext(InputContext);
+
+  const [setSearchHistory] = useStore((state) => [state.setSearchHistory]);
 
   const handleUserItemClick = useCallback(() => {
-    /**
-     * inputValue가 변경되어도 검색이 다시 발생하지 않는 이슈가 존재
-     */
+    setSearchHistory((prev) => {
+      const newSearchHistory = [...prev];
+
+      const searchHistoryElement = newSearchHistory.find(
+        (searchHistory) => searchHistory.id === id
+      );
+
+      if (searchHistoryElement) {
+        searchHistoryElement.createAt = new Date();
+
+        return newSearchHistory;
+      }
+
+      newSearchHistory.push({
+        id,
+        type: "user",
+        url: avatar_url,
+        name: login,
+        createAt: new Date(),
+      });
+
+      return newSearchHistory;
+    });
+
     setInputValue(`${login}/`);
-  }, [setInputValue, login]);
+  }, [setInputValue, setSearchHistory, id, login, avatar_url]);
 
   return (
     <S.SearchModalUserListItemLayout onClick={handleUserItemClick}>
