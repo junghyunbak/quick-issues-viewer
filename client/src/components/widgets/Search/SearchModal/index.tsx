@@ -1,5 +1,5 @@
 // react
-import {
+import React, {
   Fragment,
   useCallback,
   useEffect,
@@ -100,7 +100,9 @@ export function SearchModal() {
           break;
 
         case "Escape":
-          setInputValue("");
+          if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+          }
 
           break;
       }
@@ -117,6 +119,39 @@ export function SearchModal() {
     setIsModalOpen(false);
   }, [setIsModalOpen]);
 
+  const handleScrollElementKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.code === "ArrowDown" || e.code === "ArrowUp") {
+        e.preventDefault();
+      }
+
+      if (e.code === "Tab") {
+        e.preventDefault();
+
+        if (!modalRef.current) {
+          return;
+        }
+
+        const items = Array.from(modalRef.current.querySelectorAll("li"));
+
+        if (!items.length) {
+          return;
+        }
+
+        const focusItem = document.activeElement;
+
+        const index = !(focusItem instanceof HTMLLIElement)
+          ? -1
+          : items.indexOf(focusItem);
+
+        const nextIndex = index === -1 ? 0 : (index + 1) % items.length;
+
+        items[nextIndex].focus();
+      }
+    },
+    []
+  );
+
   return (
     <InputContextProvider value={{ inputRef, inputValue, setInputValue }}>
       <S.SearchModalLayout ref={modalRef}>
@@ -126,9 +161,7 @@ export function SearchModal() {
           <SearchModalInput />
 
           <S.SearchModalContentSearchResultBox
-            onKeyDown={(e) => {
-              e.preventDefault();
-            }}
+            onKeyDown={handleScrollElementKeyDown}
           >
             {inputValue === "" ? (
               <SearchModalHistory />
