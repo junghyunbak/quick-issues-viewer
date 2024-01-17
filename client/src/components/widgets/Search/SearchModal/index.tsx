@@ -23,6 +23,8 @@ import { SearchModalHistory } from "./SearchModalHistory";
 export function SearchModal() {
   const { setIsModalOpen } = useContext(ModalContext);
 
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const [inputValue, setInputValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
@@ -47,12 +49,24 @@ export function SearchModal() {
       }
 
       switch (e.code) {
+        case "ArrowLeft":
+        case "ArrowRight":
+          if (!inputRef.current) {
+            break;
+          }
+
+          if (inputRef.current !== document.activeElement) {
+            inputRef.current.focus();
+          }
+
+          break;
+
         case "ArrowDown":
         case "ArrowUp":
           const items = Array.from(modalRef.current.querySelectorAll("li"));
 
           if (!items.length) {
-            return;
+            break;
           }
 
           const focusItem = document.activeElement;
@@ -97,14 +111,14 @@ export function SearchModal() {
     return () => {
       window.removeEventListener("keydown", KeyDownListener);
     };
-  }, [modalRef, setInputValue]);
+  }, [modalRef, setInputValue, inputRef]);
 
   const handleDimmedClick = useCallback(() => {
     setIsModalOpen(false);
   }, [setIsModalOpen]);
 
   return (
-    <InputContextProvider value={{ inputValue, setInputValue }}>
+    <InputContextProvider value={{ inputRef, inputValue, setInputValue }}>
       <S.SearchModalLayout ref={modalRef}>
         <S.SearchModalDimmedBox onClick={handleDimmedClick} />
 

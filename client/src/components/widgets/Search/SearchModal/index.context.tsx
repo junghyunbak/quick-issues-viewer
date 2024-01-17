@@ -2,6 +2,7 @@
 import React, { createContext } from "react";
 
 type InputContextValue = {
+  inputRef: React.MutableRefObject<HTMLInputElement | null>;
   inputValue: string;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
 };
