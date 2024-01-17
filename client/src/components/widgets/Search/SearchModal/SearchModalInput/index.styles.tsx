@@ -29,7 +29,6 @@ export const Magnifier = styled(MagnifierIcon)`
 
 export const SearchInput = styled.input`
   width: 100%;
-  height: 1rem;
 
   font-size: 0.875rem;
 
