@@ -2,22 +2,28 @@
 import styled from "@emotion/styled";
 import { device, size, color } from "@/assets/styles";
 
-export const SearchModalUserListItemLayout = styled.div`
+export const SearchModalUserListItem = styled.li`
   display: flex;
   align-items: center;
   gap: 0.375rem;
 
-  cursor: pointer;
+  padding: 0.375rem 0.5rem;
 
   border-radius: ${size.BORDER_RADIUS}px;
+
+  outline: none;
+
+  cursor: pointer;
+
+  &:focus {
+    background-color: ${color.g100};
+  }
 
   &:hover {
     @media ${device.canHover} {
       background-color: ${color.g100};
     }
   }
-
-  padding: 0.375rem 0.5rem;
 `;
 
 export const SearchModalUserListItemImage = styled.img`

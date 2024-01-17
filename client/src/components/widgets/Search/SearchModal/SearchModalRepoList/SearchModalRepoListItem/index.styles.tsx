@@ -10,17 +10,23 @@ export const SearchModalRepoListItem = styled.li`
   align-items: center;
   gap: 0.375rem;
 
+  border-radius: ${size.BORDER_RADIUS}px;
+
+  padding: 0.375rem 0.5rem;
+
+  outline: none;
+
   cursor: pointer;
 
-  border-radius: ${size.BORDER_RADIUS}px;
+  &:focus {
+    background-color: ${color.g100};
+  }
 
   &:hover {
     @media ${device.canHover} {
       background-color: ${color.g100};
     }
   }
-
-  padding: 0.375rem 0.5rem;
 `;
 
 export const Repository = styled(RepositoryIcon)``;
