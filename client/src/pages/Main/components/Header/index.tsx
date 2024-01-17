@@ -22,6 +22,9 @@ import { useOctokit } from "@/hooks";
 // apis
 import axios from "axios";
 
+// constants
+import { oauth } from "@/constants";
+
 export function Header() {
   const { apiService } = useOctokit();
 
@@ -47,12 +50,11 @@ export function Header() {
   const handleLoginButtonClick = async () => {
     localStorage.setItem("redirect_from", window.location.href);
 
-    const devClientId = 'Iv1.1eb8f2908f40728f';
-
-    const prodClientId = 'Iv1.38f7bf88d16ea6d8';
-
-    window.location.href =
-      `https://github.com/login/oauth/authorize?client_id=${process.env.NODE_ENV === 'production' ? prodClientId : devClientId}`;
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${
+      process.env.NODE_ENV === "production"
+        ? oauth.PROD_CLIENT_ID
+        : oauth.DEV_CLIENT_ID
+    }`;
   };
 
   const handleLogoutButtonClick = async () => {
