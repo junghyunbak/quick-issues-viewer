@@ -1,7 +1,7 @@
 // react
 import React, { useCallback, useContext, useEffect, useRef } from "react";
 import { RotatingLines } from "react-loader-spinner";
-import { InputContext } from "../index.context";
+import { InputContext } from "@/components/widgets/Search/SearchModal/index.context";
 
 // zustand
 import useStore from "@/store";

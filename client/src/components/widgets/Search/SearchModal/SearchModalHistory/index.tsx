@@ -1,12 +1,12 @@
 // react
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 
 // zustand
 import useStore from "@/store";
 
 // components
-import { SearchModalUserListItem } from "../SearchModalUserList/SearchModalUserListItem";
-import { SearchModalRepoListItem } from "../SearchModalRepoList/SearchModalRepoListItem";
+import { SearchModalUserListItem } from "@/components/widgets/Search/SearchModal/SearchModalUserList/SearchModalUserListItem";
+import { SearchModalRepoListItem } from "@/components/widgets/Search/SearchModal/SearchModalRepoList/SearchModalRepoListItem";
 
 // styles
 import * as S from "./index.styles";

@@ -1,7 +1,7 @@
 // react
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useQuery } from "react-query";
-import { InputContext } from "../index.context";
+import { InputContext } from "@/components/widgets/Search/SearchModal/index.context";
 
 // zustand
 import useStore from "@/store";
