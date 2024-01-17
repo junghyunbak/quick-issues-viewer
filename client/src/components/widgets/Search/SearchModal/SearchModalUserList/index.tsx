@@ -48,6 +48,10 @@ export function SearchModalUserList({ searchValue }: SearchModalUserListProps) {
 
   useEffect(() => {
     setUserSearching(users.isLoading);
+
+    return () => {
+      setUserSearching(false);
+    }
   }, [users.isLoading, setUserSearching]);
 
   if (!users.data || !users.data.length) {
