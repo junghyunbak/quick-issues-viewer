@@ -26,7 +26,7 @@ const GlobalStyles = css`
   *:not(.markdown-body *) {
     box-sizing: border-box;
     word-break: break-all;
-    font-family: "Segoe UI";
+    font-family: "Segoe UI", "Segoe UI Emoji";
   }
 
   ul,

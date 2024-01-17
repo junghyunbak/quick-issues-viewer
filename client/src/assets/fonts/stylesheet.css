@@ -21,7 +21,7 @@
 
 @font-face {
   font-family: "Segoe UI";
-  src: url("seguisb.ttf") format("truetype");
+  src: url("segoeuisb.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
 }
@@ -31,4 +31,9 @@
   src: url("segoeuib.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
+}
+
+@font-face {
+  font-family: "Segoe UI Emoji";
+  src: url("segoeuiemj.ttf") format("truetype");
 }

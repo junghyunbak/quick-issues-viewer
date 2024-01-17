@@ -3,14 +3,10 @@ import { useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 
 // styles
-import { css } from "@emotion/react";
-import { color, size } from "@/assets/styles";
+import * as S from "./index.styles";
 
 // utils
 import queryString from "query-string";
-
-// svg
-import { ReactComponent as Down } from "@/assets/svgs/down.svg";
 
 // constants
 import { defaultValue } from "@/constants";
@@ -66,31 +62,7 @@ export function IssueListOptionsSortElement() {
   );
 
   return (
-    <ul
-      css={css`
-        display: flex;
-
-        border: 1px solid ${color.g200};
-        border-radius: ${size.BORDER_RADIUS}px;
-
-        overflow: hidden;
-
-        li {
-          border-left: 1px solid ${color.g200};
-
-          padding: 0.3125rem 0.8rem;
-
-          font-size: 0.875rem;
-          font-weight: 600;
-
-          cursor: pointer;
-
-          &:first-of-type {
-            border-left: 0;
-          }
-        }
-      `}
-    >
+    <S.SortOptionList>
       {Object.keys(IssuesSort).map((issuesSort) => {
         if (!isIssuesSortEnum(issuesSort)) {
           return null;
@@ -98,42 +70,25 @@ export function IssueListOptionsSortElement() {
 
         const isActive = issuesSort === currentSort;
 
-        const isDesc = currentDirection === IssuesSortDirection.desc;
-
         return (
-          <li
+          <S.SortOptionListItem
             key={issuesSort}
-            css={css`
-              display: flex;
-              align-items: center;
-              gap: 0.2rem;
-
-              background-color: ${isActive ? color.active : "transparent"};
-            `}
+            isActive={isActive}
             onClick={handleIssueSortButtonClick(issuesSort)}
           >
-            <p
-              css={css`
-                color: ${isActive ? color.w : color.b};
-              `}
-            >
+            <S.SortOptionListItemParagraph isActive={isActive}>
               {issuesSort === IssuesSort["reactions-+1"] ? "👍" : issuesSort}
-            </p>
+            </S.SortOptionListItemParagraph>
 
             {isActive && (
-              <Down
-                css={css`
-                  transform: rotateX(${isDesc ? "0deg" : "180deg"});
-
-                  path {
-                    fill: ${isActive ? color.w : color.b};
-                  }
-                `}
+              <S.SortOptionsDirection
+                isActive={isActive}
+                direction={currentDirection}
               />
             )}
-          </li>
+          </S.SortOptionListItem>
         );
       })}
-    </ul>
+    </S.SortOptionList>
   );
 }
