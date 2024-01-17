@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { useCallback } from "react";
 
 // zustand
 import useStore from "@/store";
@@ -7,6 +7,9 @@ import useStore from "@/store";
 // components
 import { SearchModalUserListItem } from "../SearchModalUserList/SearchModalUserListItem";
 import { SearchModalRepoListItem } from "../SearchModalRepoList/SearchModalRepoListItem";
+
+// styles
+import * as S from "./index.styles";
 
 interface SearchModalHistoryProps {
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
@@ -17,11 +20,34 @@ export function SearchModalHistory({
   setInputValue,
   setIsModalOpen,
 }: SearchModalHistoryProps) {
-  const [searchHistory] = useStore((state) => [state.searchHistory]);
+  const [searchHistory, setSearchHistory] = useStore((state) => [
+    state.searchHistory,
+    state.setSearchHistory,
+  ]);
+
+  const handleRemoveHistoryButtonClick = useCallback(() => {
+    setSearchHistory(() => {
+      return [];
+    });
+  }, [setSearchHistory]);
 
   return (
-    <div>
-      <ul>
+    <S.SearchModalHistoryListLayout>
+      <S.SearchModalHistoryListHeaderBox>
+        <S.SearchModalHistoryListHeaderTitleParagraph>
+          Recent
+        </S.SearchModalHistoryListHeaderTitleParagraph>
+
+        {searchHistory.length > 0 && (
+          <S.SearchModalHistoryListHeaderRemoveParagraph
+            onClick={handleRemoveHistoryButtonClick}
+          >
+            Remove all
+          </S.SearchModalHistoryListHeaderRemoveParagraph>
+        )}
+      </S.SearchModalHistoryListHeaderBox>
+
+      <S.SearchModalHistoryList>
         {searchHistory
           .sort((a, b) => (a.createAt > b.createAt ? -1 : 1))
           .map((searchHistoryItem) => {
@@ -50,7 +76,7 @@ export function SearchModalHistory({
               return null;
             }
           })}
-      </ul>
-    </div>
+      </S.SearchModalHistoryList>
+    </S.SearchModalHistoryListLayout>
   );
 }
