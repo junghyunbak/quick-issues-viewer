@@ -1,6 +1,7 @@
 // react
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { ModalContext } from "@/components/widgets/Search/index.context";
 
 // zustand
 import useStore from "@/store";
@@ -12,15 +13,14 @@ interface SearchModalItemProps {
   id: number;
 
   full_name: string;
-
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function SearchModalRepoListItem({
   id,
   full_name,
-  setIsModalOpen,
 }: SearchModalItemProps) {
+  const { setIsModalOpen } = useContext(ModalContext);
+
   const navigate = useNavigate();
 
   const [setSearchHistory] = useStore((state) => [state.setSearchHistory]);

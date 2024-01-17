@@ -11,15 +11,7 @@ import { SearchModalRepoListItem } from "../SearchModalRepoList/SearchModalRepoL
 // styles
 import * as S from "./index.styles";
 
-interface SearchModalHistoryProps {
-  setInputValue: React.Dispatch<React.SetStateAction<string>>;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export function SearchModalHistory({
-  setInputValue,
-  setIsModalOpen,
-}: SearchModalHistoryProps) {
+export function SearchModalHistory() {
   const [searchHistory, setSearchHistory] = useStore((state) => [
     state.searchHistory,
     state.setSearchHistory,
@@ -55,12 +47,7 @@ export function SearchModalHistory({
 
             if (type === "repo") {
               return (
-                <SearchModalRepoListItem
-                  key={id}
-                  id={id}
-                  full_name={name}
-                  setIsModalOpen={setIsModalOpen}
-                />
+                <SearchModalRepoListItem key={id} id={id} full_name={name} />
               );
             } else if (type === "user") {
               return (
@@ -69,7 +56,6 @@ export function SearchModalHistory({
                   id={id}
                   login={name}
                   avatar_url={url || ""}
-                  setInputValue={setInputValue}
                 />
               );
             } else {

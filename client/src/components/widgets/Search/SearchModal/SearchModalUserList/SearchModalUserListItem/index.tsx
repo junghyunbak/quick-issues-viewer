@@ -1,5 +1,6 @@
 // react
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
+import { InputContext } from "../../index.context";
 
 // styles
 import * as S from "./index.styles";
@@ -11,16 +12,15 @@ interface SearchModalUserListItemProps {
   id: number;
   login: string;
   avatar_url: string;
-
-  setInputValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export function SearchModalUserListItem({
   id,
   login,
   avatar_url,
-  setInputValue,
 }: SearchModalUserListItemProps) {
+  const { setInputValue } = useContext(InputContext);
+
   const [setSearchHistory] = useStore((state) => [state.setSearchHistory]);
 
   const handleUserItemClick = useCallback(() => {
@@ -48,11 +48,8 @@ export function SearchModalUserListItem({
       return newSearchHistory;
     });
 
-    /**
-     * inputValue가 변경되어도 검색이 다시 발생하지 않는 이슈가 존재
-     */
     setInputValue(`${login}/`);
-  }, [setInputValue, login]);
+  }, [setInputValue, setSearchHistory, id, login, avatar_url]);
 
   return (
     <S.SearchModalUserListItemLayout onClick={handleUserItemClick}>
