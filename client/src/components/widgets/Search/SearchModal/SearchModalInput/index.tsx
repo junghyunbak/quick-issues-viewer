@@ -10,9 +10,7 @@ import useStore from "@/store";
 import * as S from "./index.styles";
 
 export function SearchModalInput() {
-  const { inputValue, setInputValue } = useContext(InputContext);
-
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const { inputRef, inputValue, setInputValue } = useContext(InputContext);
 
   const [repoSearching, userSearching] = useStore((state) => [
     state.repoSearching,
