@@ -12,12 +12,12 @@ import * as S from "./index.styles";
 interface SearchModalItemProps {
   id: number;
 
-  full_name: string;
+  fullName: string;
 }
 
 export function SearchModalRepoListItem({
   id,
-  full_name,
+  fullName,
 }: SearchModalItemProps) {
   const { setIsModalOpen } = useContext(ModalContext);
 
@@ -42,26 +42,26 @@ export function SearchModalRepoListItem({
       newSearchHistory.push({
         id,
         type: "repo",
-        name: full_name,
+        name: fullName,
         createAt: new Date(),
       });
 
       return newSearchHistory;
     });
 
-    const [owner, repo] = full_name.split("/");
+    const [owner, repo] = fullName.split("/");
 
     navigate(`/${owner}/${repo}`);
 
     setIsModalOpen(false);
-  }, [navigate, id, full_name, setIsModalOpen, setSearchHistory]);
+  }, [navigate, id, fullName, setIsModalOpen, setSearchHistory]);
 
   return (
     <S.SearchModalRepoListItem onClick={handleItemClick}>
       <S.Repository />
 
       <S.SearchModalRepoListItemParagraph>
-        {full_name}
+        {fullName}
       </S.SearchModalRepoListItemParagraph>
     </S.SearchModalRepoListItem>
   );

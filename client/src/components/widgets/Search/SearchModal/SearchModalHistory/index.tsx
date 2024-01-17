@@ -47,7 +47,7 @@ export function SearchModalHistory() {
 
             if (type === "repo") {
               return (
-                <SearchModalRepoListItem key={id} id={id} full_name={name} />
+                <SearchModalRepoListItem key={id} id={id} fullName={name} />
               );
             } else if (type === "user") {
               return (

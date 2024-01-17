@@ -83,7 +83,7 @@ export function SearchModalRepoList({ searchValue }: SearchModalRepoListProps) {
               <SearchModalRepoListItem
                 key={repo.id}
                 id={id}
-                full_name={full_name}
+                fullName={full_name}
               />
             );
           })}
