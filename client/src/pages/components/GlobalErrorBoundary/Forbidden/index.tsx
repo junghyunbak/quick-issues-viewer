@@ -11,6 +11,9 @@ import { GithubLoginButton } from "@/components/core/Button/GithubLoginButton";
 // apis
 import { type RequestError } from "octokit";
 
+// constants
+import { oauth } from "@/constants";
+
 interface ForbiddenProps {
   error: RequestError;
 }
@@ -58,8 +61,11 @@ export function Forbidden({ error }: ForbiddenProps) {
   const handleLoginButtonClick = async () => {
     localStorage.setItem("redirect_from", window.location.href);
 
-    window.location.href =
-      "https://github.com/login/oauth/authorize?client_id=Iv1.1eb8f2908f40728f";
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${
+      process.env.NODE_ENV === "production"
+        ? oauth.PROD_CLIENT_ID
+        : oauth.DEV_CLIENT_ID
+    }`;
   };
 
   return (
