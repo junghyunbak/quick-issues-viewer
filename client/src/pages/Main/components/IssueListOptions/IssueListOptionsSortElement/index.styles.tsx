@@ -29,6 +29,8 @@ export const SortOptionListItem = styled.li<{ isActive: boolean }>`
 
   padding: 0.3125rem 0.8rem;
 
+  cursor: pointer;
+
   &:first-of-type {
     border-left: 0;
   }
@@ -44,10 +46,10 @@ export const SortOptionsDirection = styled(DownIcon)<{
   isActive: boolean;
   direction: IssuesSortDirection;
 }>`
-  transform: rotateX(
-    ${(props) =>
-      props.direction === IssuesSortDirection.desc ? "0deg" : "180deg"}
-  );
+  transform: ${(props) =>
+    props.direction === IssuesSortDirection.desc
+      ? "rotateX(0deg)"
+      : "rotateX(180deg) translateY(-1.95px)"};
 
   path {
     fill: ${(props) => (props.isActive ? color.w : color.b)};

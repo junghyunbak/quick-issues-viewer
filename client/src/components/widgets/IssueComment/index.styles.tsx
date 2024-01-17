@@ -42,7 +42,7 @@ export const ContentLayout = styled.div<{ isComment: boolean }>`
 
   position: relative;
 
-  padding: ${(props) => (props.isComment ? "1.25rem 0" : "0 0 1.25rem 0")};
+  padding: ${(props) => (props.isComment ? "1.25rem 0" : "0")};
 
   &::before {
     content: "";
