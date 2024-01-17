@@ -20,35 +20,37 @@ export function SearchModalHistory({
   const [searchHistory] = useStore((state) => [state.searchHistory]);
 
   return (
-    <ul>
-      {searchHistory
-        .sort((a, b) => (a.createAt > b.createAt ? -1 : 1))
-        .map((searchHistoryItem) => {
-          const { id, name, url, type } = searchHistoryItem;
+    <div>
+      <ul>
+        {searchHistory
+          .sort((a, b) => (a.createAt > b.createAt ? -1 : 1))
+          .map((searchHistoryItem) => {
+            const { id, name, url, type } = searchHistoryItem;
 
-          if (type === "repo") {
-            return (
-              <SearchModalRepoListItem
-                key={id}
-                id={id}
-                full_name={name}
-                setIsModalOpen={setIsModalOpen}
-              />
-            );
-          } else if (type === "user") {
-            return (
-              <SearchModalUserListItem
-                key={id}
-                id={id}
-                login={name}
-                avatar_url={url || ""}
-                setInputValue={setInputValue}
-              />
-            );
-          } else {
-            return null;
-          }
-        })}
-    </ul>
+            if (type === "repo") {
+              return (
+                <SearchModalRepoListItem
+                  key={id}
+                  id={id}
+                  full_name={name}
+                  setIsModalOpen={setIsModalOpen}
+                />
+              );
+            } else if (type === "user") {
+              return (
+                <SearchModalUserListItem
+                  key={id}
+                  id={id}
+                  login={name}
+                  avatar_url={url || ""}
+                  setInputValue={setInputValue}
+                />
+              );
+            } else {
+              return null;
+            }
+          })}
+      </ul>
+    </div>
   );
 }
