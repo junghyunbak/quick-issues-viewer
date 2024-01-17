@@ -30,6 +30,10 @@ export function SearchModalInput() {
     [setInputValue]
   );
 
+  const handleTextRemoveButtonClick = useCallback(() => {
+    setInputValue("");
+  }, [setInputValue]);
+
   return (
     <S.SearchInputLayout>
       <S.SearchInputLabel>
@@ -42,9 +46,15 @@ export function SearchModalInput() {
           placeholder="{owner}/{repo}"
         />
 
-        {(repoSearching || userSearching) && (
-          <RotatingLines width="16px" strokeColor="gray" />
-        )}
+        <S.SearchInputUtilBox>
+          {(repoSearching || userSearching) && (
+            <RotatingLines width="1rem" strokeColor="gray" />
+          )}
+
+          {inputValue !== "" && (
+            <S.CircleX onClick={handleTextRemoveButtonClick} />
+          )}
+        </S.SearchInputUtilBox>
       </S.SearchInputLabel>
     </S.SearchInputLayout>
   );
