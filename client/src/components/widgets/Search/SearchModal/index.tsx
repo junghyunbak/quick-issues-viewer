@@ -62,7 +62,9 @@ export function SearchModal() {
             : items.indexOf(focusItem);
 
           if (index === -1) {
-            items[0].focus();
+            const nextIndex = e.code === "ArrowDown" ? 0 : items.length - 1;
+
+            items[nextIndex].focus();
           } else {
             const nextIndex =
               e.code === "ArrowDown"
