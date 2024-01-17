@@ -51,6 +51,10 @@ export function SearchModalRepoList({ searchValue }: SearchModalRepoListProps) {
 
   useEffect(() => {
     setRepoSearching(repos.isLoading);
+
+    return () => {
+      setRepoSearching(false);
+    }
   }, [repos.isLoading, setRepoSearching]);
 
   if (!repos.data || !repos.data.length) {
@@ -68,6 +72,9 @@ export function SearchModalRepoList({ searchValue }: SearchModalRepoListProps) {
           .filter((repo) => {
             const repoName = repo.full_name.split("/")[1];
 
+            /**
+             * 레포지토리 필터링은 추가적인 api 요청이 필요없기 때문에 inputValue값을 사용함.
+             */
             const searchRepo = inputValue.split("/")[1];
 
             if (searchRepo === undefined) {
