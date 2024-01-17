@@ -147,21 +147,23 @@ export const ContentBodyBox = styled.div`
   z-index: ${zIndex.MARKDOWN_BODY};
 
   padding: 0.75rem;
+`;
 
+export const ContentBodyMarkdownWrapper = styled.div`
   // .markdown-body 스타일 덮어쓰기
   li {
-    list-style: initial !important;
+    list-style: initial;
   }
 
   pre {
-    padding: 0 !important;
+    padding: 0;
   }
 
   a[href*="fn"] {
-    scroll-margin-top: 4rem !important;
+    scroll-margin-top: 4rem;
   }
 
-  font-size: 1rem !important;
+  font-size: 1rem;
 `;
 
 export const ContentBodyReactionsBox = styled.div`

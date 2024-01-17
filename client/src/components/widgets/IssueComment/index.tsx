@@ -60,40 +60,41 @@ export function IssueComment({
           </S.ContentHeaderBox>
 
           <S.ContentBodyBox>
-            <Markdown
-              className="markdown-body"
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeRaw]}
-              components={{
-                code({ inline, children, className, node, ...props }) {
-                  const match = /language-(\w+)/.exec(className || "");
+            <S.ContentBodyMarkdownWrapper className="markdown-body">
+              <Markdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  code({ inline, children, className, node, ...props }) {
+                    const match = /language-(\w+)/.exec(className || "");
 
-                  return !inline && match ? (
-                    <SyntaxHighlighter
-                      {...props}
-                      PreTag="div"
-                      language={match[1]}
-                      style={vs}
-                      customStyle={{
-                        background: "none",
-                        border: 0,
-                        margin: 0,
-                        fontSize: "1rem",
-                        lineHeight: "normal",
-                      }}
-                    >
-                      {String(children).replace(/\n$/, "")}
-                    </SyntaxHighlighter>
-                  ) : (
-                    <code {...props} className={className}>
-                      {children}
-                    </code>
-                  );
-                },
-              }}
-            >
-              {markdownText}
-            </Markdown>
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        {...props}
+                        PreTag="div"
+                        language={match[1]}
+                        style={vs}
+                        customStyle={{
+                          background: "none",
+                          border: 0,
+                          margin: 0,
+                          fontSize: "1rem",
+                          lineHeight: "normal",
+                        }}
+                      >
+                        {String(children).replace(/\n$/, "")}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code {...props} className={className}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
+                {markdownText}
+              </Markdown>
+            </S.ContentBodyMarkdownWrapper>
 
             {reactions && reactions.total_count > 0 && (
               <S.ContentBodyReactionsBox>
