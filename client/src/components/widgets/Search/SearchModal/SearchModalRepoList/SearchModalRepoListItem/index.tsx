@@ -34,7 +34,7 @@ export function SearchModalRepoListItem({
       );
 
       if (searchHistoryElement) {
-        searchHistoryElement.createAt = new Date();
+        searchHistoryElement.createAt = Date.now();
 
         return newSearchHistory;
       }
@@ -43,7 +43,7 @@ export function SearchModalRepoListItem({
         id,
         type: "repo",
         name: fullName,
-        createAt: new Date(),
+        createAt: Date.now(),
       });
 
       return newSearchHistory;

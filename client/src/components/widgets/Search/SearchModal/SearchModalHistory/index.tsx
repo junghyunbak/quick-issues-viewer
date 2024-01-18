@@ -1,5 +1,5 @@
 // react
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 
 // zustand
 import useStore from "@/store";
@@ -11,7 +11,7 @@ import { SearchModalRepoListItem } from "@/components/widgets/Search/SearchModal
 // styles
 import * as S from "./index.styles";
 
-export function SearchModalHistory() {
+export const SearchModalHistory = memo(() => {
   const [searchHistory, setSearchHistory] = useStore((state) => [
     state.searchHistory,
     state.setSearchHistory,
@@ -65,4 +65,4 @@ export function SearchModalHistory() {
       </S.SearchModalHistoryList>
     </S.SearchModalHistoryListLayout>
   );
-}
+});
