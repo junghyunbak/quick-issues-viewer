@@ -10,7 +10,8 @@ import { Log } from './modules/log/entities/log.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: '/etc/sqlite/logs',
+      database:
+        process.env.NODE_ENV === 'dev' ? './sqlite/logs' : '/etc/sqlite/logs',
       entities: [Log],
       synchronize: true,
     }),
