@@ -6,7 +6,7 @@ type SearchHistory = {
   type: "repo" | "user";
   name: string;
   url?: string;
-  createAt: Date;
+  createAt: number;
 };
 
 type SearchSlice = {

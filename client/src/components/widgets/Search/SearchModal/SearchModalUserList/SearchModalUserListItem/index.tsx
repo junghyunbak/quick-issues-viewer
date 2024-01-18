@@ -32,7 +32,7 @@ export function SearchModalUserListItem({
       );
 
       if (searchHistoryElement) {
-        searchHistoryElement.createAt = new Date();
+        searchHistoryElement.createAt = Date.now();
 
         return newSearchHistory;
       }
@@ -42,7 +42,7 @@ export function SearchModalUserListItem({
         type: "user",
         url: avatar_url,
         name: login,
-        createAt: new Date(),
+        createAt: Date.now(),
       });
 
       return newSearchHistory;

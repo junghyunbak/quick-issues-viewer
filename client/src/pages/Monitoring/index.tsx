@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { LogList } from "./components/LogList";
 
 import { css } from "@emotion/react";
-import { device } from "@/assets/styles";
 
 export function Monitoring() {
   return (
@@ -18,13 +17,8 @@ export function Monitoring() {
     >
       <div
         css={css`
-          width: 75%;
-          height: 80%;
-
-          @media ${device.mobile} {
-            width: 100%;
-            height: 100%;
-          }
+          width: 100%;
+          height: 100%;
 
           overflow: scroll;
         `}

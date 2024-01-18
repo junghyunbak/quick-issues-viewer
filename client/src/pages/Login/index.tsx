@@ -1,7 +1,7 @@
 // react
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import { useQuery } from "react-query";
 
 // utils
 import queryString from "query-string";
@@ -16,21 +16,51 @@ import axios from "axios";
 export function Login() {
   const [searchParams] = useSearchParams();
 
-  const { code } = queryString.parse(searchParams.toString());
+  const { code, error } = queryString.parse(searchParams.toString());
 
-  useQuery(
-    ["oauth", "login", code],
-    async () => {
-      await axios.post("/api/oauth/login", { code });
-    },
-    {
-      onSuccess() {
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    if (error || !code) {
+      const redirectFrom = localStorage.getItem("redirect_from");
+
+      window.location.href = redirectFrom || "/";
+
+      return;
+    }
+
+    setIsValid(true);
+  }, [error, code]);
+
+  useEffect(() => {
+    if (!isValid) {
+      return;
+    }
+
+    axios
+      .post("/api/oauth/login", { code })
+      .then(() => {
         const redirectFrom = localStorage.getItem("redirect_from");
 
         window.location.href = redirectFrom || "/";
-      },
-    }
-  );
+
+        return;
+      })
+      .catch((e) => {
+        /**
+         * useEffect 내에서 오류를 발생시켜 useErrorBoundary가 반응하도록 하기 위한 trick
+         *
+         * https://github.com/facebook/react/issues/14981
+         */
+        setIsValid(() => {
+          throw e;
+        });
+      });
+  }, [code, isValid, setIsValid]);
+
+  if (!isValid) {
+    return null;
+  }
 
   return (
     <div
