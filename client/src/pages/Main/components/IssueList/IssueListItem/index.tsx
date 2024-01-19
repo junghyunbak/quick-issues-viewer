@@ -24,35 +24,28 @@ export function IssueListItem({ issue }: IssueListItemProps) {
   );
   const { scrollRef, contentRef } = useContext(IssueListRefsContext);
 
-  const issueHeaderRef = useRef<HTMLDivElement | null>(null);
-  const issueBodyRef = useRef<HTMLDivElement | null>(null);
+  const issueRef = useRef<HTMLLIElement | null>(null);
 
   const [isBodyOpen, setIsBodyOpen] = useState(selectedIssueId === issue.id);
 
   const moveScrollToIssueHeader = useCallback(() => {
-    if (
-      !scrollRef.current ||
-      !contentRef.current ||
-      !issueBodyRef.current ||
-      !issueHeaderRef.current
-    ) {
+    if (!scrollRef.current || !contentRef.current || !issueRef.current) {
       return;
     }
 
     const { y: scrollY, height: scorllHeight } =
       scrollRef.current.getClientRects()[0];
     const { y: contentY } = contentRef.current.getClientRects()[0];
-    const { y: bodyY } = issueBodyRef.current.getClientRects()[0];
-    const { height: headerHeight } = issueHeaderRef.current.getClientRects()[0];
+    const { y: issueY } = issueRef.current.getClientRects()[0];
 
-    const bodyOffset = bodyY - contentY;
+    const issueOffset = issueY - contentY;
 
-    if (scrollY <= bodyY && bodyY <= scrollY + scorllHeight) {
+    if (scrollY <= issueY && issueY <= scrollY + scorllHeight) {
       return;
     }
 
-    scrollRef.current.scrollTo(0, bodyOffset - headerHeight);
-  }, [scrollRef, contentRef, issueBodyRef, issueHeaderRef]);
+    scrollRef.current.scrollTo(0, issueOffset);
+  }, [scrollRef, contentRef, issueRef]);
 
   const handleIssueHeaderClick = useCallback(() => {
     setSelectedIssueId((prev) => {
@@ -86,12 +79,9 @@ export function IssueListItem({ issue }: IssueListItemProps) {
 
   return (
     <IssueProvider value={issue}>
-      <S.IssueItemLayout>
-        <IssueListItemHeader
-          ref={issueHeaderRef}
-          onClick={handleIssueHeaderClick}
-        />
-        {isBodyOpen && <IssueListItemBody ref={issueBodyRef} />}
+      <S.IssueItemLayout ref={issueRef}>
+        <IssueListItemHeader onClick={handleIssueHeaderClick} />
+        {isBodyOpen && <IssueListItemBody />}
       </S.IssueItemLayout>
     </IssueProvider>
   );

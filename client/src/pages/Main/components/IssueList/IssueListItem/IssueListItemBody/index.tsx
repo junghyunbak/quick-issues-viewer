@@ -1,5 +1,5 @@
 // react
-import { useCallback, useContext, useState, forwardRef, Fragment } from "react";
+import { useCallback, useContext, useState } from "react";
 import { IssueContext } from "@/pages/Main/components/IssueList/IssueListItem/index.context";
 
 // components
@@ -16,10 +16,7 @@ interface IssueListItemBodyProps
     HTMLDivElement
   > {}
 
-export const IssueListItemBody = forwardRef<
-  HTMLDivElement | null,
-  IssueListItemBodyProps
->((props, ref) => {
+export function IssueListItemBody(props: IssueListItemBodyProps) {
   const { body, user, html_url, reactions, comments } =
     useContext(IssueContext);
 
@@ -32,7 +29,7 @@ export const IssueListItemBody = forwardRef<
   const isCommentsExist = comments > 0;
 
   return (
-    <S.IssueBodyLayout ref={ref} {...props}>
+    <S.IssueBodyLayout {...props}>
       <IssueComment
         markdownText={body || ""}
         user={user}
@@ -41,12 +38,7 @@ export const IssueListItemBody = forwardRef<
         reactions={reactions}
       />
 
-      {commentsIsOpen && (
-        <Fragment>
-          <IssueListItemBodyCommentList />
-          <S.IssueBodySplitLineBox />
-        </Fragment>
-      )}
+      {commentsIsOpen && <IssueListItemBodyCommentList />}
 
       {!commentsIsOpen && isCommentsExist && (
         <IssueListItemBodyShowCommentsButton
@@ -55,4 +47,4 @@ export const IssueListItemBody = forwardRef<
       )}
     </S.IssueBodyLayout>
   );
-});
+}
