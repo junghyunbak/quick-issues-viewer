@@ -1,5 +1,5 @@
 // react
-import { useCallback, useContext, useState, forwardRef, Fragment } from "react";
+import { useCallback, useContext, useState, forwardRef } from "react";
 import { IssueContext } from "@/pages/Main/components/IssueList/IssueListItem/index.context";
 
 // components
@@ -41,12 +41,7 @@ export const IssueListItemBody = forwardRef<
         reactions={reactions}
       />
 
-      {commentsIsOpen && (
-        <Fragment>
-          <IssueListItemBodyCommentList />
-          <S.IssueBodySplitLineBox />
-        </Fragment>
-      )}
+      {commentsIsOpen && <IssueListItemBodyCommentList />}
 
       {!commentsIsOpen && isCommentsExist && (
         <IssueListItemBodyShowCommentsButton
