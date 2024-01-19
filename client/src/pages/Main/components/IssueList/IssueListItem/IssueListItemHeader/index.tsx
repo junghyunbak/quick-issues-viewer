@@ -1,5 +1,5 @@
 // react
-import { useMemo, useContext, forwardRef } from "react";
+import { useMemo, useContext } from "react";
 import { IssueContext } from "@/pages/Main/components/IssueList/IssueListItem/index.context";
 
 // components
@@ -14,10 +14,7 @@ interface IssueListItemHeaderProps
     HTMLDivElement
   > {}
 
-export const IssueListItemHeader = forwardRef<
-  HTMLDivElement | null,
-  IssueListItemHeaderProps
->((props, ref) => {
+export function IssueListItemHeader(props: IssueListItemHeaderProps) {
   const { state, title, comments, created_at, pull_request, reactions } =
     useContext(IssueContext);
 
@@ -40,7 +37,7 @@ export const IssueListItemHeader = forwardRef<
   const isCommentExist = comments > 0;
 
   return (
-    <S.IssueListItemHeaderLayout {...props} ref={ref}>
+    <S.IssueListItemHeaderLayout {...props}>
       <S.IssueInfoLayout>
         <S.IssueInfoStatusBox>{StatusIcon}</S.IssueInfoStatusBox>
 
@@ -76,4 +73,4 @@ export const IssueListItemHeader = forwardRef<
       </S.CountingBox>
     </S.IssueListItemHeaderLayout>
   );
-});
+}
