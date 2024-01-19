@@ -73,9 +73,9 @@ export function get(octokit: Octokit) {
     }> => {
       const queries = [`type:issue`, `repo:${owner}/${repo}`];
 
-      if (labels.length > 0) {
-        queries.push(`label:${labels.join(",")}`);
-      }
+      labels.forEach((label) => {
+        queries.push(`label:"${label}"`);
+      });
 
       if (state !== "all") {
         queries.push(`state:${state}`);
