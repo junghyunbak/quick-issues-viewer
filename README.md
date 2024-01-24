@@ -14,6 +14,8 @@ Github `issues` 탭에서 다음과 같은 불편한 점을 느껴, 편리하게
 
 ## 기술 스택
 
+![image](https://github.com/junghyunbak/github-issues-viewer/assets/44913775/65cb572d-a02e-42d8-a8d4-81c3b8014390)
+
 ## 데모 사진
 
 ### 메인 페이지:이슈 리스트
