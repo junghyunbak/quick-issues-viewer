@@ -9,8 +9,8 @@ Github `issues` 탭에서 다음과 같은 불편한 점을 느껴, 편리하게
 
 ## 링크
 
-- Frontend README [[이동]](https://github.com/junghyunbak/github-issues-viewer/blob/develop/client/README.md)
-- Backend README [[이동]](https://github.com/junghyunbak/github-issues-viewer/blob/develop/server/README.md)
+- Frontend README [[이동]](https://github.com/junghyunbak/github-issues-viewer/blob/master/client/README.md)
+- Backend README [[이동]](https://github.com/junghyunbak/github-issues-viewer/blob/master/server/README.md)
 
 ## 기술 스택
 
