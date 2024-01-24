@@ -1,46 +1,48 @@
-# Getting Started with Create React App
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white"><img src="https://img.shields.io/badge/Zustand-ecb63f?style=flat-square"><img src="https://img.shields.io/badge/React Query-FF4154?style=flat-square&logo=react-query&logoColor=white"><img src="https://img.shields.io/badge/Emotion-cc67bc?style=flat-square"><img src="https://img.shields.io/badge/npm-CB3837?style=flat-square&logo=npm">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 개발 환경
 
-## Available Scripts
+- vscode
+- node v18.12.1
 
-In the project directory, you can run:
+## 실행 방법
 
-### `npm start`
+1. 의존성 패키지 설치 후 실행
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+$ npm install
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# 개발
+$ npm start
 
-### `npm test`
+# 빌드
+$ npm run build
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 배포
+$ npm run serve
 
-### `npm run build`
+# 도커 이미지 생성 후 실행
+$ ./docker/build-and-run.sh
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 기술 스택 & 라이브러리 선정 이유
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### :gear: React & TypeScript
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- 빠른 시간안에 개발하여 사용하기위해 익숙하고, 구현에 필요한 라이브러리가 다양한 React를 선택했다. (예를 들면 `react-pageinate`, `react-markdown` 등)
+- 코드의 안정성과 가독성 그리고 유지보수성을 위해 TypeScript를 사용하여 개발하였다.
+- Github OpenAPI를 이용하여 특정 레포지토리의 이슈를 조회하는것이 목적인 서비스라 검색 엔진 최적화는 고려 대상이 아니었기에, React를 이용한 CSR 방식을 채택하였다.
 
-### `npm run eject`
+### :gear: React Query
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- 프로젝트에서 사용하는 Github OpenAPI에는 시간/분 당 요쳥량 제한이 존재하고, 요청량을 초과하게 되면 남은 시간 동안 사용이 불가능해지므로, 동일 요청에 대해 **캐싱**을 수행하여 빠르게 요청량 제한에 도달하지 않도록 하기위해 도입하였다.
+- React Query와 `ErrorBoundary`과 `Suspense`를 함께 사용하면, **에러처리와 로딩 시 화면의 처리를 선언적**으로 할 수 있게된다.
+- `useQuery`훅을 사용 할 경우, 비동기 요청으로 받아온 데이터를 추가 상태를 이용하여 관리하지 않아도 되어 코드의 **가독성과 유지보수성을 높일 수 있다**.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### :gear: Zustand
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- 다양한 전역 상태관리 라이브러리 중 zustand를 고른 이유는, 사용법이 매우 쉽고 간단하며 react-devtools 와도 호환되기 때문이다. `persist` 기능 또한 쉽게 적용할 수 있어 history를 구현할 때 유용하게 사용하였다.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### :gear: Emotion
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `css` props를 이용하여 css 문법으로 jsx 문법 위에 스타일을 작성하므로써, 빠른 개발이 가능하기 때문에 선택했다.

@@ -1,73 +1,45 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+<img src="https://img.shields.io/badge/NestJS-E0234E?style=flat-square&logo=nestjs"><img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite"><img src="https://img.shields.io/badge/typeorm-f7a600?style=flat-square"><img src="https://img.shields.io/badge/npm-CB3837?style=flat-square&logo=npm">
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 개발 환경 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- vscode
+- node v18.12.1
 
-## Description
+## 실행 방법
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. .env 설정
 
-## Installation
+.env.template 파일을 .env 파일에 복사한 후 필요한 환경변수 값을 모두 채운다.
+
+2. 의존성 패키지 설치 후 실행
 
 ```bash
 $ npm install
-```
 
-## Running the app
+# 개발
+$ npm start
 
-```bash
-# development
-$ npm run start
+# 빌드
+$ npm run build
 
-# watch mode
-$ npm run start:dev
-
-# production mode
+# 배포
 $ npm run start:prod
+
+# 도커 이미지 생성 후 실행
+$ ./docker/build-and-run.sh
 ```
 
-## Test
+## 기술 스택 & 라이브러리 선정 이유
 
-```bash
-# unit tests
-$ npm run test
+### :gear: NestJS
 
-# e2e tests
-$ npm run test:e2e
+- **OAuth**와 **로깅**만을 위한 백엔드 애플리케이션 제작이 목적이었기 때문에, `Express`와 같이 무척 자유로운 구조의 백엔드 프레임워크 보다는, 모듈 기반의 아키텍처를 제공해주어 빠른 기능 구현이 가능한 `NestJS`를 선택했다.
+- TypeScript를 지원하여 코드의 안정성, 가독성, 유지보수성을 챙길 수 있다.
 
-# test coverage
-$ npm run test:cov
-```
+### :gear: typeorm
 
-## Support
+- TypeScript와 데코레이터 문법을 지원하기 때문에, Sequelize ORM 라이브러리에 비해 NestJS와 함께 사용했을 때 일관성 있는 코드를 작성할 수 있어 선택하였다.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### :gear: SQLite
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- 오직 로그 데이터를 보관하기 위해 `MySQL`과 같은 영구 저장 데이터베이스를 사용하는 것은 오버 엔지니어링으로 여겨져, 파일 시스템 기반 데이터베이스인 `SQLite`를 선택하였다.
