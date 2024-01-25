@@ -2,8 +2,8 @@
 
 Github `issues` 탭에서 다음과 같은 불편한 점을 느껴, 편리하게 사용하고자 제작한 이슈 뷰어입니다.
 
-- 이슈 간 빠른 전환의 어려움
-- 사용성을 저해하는 너무 많은 정렬 & 필터링 요소 
+- 이슈 간 빠른 전환이 어려움
+- 사용성을 저해하는, 너무 많은 정렬 & 필터링 요소 
 
 \+ 특정 레포지토리의 이슈를 데이터베이스 삼아, 간단한 글을 기록하는 블로그처럼 사용할 수도 있습니다.
 
@@ -28,7 +28,7 @@ Github `issues` 탭에서 다음과 같은 불편한 점을 느껴, 편리하게
 
 ### 메인 페이지:레포지토리 검색 모달
 
-![search-repository](https://github.com/junghyunbak/github-issues-viewer/assets/44913775/cbe80744-db8c-4d06-aefc-6834eaa15240)
+![search-repository](https://github.com/junghyunbak/github-issues-viewer/assets/44913775/58787ff5-21a4-417b-a9b0-6ff0eee0b054)
 
 ### 에러 페이지:Forbidden
 
