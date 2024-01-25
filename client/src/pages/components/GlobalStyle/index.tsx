@@ -39,7 +39,7 @@ const GlobalStyles = css`
     padding: 0;
   }
 
-  li {
+  li:not(.markdown-body *) {
     list-style: none;
   }
 `;
