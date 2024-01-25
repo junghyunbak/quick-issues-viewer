@@ -14,7 +14,12 @@ export const IssueListLayout = styled.div`
   }
 `;
 
-export const IssueList = styled.ul`
+/**
+ * IssueList의 태그를 `ul`로 사용 할 경우,
+ * 하위에 존재하는 markdown 요소 내 `ul` 태그의 스타일이 영향을 받아
+ * `ul` 대신 `div` 태그를 사용함.
+ */
+export const IssueList = styled.div`
   width: 100%;
 
   border: 1px solid ${color.g200};

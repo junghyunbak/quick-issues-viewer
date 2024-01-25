@@ -149,12 +149,10 @@ export const ContentBodyBox = styled.div`
   padding: 0.75rem;
 `;
 
+/**
+ * .markdown-body 스타일 덮어쓰기
+ */
 export const ContentBodyMarkdownWrapper = styled.div`
-  // .markdown-body 스타일 덮어쓰기
-  li {
-    list-style: initial;
-  }
-
   pre {
     padding: 0;
   }
