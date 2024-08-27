@@ -5,18 +5,10 @@ Github `issues` 탭에서 다음과 같은 불편한 점을 느껴, 편리하게
 - 이슈 간 빠른 전환이 어려움
 - 사용성을 저해하는, 너무 많은 정렬 & 필터링 요소 
 
-<br/>
-
-\+ 특정 레포지토리의 이슈를 데이터베이스 삼아, 간단한 글을 기록하는 블로그처럼 사용할 수도 있습니다.
-
 ## 링크
 
 - Frontend README [[이동]](https://github.com/junghyunbak/github-issues-viewer/blob/master/client/README.md)
 - Backend README [[이동]](https://github.com/junghyunbak/github-issues-viewer/blob/master/server/README.md)
-
-<br/>
-
-- `facebook/react` issues [[이동]](https://github-issues-viewer.lightpavilion.site/facebook/react)
 
 ## 기술 스택
 
